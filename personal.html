@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Personal Athletes — APEX Performance Suite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app">
+
+<aside class="sidebar">
+  <a href="index.html" class="sidebar-brand">
+    <div class="sidebar-brand-mark personal">A</div>
+    <div class="sidebar-brand-text">APEX<small>👤 Personal Athletes</small></div>
+  </a>
+
+  <div class="nav-section">Generale</div>
+  <a class="nav-link active" href="#" data-view="dashboard">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+    Dashboard
+  </a>
+  <a class="nav-link" href="#" data-view="clienti">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v2"/></svg>
+    Clienti<span class="badge">8</span>
+  </a>
+  <a class="nav-link" href="#" data-view="programmi">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+    Programmi
+  </a>
+  <a class="nav-link" href="#" data-view="sessioni">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+    Sessioni
+  </a>
+  <a class="nav-link" href="#" data-view="esercizi">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.5 6.5 17.5 17.5M21 21l-1-1M3 3l1 1M8.5 8.5 7 7M16 16l1.5 1.5M14 7 7 14"/></svg>
+    Libreria esercizi
+  </a>
+
+  <div class="nav-section">Business</div>
+  <a class="nav-link" href="#" data-view="pagamenti">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+    Pagamenti
+  </a>
+  <a class="nav-link" href="#" data-view="messaggi">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Messaggi<span class="badge">3</span>
+  </a>
+
+  <div class="sidebar-bottom">
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar personal">MT</div>
+      <div class="sidebar-user-info">
+        <strong>Marcello Tavola</strong>
+        <span>Personal Trainer</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+
+<!-- ============ DASHBOARD ============ -->
+<section data-pane="dashboard">
+  <div class="topbar">
+    <div class="crumb">Personal Athletes
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong id="crumb-current">Dashboard</strong>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="dash-search" placeholder="Cerca cliente…" />
+      </div>
+      <button class="btn primary">+ Nuovo cliente</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="page-header">
+      <p class="page-eyebrow">Personal Training · Maggio 2026</p>
+      <h2>I tuoi <em>clienti</em> privati</h2>
+      <p>8 clienti attivi, 12 sessioni nei prossimi 7 giorni. Aderenza media in crescita.</p>
+    </div>
+
+    <div class="grid grid-4 stagger" style="margin-bottom:24px;">
+      <div class="stat">
+        <div class="stat-label">Clienti attivi</div>
+        <div class="stat-value tick" data-count="8">0</div>
+        <div class="stat-trend up">↑ +2 questo mese</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Sessioni 7gg</div>
+        <div class="stat-value tick" data-count="12">0</div>
+        <div class="stat-trend flat">3 oggi · 4 domani</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Aderenza media</div>
+        <div class="stat-value"><span class="tick" data-count="87">0</span><span class="stat-value-sub">%</span></div>
+        <div class="stat-trend up">↑ +4% mese</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Fatturato mese</div>
+        <div class="stat-value"><span class="stat-value-sub" style="font-size:18px;margin-left:0;">€</span><span class="tick" data-count="7840">0</span></div>
+        <div class="stat-trend up">↑ +12% vs Apr</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2-1" style="margin-bottom:24px;">
+      <div class="card glow">
+        <div class="card-header">
+          <div><h3 class="card-title">Prossime sessioni</h3><p class="card-sub">Oggi · 6 maggio</p></div>
+          <a href="#" data-view="sessioni" class="btn ghost">Calendario →</a>
+        </div>
+        <div id="next-sessions" class="stagger"></div>
+      </div>
+      <div class="card glow">
+        <div class="card-header">
+          <div><h3 class="card-title">Ricavi · 6 mesi</h3><p class="card-sub">Trend mensile</p></div>
+        </div>
+        <div class="chart-container" style="height:240px;"><canvas id="ch-revenue"></canvas></div>
+      </div>
+    </div>
+
+    <div class="card glow">
+      <div class="card-header">
+        <div><h3 class="card-title">I tuoi clienti</h3><p class="card-sub">Stato live · clicca per il profilo</p></div>
+        <a href="#" data-view="clienti" class="btn ghost">Vedi tutti →</a>
+      </div>
+      <div class="grid grid-3 stagger" id="client-cards"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLIENTI ============ -->
+<section data-pane="clienti" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Personal Athletes
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Clienti</strong>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="clients-search" placeholder="Cerca cliente…" />
+      </div>
+      <button class="btn primary">+ Nuovo cliente</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="page-header">
+      <p class="page-eyebrow">8 attivi · 1 in rehab</p>
+      <h2>Lista clienti</h2>
+      <p>Tutti i clienti di personal training. Clicca per vedere profilo completo, programma, progressi e pagamenti.</p>
+    </div>
+
+    <div class="tabs" data-filter-group="clients">
+      <div class="tab active" data-filter="all">Tutti</div>
+      <div class="tab" data-filter="ski">Sci</div>
+      <div class="tab" data-filter="other">Altri sport</div>
+      <div class="tab" data-filter="rehab">In rehab</div>
+      <div class="tab" data-filter="online">Online only</div>
+    </div>
+
+    <div class="card card-pad-0 glow" data-filter-target="clients">
+      <table class="table">
+        <thead><tr><th>Cliente</th><th>Sport / Obiettivo</th><th>Piano</th><th>Aderenza</th><th>Sessioni</th><th>Prossima</th><th>Stato</th></tr></thead>
+        <tbody id="clients-table" class="stagger"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROGRAMMI ============ -->
+<section data-pane="programmi" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Personal Athletes
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Programmi</strong>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions"><button class="btn">Template</button><button class="btn primary">+ Programma</button></div>
+  </div>
+  <div class="content">
+    <div class="page-header">
+      <p class="page-eyebrow">8 programmi attivi · 5 template</p>
+      <h2>Programmi <em>personalizzati</em></h2>
+      <p>Costruisci schede su misura partendo dai template, assegna ai clienti, monitora aderenza ed esecuzione.</p>
+    </div>
+
+    <div class="grid grid-3 stagger" style="margin-bottom:24px;">
+      <div class="card glow"><h4 style="margin:0 0 4px;font-size:15px;">📋 Sci amatore avanzato</h4><p class="muted" style="font-size:12px;margin:0 0 14px;line-height:1.5;">Template 12 settimane · Forza + esplosività + propriocezione</p><span class="pill info">3 clienti</span></div>
+      <div class="card glow"><h4 style="margin:0 0 4px;font-size:15px;">🏔️ Sci agonistico FIS</h4><p class="muted" style="font-size:12px;margin:0 0 14px;line-height:1.5;">Template 24 settimane · Periodizzato su gare</p><span class="pill info">2 clienti</span></div>
+      <div class="card glow"><h4 style="margin:0 0 4px;font-size:15px;">🏃 Endurance + forza</h4><p class="muted" style="font-size:12px;margin:0 0 14px;line-height:1.5;">Template 12 settimane · Trail / triathlon</p><span class="pill info">2 clienti</span></div>
+      <div class="card glow"><h4 style="margin:0 0 4px;font-size:15px;">🏥 Rehab post-LCA</h4><p class="muted" style="font-size:12px;margin:0 0 14px;line-height:1.5;">Protocollo 6+ mesi · 5 fasi · criteri RTS</p><span class="pill info">1 cliente</span></div>
+      <div class="card glow"><h4 style="margin:0 0 4px;font-size:15px;">⛷️ Pre-stagione sci</h4><p class="muted" style="font-size:12px;margin:0 0 14px;line-height:1.5;">Template 8 settimane · Set–Nov</p><span class="pill muted">Disponibile</span></div>
+      <div class="card" style="background:transparent;border:1.5px dashed var(--border-2);"><h4 style="margin:0 0 4px;font-size:15px;color:var(--text-3);">+ Crea template</h4><p class="muted" style="font-size:12px;margin:0;line-height:1.5;">Parti da zero o duplica</p></div>
+    </div>
+
+    <div class="card glow">
+      <div class="card-header"><h3 class="card-title">Esempio · Sci amatore avanzato — Microciclo W6</h3></div>
+      <div class="stagger">
+        <div class="workout-item">
+          <div class="workout-num">1</div>
+          <div class="workout-name">Riscaldamento dinamico<span>10' bike + drill mobilità sci-specifici</span></div>
+          <div class="workout-stat"><strong>15'</strong>tempo</div>
+          <div class="workout-stat"><strong>—</strong>serie</div>
+          <div class="workout-stat"><strong>—</strong>carico</div>
+          <div class="workout-stat"><strong>RPE 3</strong>obiettivo</div>
+        </div>
+        <div class="workout-item">
+          <div class="workout-num">2</div>
+          <div class="workout-name">Bulgarian Split Squat<span>Tempo eccentrico 3" — focus stabilità ginocchio</span></div>
+          <div class="workout-stat"><strong>4</strong>serie</div>
+          <div class="workout-stat"><strong>8/lato</strong>rep</div>
+          <div class="workout-stat"><strong>20kg</strong>carico</div>
+          <div class="workout-stat"><strong>RPE 7</strong>obiettivo</div>
+        </div>
+        <div class="workout-item">
+          <div class="workout-num">3</div>
+          <div class="workout-name">Squat jump<span>Massima altezza · pausa completa</span></div>
+          <div class="workout-stat"><strong>4</strong>serie</div>
+          <div class="workout-stat"><strong>5</strong>rep</div>
+          <div class="workout-stat"><strong>BW</strong>carico</div>
+          <div class="workout-stat"><strong>Max alt.</strong>obiettivo</div>
+        </div>
+        <div class="workout-item">
+          <div class="workout-num">4</div>
+          <div class="workout-name">Single leg balance + perturbazioni<span>Su BOSU · occhi chiusi 30"</span></div>
+          <div class="workout-stat"><strong>3</strong>serie</div>
+          <div class="workout-stat"><strong>30"</strong>x lato</div>
+          <div class="workout-stat"><strong>BW</strong>carico</div>
+          <div class="workout-stat"><strong>RPE 5</strong>obiettivo</div>
+        </div>
+        <div class="workout-item">
+          <div class="workout-num">5</div>
+          <div class="workout-name">Plank dinamico + side plank<span>Core anti-rotazione</span></div>
+          <div class="workout-stat"><strong>3</strong>circuiti</div>
+          <div class="workout-stat"><strong>40"</strong>x es.</div>
+          <div class="workout-stat"><strong>BW</strong>carico</div>
+          <div class="workout-stat"><strong>RPE 6</strong>obiettivo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SESSIONI ============ -->
+<section data-pane="sessioni" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Personal Athletes
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Sessioni</strong>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions"><button class="btn">Vista lista</button><button class="btn primary">+ Sessione</button></div>
+  </div>
+  <div class="content">
+    <div class="page-header">
+      <p class="page-eyebrow">Sync Google Calendar · Maggio 2026</p>
+      <h2>Calendario <em>sessioni</em></h2>
+      <p>Sessioni in presenza, online e in autonomia. I clienti prenotano slot dalla loro app.</p>
+    </div>
+
+    <div class="card glow" style="margin-bottom:18px;">
+      <div class="cal-legend">
+        <span><span class="lg-dot" style="background:var(--info);"></span>In presenza</span>
+        <span><span class="lg-dot" style="background:var(--good);"></span>Online</span>
+        <span><span class="lg-dot" style="background:var(--warn);"></span>Da prenotare</span>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-head">Lun</div><div class="cal-head">Mar</div><div class="cal-head">Mer</div>
+        <div class="cal-head">Gio</div><div class="cal-head">Ven</div><div class="cal-head">Sab</div><div class="cal-head">Dom</div>
+      </div>
+      <div class="cal-grid stagger" id="cal-personal"></div>
+    </div>
+
+    <div class="card glow">
+      <div class="card-header"><h3 class="card-title">Oggi · 6 maggio</h3></div>
+      <div id="today-sessions" class="stagger"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ESERCIZI ============ -->
+<section data-pane="esercizi" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Personal Athletes
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Libreria esercizi</strong>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions"><button class="btn primary">+ Esercizio</button></div>
+  </div>
+  <div class="content">
+    <div class="page-header">
+      <p class="page-eyebrow">340 esercizi · 142 con video</p>
+      <h2>Database <em>esercizi</em></h2>
+      <p>Categorie sport-specifiche, video dimostrativi, varianti, parametri di default. Condiviso con il modulo Squadra.</p>
+    </div>
+
+    <div class="tabs" data-filter-group="exercises">
+      <div class="tab active" data-filter="all">Tutti</div>
+      <div class="tab" data-filter="forza">Forza</div>
+      <div class="tab" data-filter="potenza">Potenza</div>
+      <div class="tab" data-filter="reattivita">Reattività</div>
+      <div class="tab" data-filter="stabilita">Stabilità</div>
+      <div class="tab" data-filter="sci">Sci-specifici</div>
+      <div class="tab" data-filter="rehab">Rehab</div>
+    </div>
+
+    <div class="grid grid-3 stagger" data-filter-target="exercises">
+      <div class="card glow" data-tags="all,forza,sci"><h4 style="margin:0 0 4px;font-size:15px;">🏋️ Box Squat</h4><p class="muted" style="font-size:12px;margin:0 0 12px;line-height:1.5;">Forza max — quadricipite, glutei. Pausa controllata sul box.</p><span class="pill muted">Forza</span> <span class="pill muted">Sci-spec</span></div>
+      <div class="card glow" data-tags="all,potenza,reattivita"><h4 style="margin:0 0 4px;font-size:15px;">⚡ Drop Jump</h4><p class="muted" style="font-size:12px;margin:0 0 12px;line-height:1.5;">Reattivo — ciclo stretch-shortening. Box 30-60cm.</p><span class="pill muted">Potenza</span> <span class="pill muted">Reattività</span></div>
+      <div class="card glow" data-tags="all,forza,stabilita"><h4 style="margin:0 0 4px;font-size:15px;">🦵 Bulgarian Split Squat</h4><p class="muted" style="font-size:12px;margin:0 0 12px;line-height:1.5;">Forza unilaterale — quadricipite, glutei, stabilità.</p><span class="pill muted">Forza</span> <span class="pill muted">Stabilità</span></div>
+      <div class="card glow" data-tags="all,sci"><h4 style="margin:0 0 4px;font-size:15px;">⛷️ Skiers wall sit</h4><p class="muted" style="font-size:12px;margin:0 0 12px;line-height:1.5;">Posizione 90° — endurance lattacido sci.</p><span class="pill muted">Sci-spec</span> <span class="pill muted">Endurance</span></div>
+      <div class="card glow" data-tags="all,forza,rehab"><h4 style="margin:0 0 4px;font-size:15px;">🛡️ Nordic Hamstring</h4><p class="muted" style="font-size:12px;margin:0 0 12px;line-height:1.5;">Eccentrico hamstring — protezione infortuni.</p><span class="pill muted">Forza</span> <span class="pill muted">Prevenzione</span></div>
+      <div class="card glow" data-tags="all,stabilita"><h4 style="margin:0 0 4px;font-size:15px;">🌀 Pallof Press</h4><p class="muted" style="font-size:12px;margin:0 0 12px;line-height:1.5;">Anti-rotazione core — stabilità lombo-pelvica.</p><span class="pill muted">Stabilità</span> <span class="pill muted">Core</span></div>
+      <div class="card glow" data-tags="all,potenza"><h4 style="margin:0 0 4px;font-size:15px;">💥 Power Clean</h4><p class="muted" style="font-size:12px;margin:0 0 12px;line-height:1.5;">Potenza esplosiva total-body. Tecnica progressiva.</p><span class="pill muted">Potenza</span></div>
+      <div class="card glow" data-tags="all,reattivita,sci"><h4 style="margin:0 0 4px;font-size:15px;">🔁 Lateral Bound</h4><p class="muted" style="font-size:12px;margin:0 0 12px;line-height:1.5;">Pliometria laterale — specifica per sci.</p><span class="pill muted">Reattività</span> <span class="pill muted">Sci-spec</span></div>
+      <div class="card glow" data-tags="all,rehab,stabilita"><h4 style="margin:0 0 4px;font-size:15px;">🎯 Y-Balance</h4><p class="muted" style="font-size:12px;margin:0 0 12px;line-height:1.5;">Test/training dinamico equilibrio + propriocezione.</p><span class="pill muted">Rehab</span> <span class="pill muted">Stabilità</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGAMENTI ============ -->
+<section data-pane="pagamenti" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Personal Athletes
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Pagamenti</strong>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions"><button class="btn">Esporta</button><button class="btn primary">+ Fattura</button></div>
+  </div>
+  <div class="content">
+    <div class="page-header">
+      <p class="page-eyebrow">Maggio 2026 · Stripe integrato</p>
+      <h2>Fatturazione &amp; <em>abbonamenti</em></h2>
+      <p>Abbonamenti, pacchetti sessioni, fatture e pagamenti. Reminder automatici e integrazione Stripe.</p>
+    </div>
+
+    <div class="grid grid-4 stagger" style="margin-bottom:24px;">
+      <div class="stat"><div class="stat-label">Incasso mese</div><div class="stat-value"><span class="stat-value-sub" style="font-size:18px;margin-left:0;">€</span><span class="tick" data-count="7840">0</span></div><div class="stat-trend up">↑ +12% Apr</div></div>
+      <div class="stat"><div class="stat-label">In sospeso</div><div class="stat-value"><span class="stat-value-sub" style="font-size:18px;margin-left:0;">€</span><span class="tick" data-count="640">0</span></div><div class="stat-trend flat">2 fatture</div></div>
+      <div class="stat"><div class="stat-label">Scadute</div><div class="stat-value text-bad"><span class="stat-value-sub" style="font-size:18px;margin-left:0;color:var(--bad);">€</span><span class="tick" data-count="280">0</span></div><div class="stat-trend down">1 fattura</div></div>
+      <div class="stat"><div class="stat-label">MRR ricorrente</div><div class="stat-value"><span class="stat-value-sub" style="font-size:18px;margin-left:0;">€</span><span class="tick" data-count="5400">0</span></div><div class="stat-trend up">↑ +8%</div></div>
+    </div>
+
+    <div class="card card-pad-0 glow">
+      <div style="padding:18px 22px;border-bottom:1px solid var(--border);"><h3 class="card-title">Movimenti recenti</h3></div>
+      <div class="stagger">
+        <div class="payment-row"><span class="payment-status paid"></span><div style="flex:1;"><strong style="font-size:13.5px;">Andrea Rossi</strong><div class="muted" style="font-size:11.5px;">Premium 12 mesi · rata mensile</div></div><span class="muted tabular" style="font-size:12px;">04/05</span><strong class="tabular">€450</strong><span class="pill good">Pagato</span></div>
+        <div class="payment-row"><span class="payment-status paid"></span><div style="flex:1;"><strong style="font-size:13.5px;">Sofia Bianchi</strong><div class="muted" style="font-size:11.5px;">Athlete dev · pacchetto 12 sessioni</div></div><span class="muted tabular" style="font-size:12px;">02/05</span><strong class="tabular">€720</strong><span class="pill good">Pagato</span></div>
+        <div class="payment-row"><span class="payment-status pending"></span><div style="flex:1;"><strong style="font-size:13.5px;">Marco Colombo</strong><div class="muted" style="font-size:11.5px;">Standard 6 mesi · rata mensile</div></div><span class="muted tabular" style="font-size:12px;">01/05</span><strong class="tabular">€320</strong><span class="pill warn">In attesa</span></div>
+        <div class="payment-row"><span class="payment-status paid"></span><div style="flex:1;"><strong style="font-size:13.5px;">Elena Ferrari</strong><div class="muted" style="font-size:11.5px;">Rehab dedicato · pacchetto 8 sessioni</div></div><span class="muted tabular" style="font-size:12px;">28/04</span><strong class="tabular">€640</strong><span class="pill good">Pagato</span></div>
+        <div class="payment-row"><span class="payment-status overdue"></span><div style="flex:1;"><strong style="font-size:13.5px;">Luca Moretti</strong><div class="muted" style="font-size:11.5px;">Standard · scadenza 25/04</div></div><span class="muted tabular" style="font-size:12px;">25/04</span><strong class="tabular">€280</strong><span class="pill bad">Scaduta</span></div>
+        <div class="payment-row"><span class="payment-status paid"></span><div style="flex:1;"><strong style="font-size:13.5px;">Giulia Conti</strong><div class="muted" style="font-size:11.5px;">Online · rata mensile</div></div><span class="muted tabular" style="font-size:12px;">22/04</span><strong class="tabular">€180</strong><span class="pill good">Pagato</span></div>
+        <div class="payment-row"><span class="payment-status paid"></span><div style="flex:1;"><strong style="font-size:13.5px;">Federico Greco</strong><div class="muted" style="font-size:11.5px;">Athlete dev · rata trimestrale</div></div><span class="muted tabular" style="font-size:12px;">20/04</span><strong class="tabular">€1.080</strong><span class="pill good">Pagato</span></div>
+        <div class="payment-row"><span class="payment-status pending"></span><div style="flex:1;"><strong style="font-size:13.5px;">Marta Esposito</strong><div class="muted" style="font-size:11.5px;">Standard online · rata mensile</div></div><span class="muted tabular" style="font-size:12px;">18/04</span><strong class="tabular">€140</strong><span class="pill warn">In attesa</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MESSAGGI ============ -->
+<section data-pane="messaggi" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Personal Athletes
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Messaggi</strong>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions"><button class="btn primary">+ Messaggio</button></div>
+  </div>
+  <div class="content">
+    <div class="page-header">
+      <p class="page-eyebrow">3 non letti</p>
+      <h2>Comunicazione clienti</h2>
+      <p>Chat diretta con i clienti, condivisione video, feedback su sessioni.</p>
+    </div>
+    <div class="card glow">
+      <div class="stagger">
+        <div class="alert-row"><span class="dot warn"></span><div class="label"><strong>Sofia Bianchi</strong> · "Marcello, posso anticipare la sessione di domani alle 17?"</div><span class="when">8 min</span></div>
+        <div class="alert-row"><span class="dot warn"></span><div class="label"><strong>Marco Colombo</strong> · "Ho avuto un fastidio al ginocchio dx durante lo squat..."</div><span class="when">2h</span></div>
+        <div class="alert-row"><span class="dot warn"></span><div class="label"><strong>Federico Greco</strong> · "Video del free-skate per analisi tecnica"</div><span class="when">ieri</span></div>
+        <div class="alert-row"><span class="dot good"></span><div class="label"><strong>Andrea Rossi</strong> · "Tutto ok, ottima sessione!"</div><span class="when">ieri</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- ============ CLIENT MODAL ============ -->
+<div class="modal" id="client-modal">
+  <div class="modal-inner">
+    <div class="modal-close" onclick="closeClient()">×</div>
+
+    <div class="athlete-hero">
+      <div class="athlete-hero-avatar" id="cm-avatar" style="background:linear-gradient(135deg,#1D4ED8,#1E3A8A);color:white;">—</div>
+      <div style="z-index:1;">
+        <h2 id="cm-name">—</h2>
+        <p class="meta" id="cm-meta">—</p>
+        <div class="tags"><span class="pill info" id="cm-plan">—</span></div>
+      </div>
+      <div style="text-align:right;z-index:1;">
+        <small class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;">Prossima</small>
+        <div style="font-size:13px;font-weight:600;margin-top:4px;" id="cm-next">—</div>
+      </div>
+    </div>
+
+    <div class="grid grid-3" style="margin-bottom:18px;">
+      <div class="stat"><div class="stat-label">Obiettivo</div><div class="stat-value" style="font-size:15px;line-height:1.3;" id="cm-goal">—</div></div>
+      <div class="stat"><div class="stat-label">Aderenza</div><div class="stat-value" id="cm-adherence">—</div></div>
+      <div class="stat"><div class="stat-label">Sessioni</div><div class="stat-value" id="cm-sessions">—</div></div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:18px;">
+      <div class="card">
+        <div class="card-header"><div><h3 class="card-title">Progressi · 12 mesi</h3><p class="card-sub">Indice composito (0–100)</p></div></div>
+        <div class="chart-container" style="height:200px;"><canvas id="cm-progress-chart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3 class="card-title">Test recenti</h3></div>
+        <div class="alert-row"><span class="dot good"></span><div class="label">CMJ 38.4cm <span class="text-good">+2.1cm</span></div><span class="when">15/04</span></div>
+        <div class="alert-row"><span class="dot good"></span><div class="label">Squat 1RM 110kg <span class="text-good">+10kg</span></div><span class="when">10/04</span></div>
+        <div class="alert-row"><span class="dot good"></span><div class="label">Plank 3'40" <span class="text-good">+45"</span></div><span class="when">05/04</span></div>
+        <div class="alert-row"><span class="dot good"></span><div class="label">BF 14.2% <span class="text-good">-1.8%</span></div><span class="when">01/04</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">Programma in corso</h3><span class="pill info">Settimana 6 / 12</span></div>
+      <div class="bar-list">
+        <div class="bar-row"><span class="bar-label">Lun · Forza</span><div class="bar-track"><div class="bar-fill ok" style="width:100%"></div></div><span class="bar-value text-good">✓</span></div>
+        <div class="bar-row"><span class="bar-label">Mer · Potenza</span><div class="bar-track"><div class="bar-fill ok" style="width:100%"></div></div><span class="bar-value text-good">✓</span></div>
+        <div class="bar-row"><span class="bar-label">Ven · Forza</span><div class="bar-track"><div class="bar-fill info" style="width:60%"></div></div><span class="bar-value">Oggi</span></div>
+        <div class="bar-row"><span class="bar-label">Sab · Endurance</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span class="bar-value muted">—</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+const P = window.DATA.personal;
+
+function tagsForClient(c) {
+  const tags = ['all'];
+  const isSki = /sci|snowboard/i.test(c.sport);
+  if (isSki) tags.push('ski'); else tags.push('other');
+  if (c.status === 'rehab') tags.push('rehab');
+  if (/online/i.test(c.plan)) tags.push('online');
+  return tags.join(',');
+}
+
+function clientCards() {
+  document.getElementById('client-cards').innerHTML = P.clients.slice(0, 6).map(c => `
+    <div class="client-card" data-client="${c.id}">
+      <div class="client-card-head">
+        <div class="client-card-avatar">${UTIL.initials(c.name)}</div>
+        <div class="client-card-info"><strong>${c.name}</strong><span>${c.sport}</span></div>
+      </div>
+      <p style="font-size:12.5px;color:var(--text-2);margin:0 0 14px;line-height:1.5;">${c.goal}</p>
+      <div class="client-progress">
+        <div class="client-progress-item"><small>Aderenza</small><strong class="${c.adherence>=85?'text-good':c.adherence>=75?'text-warn':'text-bad'}">${c.adherence}%</strong></div>
+        <div class="client-progress-item"><small>Sessioni</small><strong>${c.sessions}/${c.total}</strong></div>
+        <div class="client-progress-item"><small>Stato</small><strong>${c.status === 'rehab' ? '<span class="text-warn">Rehab</span>' : '<span class="text-good">Attivo</span>'}</strong></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function clientsTable() {
+  document.getElementById('clients-table').innerHTML = P.clients.map(c => `
+    <tr data-client="${c.id}" data-tags="${tagsForClient(c)}" data-search="${c.name.toLowerCase()} ${c.sport.toLowerCase()}">
+      <td>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="client-card-avatar" style="width:32px;height:32px;font-size:11px;">${UTIL.initials(c.name)}</div>
+          <div><strong>${c.name}</strong><div class="muted" style="font-size:11px;">${c.age} anni</div></div>
+        </div>
+      </td>
+      <td><strong style="font-weight:500;">${c.sport}</strong><div class="muted" style="font-size:11.5px;">${c.goal}</div></td>
+      <td><span class="pill muted">${c.plan}</span></td>
+      <td>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div class="readiness" style="width:60px;"><div class="readiness-bar ${c.adherence>=85?'high':c.adherence>=75?'med':'low'}" style="width:${c.adherence}%"></div></div>
+          <span class="tabular">${c.adherence}%</span>
+        </div>
+      </td>
+      <td class="tabular">${c.sessions}/${c.total}</td>
+      <td class="tabular muted" style="font-size:12px;">${c.nextSession}</td>
+      <td><span class="pill ${c.status === 'rehab' ? 'warn' : 'good'}">${c.status === 'rehab' ? 'Rehab' : 'Attivo'}</span></td>
+    </tr>
+  `).join('');
+}
+
+function nextSessions() {
+  const today = [
+    { time: '09:00', name: 'Andrea Rossi', what: 'Forza + esplosività', mode: 'In presenza' },
+    { time: '11:00', name: 'Elena Ferrari', what: 'Rehab fase 4', mode: 'In presenza' },
+    { time: '16:30', name: 'Sofia Bianchi', what: 'Pre-stagione FIS', mode: 'In presenza' },
+    { time: '19:00', name: 'Giulia Conti', what: 'Forza + mobilità', mode: 'Online' },
+  ];
+  const html = today.map(s => `<div class="session-row">
+    <div class="session-time"><strong>${s.time}</strong><span>oggi</span></div>
+    <div class="race-name"><strong>${s.name}</strong><span>${s.what}</span></div>
+    <span class="pill ${s.mode === 'Online' ? 'good' : 'info'}">${s.mode}</span>
+    <button class="btn ghost">→</button>
+  </div>`).join('');
+  document.getElementById('next-sessions').innerHTML = html;
+  document.getElementById('today-sessions').innerHTML = html;
+}
+
+function calPersonal() {
+  const days = 31, startDay = 4;
+  const cells = [];
+  for (let i = 0; i < startDay; i++) cells.push(`<div class="cal-day" style="opacity:0.25;"></div>`);
+  for (let d = 1; d <= days; d++) {
+    let events = [];
+    if ([1,4,6,8,11,13,15,18,20,22,25,27,29].includes(d)) events.push('gym');
+    if ([2,7,9,14,16,21,23,28,30].includes(d)) events.push('snow');
+    if ([5,12,19,26].includes(d)) events.push('travel');
+    cells.push(`<div class="cal-day ${d === 6 ? 'today' : ''}">
+      <span class="num">${d}</span>
+      <div class="events">${events.map(e => `<div class="event ${e}"></div>`).join('')}</div>
+    </div>`);
+  }
+  document.getElementById('cal-personal').innerHTML = cells.join('');
+}
+
+window.__renderCharts = function(view) {
+  if (view === 'dashboard') {
+    const el = document.getElementById('ch-revenue');
+    if (el && !el._chart) {
+      el._chart = lineChart(el, ['Dic','Gen','Feb','Mar','Apr','Mag'],
+        [{ label: 'Ricavi (€)', data: [5200, 5800, 6100, 6400, 7000, 7840], color: '#1D4ED8', fill: true }],
+        { legend: false });
+    }
+  }
+};
+
+clientCards();
+clientsTable();
+nextSessions();
+calPersonal();
+attachSearch(document.getElementById('clients-search'), 'clients');
+
+document.getElementById('client-modal').addEventListener('click', (e) => {
+  if (e.target.id === 'client-modal') closeClient();
+});
+
+window.__renderCharts('dashboard');
+</script>
+</body>
+</html>

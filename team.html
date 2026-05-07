@@ -1,0 +1,2439 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Swiss Ski Team — APEX Performance Suite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app">
+
+<aside class="sidebar">
+  <a href="index.html" class="sidebar-brand">
+    <div class="sidebar-brand-mark">A</div>
+    <div class="sidebar-brand-text">APEX<small><span class="swiss-flag"></span> Swiss Ski Team</small></div>
+  </a>
+
+  <div class="sidebar-swiss-strip">
+    <span class="swiss-flag lg"></span>
+    <div>
+      <strong>Swiss-Ski</strong>
+      <span>World Cup · 2025/26</span>
+    </div>
+  </div>
+
+  <div class="nav-section">Generale</div>
+  <a class="nav-link active" href="#" data-view="dashboard">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+    Dashboard
+  </a>
+  <a class="nav-link" href="#" data-view="atleti">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="17" cy="7" r="3"/><path d="M21 21v-1.5a3.5 3.5 0 0 0-3-3.45"/></svg>
+    Atleti<span class="badge">16</span>
+  </a>
+  <a class="nav-link" href="#" data-view="programma">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+    Programmazione
+  </a>
+  <a class="nav-link" href="#" data-view="test">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 17 5-5 4 4 8-8"/><path d="M21 8V3h-5"/></svg>
+    Test &amp; Performance
+  </a>
+  <a class="nav-link" href="#" data-view="gare">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V2h12v7M6 9h12M6 9l-2 4h16l-2-4M5 22h14M9 18v4M15 18v4M9 13v5M15 13v5M12 13v9"/></svg>
+    Gare &amp; Risultati
+  </a>
+  <a class="nav-link" href="#" data-view="calendario">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    Calendario
+  </a>
+  <a class="nav-link" href="#" data-view="infortuni">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12h6M12 9v6"/><circle cx="12" cy="12" r="9"/></svg>
+    Cartelle Cliniche<span class="badge">2</span>
+  </a>
+  <a class="nav-link" href="#" data-view="video">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+    Neve &amp; Video
+  </a>
+
+  <div class="nav-section">Squadra</div>
+  <a class="nav-link" href="#" data-view="staff">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m22 11-3 3-3-3"/><path d="M19 14V4"/></svg>
+    Staff
+  </a>
+  <a class="nav-link" href="#" data-view="report">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></svg>
+    Report Federazione
+  </a>
+
+  <div class="sidebar-bottom">
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar">MT</div>
+      <div class="sidebar-user-info">
+        <strong>Marcello Tavola</strong>
+        <span>Head Coach</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+
+<!-- ============ DASHBOARD ============ -->
+<section data-pane="dashboard">
+  <div class="topbar">
+    <div class="crumb">Swiss Ski Team
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong id="crumb-current">Dashboard</strong>
+    </div>
+    <span class="swiss-banner"><span class="swiss-flag"></span>FSI · Coppa del Mondo</span>
+    <span class="topbar-meta"><span class="live-pulse"><span class="live-pulse-dot"></span>LIVE</span> · 14 atleti online · sync 8 min fa</span>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="dashboard-search" placeholder="Cerca atleta…" />
+        <span class="kbd">⌘K</span>
+      </div>
+      <button class="btn primary magnetic" data-action="new-session"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Nuova sessione</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- HERO greeting + readiness gauge -->
+    <div class="dash-hero with-photo" style="display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;">
+      <div>
+        <p class="page-eyebrow">Stagione 2025/26 · Settimana 19</p>
+        <h1>Buongiorno <em>Marcello</em>,<br/>la squadra è in forma.</h1>
+        <p style="font-size:15px;color:var(--text-2);max-width:560px;margin:8px 0 24px;line-height:1.55;">14 atleti disponibili, 2 in cartella clinica. Prossima gara fra 3 giorni a <strong style="color:var(--text);">Zermatt-Cervinia</strong>. Marco Odermatt &amp; Lara Gut-Behrami in posizione TOP 5 WC.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn primary" data-action="briefing">📋 Briefing pre-gara</button>
+          <button class="btn" data-view="programma">→ Programma settimana</button>
+          <button class="btn ghost" data-action="export-pdf-report">📄 Report PDF</button>
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <div class="gauge-hero" id="gauge-readiness">
+          <svg class="gauge-svg" viewBox="0 0 200 200">
+            <defs>
+              <linearGradient id="gauge-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#C8102E"/>
+                <stop offset="50%" stop-color="#D4A574"/>
+                <stop offset="100%" stop-color="#0F766E"/>
+              </linearGradient>
+            </defs>
+            <circle class="gauge-track" cx="100" cy="100" r="90"/>
+            <circle class="gauge-fill" cx="100" cy="100" r="90" style="--circ: 565;"/>
+          </svg>
+          <div class="gauge-center">
+            <div class="gauge-value tick live-tick" data-count="81" data-suffix="%" data-live-key="readiness" data-suffix="%">0%</div>
+            <div class="gauge-label">Squad Readiness</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;font-size:11.5px;color:var(--text-3);"><span class="text-good" style="font-weight:600;">↑ +3%</span> vs settimana scorsa</div>
+      </div>
+    </div>
+
+    <!-- COUNTDOWN BANNER -->
+    <div class="countdown-banner">
+      <div class="countdown-mountain">
+        <svg viewBox="0 0 600 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,200 L0,150 L60,80 L120,120 L180,40 L240,90 L300,30 L360,70 L420,20 L480,60 L540,30 L600,80 L600,200 Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="countdown-grid" data-countdown-target="2026-05-09T11:30:00" style="grid-template-columns:1fr auto auto;gap:32px;">
+        <div class="countdown-info">
+          <span class="eyebrow">Prossima gara · Coppa del Mondo</span>
+          <h3>Zermatt-Cervinia <em>DH</em></h3>
+          <p>09 maggio 2026 · 11:30 · convocati Speed Group · pista del Cervino</p>
+          <div style="margin-top:14px;display:flex;gap:8px;">
+            <button class="btn" style="background:rgba(255,255,255,0.10);border-color:rgba(255,255,255,0.15);color:white;" data-action="convocation">Convocazione</button>
+            <button class="btn" style="background:rgba(255,255,255,0.10);border-color:rgba(255,255,255,0.15);color:white;" data-action="briefing">Briefing</button>
+          </div>
+        </div>
+
+        <!-- WEATHER WIDGET -->
+        <div class="weather" id="weather-widget" style="min-width:240px;">
+          <div class="weather-snow" id="weather-snow"></div>
+          <div style="position:relative;z-index:2;display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <span style="font-size:28px;line-height:1;">❄</span>
+            <div>
+              <strong style="display:block;font-size:13px;color:white;font-weight:600;">Meteo · Zermatt</strong>
+              <span style="font-size:10.5px;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;">Previsioni 09 mag · 11:30</span>
+            </div>
+          </div>
+          <div class="weather-grid">
+            <div class="weather-cell"><strong>-2°</strong><span>Temp</span></div>
+            <div class="weather-cell"><strong>14<small style="font-size:10px;">km/h</small></strong><span>Vento</span></div>
+            <div class="weather-cell"><strong>2<small style="font-size:10px;">cm</small></strong><span>Neve</span></div>
+            <div class="weather-cell"><strong>92<small style="font-size:10px;">%</small></strong><span>Visibilità</span></div>
+          </div>
+        </div>
+
+        <div class="countdown-ticker">
+          <div class="ticker-cell"><div class="ticker-num" data-cd="d">00</div><div class="ticker-label">Giorni</div></div>
+          <div class="ticker-cell"><div class="ticker-num" data-cd="h">00</div><div class="ticker-label">Ore</div></div>
+          <div class="ticker-cell"><div class="ticker-num" data-cd="m">00</div><div class="ticker-label">Min</div></div>
+          <div class="ticker-cell"><div class="ticker-num" data-cd="s">00</div><div class="ticker-label">Sec</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI strip -->
+    <div class="grid grid-4 stagger" style="margin-bottom:24px;">
+      <div class="stat-rich">
+        <div class="stat-glow"></div>
+        <div class="stat-label">Punti WC squadra</div>
+        <div class="stat-value tick" data-count="11242">0</div>
+        <div class="stat-trend up">↑ 2° posto Nations Cup</div>
+      </div>
+      <div class="stat-rich">
+        <div class="stat-glow" style="background:radial-gradient(circle,#FEF3C7,transparent 70%);"></div>
+        <div class="stat-label">Vittorie WC stagione</div>
+        <div class="stat-value tick" data-count="21">0</div>
+        <div class="stat-trend up">↑ +7 vs CH 2024/25</div>
+      </div>
+      <div class="stat-rich">
+        <div class="stat-glow" style="background:radial-gradient(circle,#DDE7FB,transparent 70%);"></div>
+        <div class="stat-label">Carico (ACWR)</div>
+        <div class="stat-value tick" data-count="1.05" data-decimals="2">0</div>
+        <div class="stat-trend flat">Zona 0.8–1.3</div>
+      </div>
+      <div class="stat-rich">
+        <div class="stat-glow" style="background:radial-gradient(circle,#D7F0EC,transparent 70%);"></div>
+        <div class="stat-label">Wellness score</div>
+        <div class="stat-value"><span class="tick" data-count="7.6" data-decimals="1">0</span><span class="stat-value-sub">/10</span></div>
+        <div class="stat-trend up">↑ +0.3 ultimi 7gg</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2-1" style="margin-bottom:24px;">
+      <div class="card glow">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Roster · stato live</h3>
+            <p class="card-sub">Posizione WC, DNA performance, readiness — clicca per il drawer dettaglio</p>
+          </div>
+          <a href="#" data-view="atleti" class="btn ghost">Vedi tutti →</a>
+        </div>
+        <div id="roster-list" class="stagger" style="margin:-8px -22px -22px -22px;"></div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="card">
+          <div class="card-header"><h3 class="card-title">Azioni rapide</h3></div>
+          <div class="quick-actions stagger">
+            <button class="qa-btn" data-action="new-session"><div class="qa-btn-icon">📝</div><strong>Allenamento</strong><span>Da template</span></button>
+            <button class="qa-btn" data-action="new-test"><div class="qa-btn-icon">📊</div><strong>Test</strong><span>CMJ / 1RM</span></button>
+            <button class="qa-btn" data-action="upload-document"><div class="qa-btn-icon">🎥</div><strong>Video</strong><span>Carica analisi</span></button>
+            <button class="qa-btn" data-action="export-pdf-report"><div class="qa-btn-icon">📋</div><strong>Report</strong><span>Federazione</span></button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Alert &amp; promemoria</h3>
+            <span class="pill warn">3</span>
+          </div>
+          <div class="stagger">
+            <div class="alert-row" data-athlete="csu"><span class="dot bad"></span><div class="label"><strong>Suter</strong> — wellness sotto soglia 3gg</div><span class="when">2h</span></div>
+            <div class="alert-row" data-athlete="gca"><span class="dot warn"></span><div class="label"><strong>Caviezel</strong> — Y-Balance test in scadenza</div><span class="when">5h</span></div>
+            <div class="alert-row" data-athlete="mge"><span class="dot warn"></span><div class="label"><strong>Gisin</strong> — ACWR &gt; 1.4, valutare scarico</div><span class="when">ieri</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:24px;">
+      <div class="card glow">
+        <div class="card-header">
+          <div><h3 class="card-title">Carico squadra</h3><p class="card-sub">sRPE settimanale · acuto vs cronico</p></div>
+          <span class="pill good">In zona</span>
+        </div>
+        <div class="chart-container" style="height:240px;"><canvas id="ch-workload"></canvas></div>
+      </div>
+      <div class="card glow">
+        <div class="card-header">
+          <div><h3 class="card-title">CMJ medio · CH vs WC</h3><p class="card-sub">Squadra sopra il riferimento Coppa del Mondo</p></div>
+          <span class="pill good">+1.3cm vs WC</span>
+        </div>
+        <div class="chart-container" style="height:240px;"><canvas id="ch-cmj"></canvas></div>
+      </div>
+    </div>
+
+    <!-- LIVE HRV / ECG WAVEFORM -->
+    <div class="ecg-card" style="margin-bottom:24px;">
+      <div class="ecg-head">
+        <div class="ecg-title">
+          <div class="copilot-avatar" style="background:linear-gradient(135deg,#0F766E,#14B8A6);width:34px;height:34px;border-radius:10px;font-size:14px;">♥</div>
+          <div>
+            <strong>Team Heartbeat · Live HRV</strong>
+            <span>14 atleti connessi · sync in tempo reale</span>
+          </div>
+        </div>
+        <div class="ecg-bpm"><span data-live-key="hrv">72</span><small>ms rMSSD</small></div>
+      </div>
+      <div class="ecg-stage">
+        <svg class="ecg-svg" id="ecg-svg" preserveAspectRatio="none"></svg>
+      </div>
+      <div class="ecg-stats">
+        <div class="ecg-stat"><strong>72<small style="font-size:10px;color:rgba(255,255,255,0.5);">ms</small></strong><span>Squad avg</span></div>
+        <div class="ecg-stat"><strong>80<small style="font-size:10px;color:rgba(255,255,255,0.5);">ms</small></strong><span>Max · Odermatt</span></div>
+        <div class="ecg-stat"><strong>58<small style="font-size:10px;color:rgba(255,255,255,0.5);">ms</small></strong><span>Min · Suter</span></div>
+        <div class="ecg-stat"><strong>+4.2<small style="font-size:10px;color:rgba(255,255,255,0.5);">%</small></strong><span>Trend 7gg</span></div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card glow">
+        <div class="card-header">
+          <div><h3 class="card-title">Prossime gare</h3><p class="card-sub">Calendario CdM</p></div>
+          <a href="#" data-view="gare" class="btn ghost">Tutte →</a>
+        </div>
+        <div id="race-list" class="stagger"></div>
+      </div>
+      <div class="card glow">
+        <div class="card-header">
+          <div><h3 class="card-title">Ultimi risultati</h3><p class="card-sub">Squadra · ultime gare</p></div>
+          <a href="#" data-view="gare" class="btn ghost">Tutti →</a>
+        </div>
+        <div id="results-recent" class="stagger"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ATLETI ============ -->
+<section data-pane="atleti" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Swiss Ski Team
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Atleti</strong>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="athletes-search" placeholder="Cerca per nome…" />
+      </div>
+      <button class="btn primary" data-action="new-athlete">+ Nuovo atleta</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="page-header">
+      <p class="page-eyebrow">Roster · 16 atleti · 14 disponibili</p>
+      <h2>Squadra <em>nazionale</em></h2>
+      <p>Ogni atleta ha un DNA performance · WC ranking · readiness in tempo reale. Clicca per il drawer profilo completo.</p>
+    </div>
+
+    <div class="tabs" data-filter-group="athletes">
+      <div class="tab active" data-filter="all">Tutti</div>
+      <div class="tab" data-filter="speed">Speed</div>
+      <div class="tab" data-filter="tech">Tech</div>
+      <div class="tab" data-filter="women">Femminile</div>
+      <div class="tab" data-filter="men">Maschile</div>
+      <div class="tab" data-filter="rehab">In rehab</div>
+    </div>
+
+    <div class="card card-pad-0 glow" data-filter-target="athletes">
+      <div id="athletes-full" class="stagger"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROGRAMMAZIONE ============ -->
+<section data-pane="programma" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Swiss Ski Team
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Programmazione</strong>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions">
+      <button class="btn" data-action="week-prev">←</button>
+      <button class="btn">Settimana 19 · 04 → 10 mag</button>
+      <button class="btn" data-action="week-next">→</button>
+      <button class="btn" data-action="open-templates">Template</button>
+      <button class="btn primary" data-action="new-session">+ Sessione</button>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="page-header">
+      <p class="page-eyebrow">Mesociclo 4 di 12 · fase agonistica</p>
+      <h2>Settimana <em>corrente</em></h2>
+      <p>Clicca un giorno per vedere e modificare le sessioni. Carico e ACWR aggiornati in tempo reale.</p>
+    </div>
+
+    <div class="grid grid-4 stagger" style="margin-bottom:24px;">
+      <div class="stat-rich">
+        <div class="stat-label">Carico settimana</div>
+        <div class="stat-value"><span class="tick" data-count="3000">0</span><span class="stat-value-sub">au</span></div>
+        <div class="stat-trend up">↑ +8% vs media 4 sett.</div>
+      </div>
+      <div class="stat-rich">
+        <div class="stat-label">ACWR squadra</div>
+        <div class="stat-value tick" data-count="1.08" data-decimals="2">0</div>
+        <div class="stat-trend flat">Ottimale</div>
+      </div>
+      <div class="stat-rich">
+        <div class="stat-label">Sessioni</div>
+        <div class="stat-value tick" data-count="11">0</div>
+        <div class="stat-trend flat">Gym · Neve · Race</div>
+      </div>
+      <div class="stat-rich">
+        <div class="stat-label">Atleti coinvolti</div>
+        <div class="stat-value tick" data-count="14">0</div>
+        <div class="stat-trend flat">Su 16 totali</div>
+      </div>
+    </div>
+
+    <div class="week-view stagger" id="week-grid"></div>
+    <div id="session-detail-area" style="margin-top:18px;"></div>
+
+    <div class="card glow" style="margin-top:24px;">
+      <div class="card-header">
+        <div><h3 class="card-title">Periodizzazione stagionale</h3><p class="card-sub">12 mesi · macrocicli e fasi</p></div>
+      </div>
+      <div class="phase-grid stagger" id="phase-grid"></div>
+      <div class="phase-grid">
+        <div class="phase-month">Mag</div><div class="phase-month">Giu</div><div class="phase-month">Lug</div>
+        <div class="phase-month">Ago</div><div class="phase-month">Set</div><div class="phase-month">Ott</div>
+        <div class="phase-month">Nov</div><div class="phase-month">Dic</div><div class="phase-month">Gen</div>
+        <div class="phase-month">Feb</div><div class="phase-month">Mar</div><div class="phase-month">Apr</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEST & PERFORMANCE ============ -->
+<section data-pane="test" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Swiss Ski Team
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Test &amp; Performance</strong>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions">
+      <button class="btn" data-action="export-csv-tests">Esporta CSV</button>
+      <button class="btn primary" data-action="new-test">+ Nuovo test</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="page-header">
+      <p class="page-eyebrow">Aggiornato oggi · 11:42</p>
+      <h2>Test fisici &amp; <em>monitoraggio</em></h2>
+      <p>Forza, potenza, reattività, endurance. Confronto squadra vs WC top10. Trend storici.</p>
+    </div>
+
+    <div class="grid grid-4 stagger" style="margin-bottom:24px;">
+      <div class="stat-rich"><div class="stat-glow"></div><div class="stat-label">CMJ medio donne</div><div class="stat-value"><span class="tick" data-count="40.7" data-decimals="1">0</span><span class="stat-value-sub">cm</span></div><div class="stat-trend up">↑ vs WC avg 39.5cm</div></div>
+      <div class="stat-rich"><div class="stat-glow"></div><div class="stat-label">CMJ medio uomini</div><div class="stat-value"><span class="tick" data-count="53.1" data-decimals="1">0</span><span class="stat-value-sub">cm</span></div><div class="stat-trend up">↑ vs WC avg 51.8cm</div></div>
+      <div class="stat-rich"><div class="stat-glow"></div><div class="stat-label">Squat 1RM medio M</div><div class="stat-value"><span class="tick" data-count="187">0</span><span class="stat-value-sub">kg</span></div><div class="stat-trend up">↑ +5% stagione</div></div>
+      <div class="stat-rich"><div class="stat-glow"></div><div class="stat-label">RSI medio</div><div class="stat-value tick" data-count="2.91" data-decimals="2">0</div><div class="stat-trend up">↑ &gt; target 2.5</div></div>
+    </div>
+
+    <div class="grid grid-2-1" style="margin-bottom:24px;">
+      <div class="card glow">
+        <div class="card-header"><div><h3 class="card-title">Wellness questionnaire</h3><p class="card-sub">Punteggi medi giornalieri</p></div></div>
+        <div class="chart-container" style="height:260px;"><canvas id="ch-wellness"></canvas></div>
+      </div>
+      <div class="card glow">
+        <div class="card-header"><h3 class="card-title">Test in programma</h3></div>
+        <div id="test-upcoming" class="stagger"></div>
+      </div>
+    </div>
+
+    <div class="card card-pad-0 glow" style="margin-bottom:24px;">
+      <div style="padding:20px 22px;border-bottom:1px solid var(--border);">
+        <h3 class="card-title">Confronto vs WC Top10</h3>
+        <p class="card-sub">CMJ batch del 02/05 · trend ultime 8 sessioni · verde = sopra WC top10</p>
+      </div>
+      <table class="table">
+        <thead><tr><th>Atleta</th><th>Specialità</th><th>CMJ + trend</th><th>SJ</th><th>RSI</th><th>Squat 1RM</th><th>vs WC Top10</th><th></th></tr></thead>
+        <tbody id="test-table"></tbody>
+      </table>
+    </div>
+
+    <!-- HEATMAP ANNUALE -->
+    <div class="card glow">
+      <div class="card-header">
+        <div><h3 class="card-title">Carico annuale · heatmap</h3><p class="card-sub">365 giorni · intensità training (rosso) · giorni gara (oro) · domeniche off</p></div>
+        <span class="pill muted">Stagione 2025/26</span>
+      </div>
+      <div class="heatmap" id="heatmap-annual"></div>
+      <div class="heatmap-legend">
+        <span>Carico</span>
+        <span class="heatmap-legend-cell" style="background:var(--surface-3);"></span>
+        <span class="heatmap-legend-cell l1"></span>
+        <span class="heatmap-legend-cell l2"></span>
+        <span class="heatmap-legend-cell l3"></span>
+        <span class="heatmap-legend-cell l4"></span>
+        <span style="margin-left:14px;display:inline-flex;align-items:center;gap:6px;"><span class="heatmap-legend-cell race"></span>Giorno gara</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GARE & RISULTATI ============ -->
+<section data-pane="gare" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Swiss Ski Team
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Gare &amp; Risultati</strong>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions">
+      <button class="btn" data-action="export-csv-results">Esporta</button>
+      <button class="btn primary" data-action="new-event">+ Gara</button>
+    </div>
+  </div>
+  <div class="content">
+
+    <!-- PAGE HEADER (compact) -->
+    <div class="page-header" style="margin-bottom:20px;">
+      <p class="page-eyebrow">Stagione 2025/26 · Coppa del Mondo</p>
+      <h2>Gare &amp; <em>risultati</em></h2>
+      <p>Calendario geolocalizzato, risultati storici, classifica WC e podio stagione.</p>
+    </div>
+
+    <!-- KPI strip (light, integrated) -->
+    <div class="grid grid-4 stagger" style="margin-bottom:20px;">
+      <div class="stat-rich"><div class="stat-glow" style="background:radial-gradient(circle,#FEF3C7,transparent 70%);"></div><div class="stat-label">Vittorie</div><div class="stat-value tick" data-count="21">0</div><div class="stat-trend up">+7 vs scorsa stagione</div></div>
+      <div class="stat-rich"><div class="stat-glow"></div><div class="stat-label">Podi totali</div><div class="stat-value tick" data-count="58">0</div><div class="stat-trend up">+12 vs scorsa</div></div>
+      <div class="stat-rich"><div class="stat-glow" style="background:radial-gradient(circle,#DDE7FB,transparent 70%);"></div><div class="stat-label">Top 10</div><div class="stat-value tick" data-count="142">0</div><div class="stat-trend up">+18 vs scorsa</div></div>
+      <div class="stat-rich"><div class="stat-glow"></div><div class="stat-label">Punti WC squadra</div><div class="stat-value tick" data-count="11242">0</div><div class="stat-trend up">2° Nations Cup</div></div>
+    </div>
+
+    <!-- WORLD MAP — authentic geographic positions -->
+    <div class="eu-map" style="margin-bottom:20px;padding:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;flex-wrap:wrap;gap:12px;">
+        <div style="flex:1;min-width:280px;">
+          <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-3);margin:0 0 6px;">World Tour · Calendario geolocalizzato</p>
+          <h3 style="font-size:20px;font-weight:600;letter-spacing:-0.02em;line-height:1.2;margin:0;">10 location · proiezione equirettangolare</h3>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn" data-action="export-csv-results">Export CSV</button>
+          <button class="btn primary" data-action="convocation">Convocazione</button>
+        </div>
+      </div>
+      <div id="eu-map-container"></div>
+      <div class="eu-map-legend" style="margin-top:14px;">
+        <span><span class="lg-pin" style="background:var(--gold);box-shadow:0 0 0 1px white,0 0 0 2px var(--gold);"></span>Prossima · countdown live</span>
+        <span><span class="lg-pin" style="background:white;box-shadow:0 0 0 1px var(--accent),0 0 0 2px white;"></span>In programma</span>
+        <span><span class="lg-pin" style="background:#94A3B8;box-shadow:0 0 0 1px white,0 0 0 2px #CBD5E1;"></span>Disputata</span>
+        <span style="margin-left:auto;display:inline-flex;align-items:center;gap:8px;"><svg width="36" height="6" viewBox="0 0 36 6"><line x1="2" y1="3" x2="34" y2="3" stroke="var(--accent)" stroke-width="2.2" stroke-dasharray="5 5"/></svg>Route prossime gare</span>
+      </div>
+    </div>
+
+    <!-- PODIUM 3D -->
+    <div class="card glow" style="margin-bottom:20px;">
+      <div class="card-header">
+        <div><h3 class="card-title">🏆 Podio stagione · Atleti svizzeri di punta</h3><p class="card-sub">Classifica generale Coppa del Mondo</p></div>
+      </div>
+      <div class="podium-3d" id="podium-3d"></div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs" data-filter-group="gare">
+      <div class="tab active" data-filter="all">Tutto</div>
+      <div class="tab" data-filter="upcoming">Prossime gare</div>
+      <div class="tab" data-filter="results">Risultati passati</div>
+      <div class="tab" data-filter="standings">Classifica WC</div>
+    </div>
+
+    <div data-filter-target="gare">
+      <div data-tags="all,upcoming" style="margin-bottom:24px;">
+        <h3 class="section-title">Prossime gare · countdown live</h3>
+        <div class="grid grid-3 stagger" id="races-upcoming"></div>
+      </div>
+
+      <div data-tags="all,results" style="margin-bottom:24px;">
+        <h3 class="section-title">Ultimi risultati</h3>
+        <div class="card card-pad-0 glow">
+          <div id="results-list"></div>
+        </div>
+      </div>
+
+      <div data-tags="all,standings">
+        <h3 class="section-title">Posizione Coppa del Mondo · top atleti</h3>
+        <div class="grid grid-3 stagger" id="wc-standings"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CALENDARIO ============ -->
+<section data-pane="calendario" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Swiss Ski Team
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Calendario</strong>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions">
+      <button class="btn" data-action="cal-prev">←</button>
+      <button class="btn">Maggio 2026</button>
+      <button class="btn" data-action="cal-next">→</button>
+      <button class="btn primary" data-action="new-event">+ Evento</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="page-header">
+      <p class="page-eyebrow">Vista mensile · sync Google &amp; Outlook</p>
+      <h2>Pianificazione</h2>
+      <p>Gare FIS, raduni, sessioni in palestra, sessioni neve, recovery e trasferte.</p>
+    </div>
+    <div class="card glow">
+      <div class="cal-legend">
+        <span><span class="lg-dot" style="background:var(--accent);"></span>Gara FIS</span>
+        <span><span class="lg-dot" style="background:var(--info);"></span>Palestra</span>
+        <span><span class="lg-dot" style="background:var(--good);"></span>Neve</span>
+        <span><span class="lg-dot" style="background:var(--warn);"></span>Trasferta</span>
+      </div>
+      <div class="cal-grid">
+        <div class="cal-head">Lun</div><div class="cal-head">Mar</div><div class="cal-head">Mer</div>
+        <div class="cal-head">Gio</div><div class="cal-head">Ven</div><div class="cal-head">Sab</div><div class="cal-head">Dom</div>
+      </div>
+      <div class="cal-grid stagger" id="cal-days"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INFORTUNI ============ -->
+<section data-pane="infortuni" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Swiss Ski Team
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Cartelle Cliniche</strong>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions">
+      <button class="btn" data-action="storico-rehab">Storico</button>
+      <button class="btn primary" data-action="new-injury">+ Nuovo episodio</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="page-header">
+      <p class="page-eyebrow">2 atleti in protocollo · 1 RTS imminente</p>
+      <h2>Cartelle <em>cliniche</em></h2>
+      <p>Stato dettagliato di ogni atleta infortunato: diagnosi, imaging, fasi rehab, criteri RTS, log giornaliero, comunicazione staff medico.</p>
+    </div>
+    <div class="rehab-tabs" id="rehab-tabs"></div>
+    <div id="rehab-detail"></div>
+    <div class="card card-pad-0 glow" style="margin-top:28px;">
+      <div style="padding:18px 22px;border-bottom:1px solid var(--border);">
+        <h3 class="card-title">Storico infortuni stagionale</h3>
+      </div>
+      <table class="table">
+        <thead><tr><th>Data</th><th>Atleta</th><th>Distretto</th><th>Diagnosi</th><th>Out (gg)</th><th>Stato</th></tr></thead>
+        <tbody id="injury-history"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEVE & VIDEO ============ -->
+<section data-pane="video" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Swiss Ski Team
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Neve &amp; Video</strong>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions"><button class="btn primary" data-action="new-session">+ Sessione</button></div>
+  </div>
+  <div class="content">
+    <div class="page-header">
+      <p class="page-eyebrow">42 sessioni stagione</p>
+      <h2>Sessioni in <em>pista</em></h2>
+      <p>Log delle sessioni con condizioni, tracciato, video e annotazioni.</p>
+    </div>
+    <div class="grid grid-2-1">
+      <div class="card card-pad-0 glow">
+        <div style="padding:20px 22px;border-bottom:1px solid var(--border);"><h3 class="card-title">Ultime sessioni</h3></div>
+        <table class="table">
+          <thead><tr><th>Data</th><th>Località</th><th>Disc.</th><th>Atleti</th><th>Manche</th><th>Condizioni</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>04/05</td><td>Saas-Fee</td><td><span class="disc-tag gs">GS</span></td><td>Tech 6</td><td class="tabular">8</td><td>Hard pack · -3°C</td><td><button class="btn ghost" data-toast="Video Saas-Fee 04/05">📹</button></td></tr>
+            <tr><td>03/05</td><td>Saas-Fee</td><td><span class="disc-tag gs">GS</span></td><td>Tech 6</td><td class="tabular">10</td><td>Hard pack · -5°C</td><td><button class="btn ghost" data-toast="Video Saas-Fee 03/05">📹</button></td></tr>
+            <tr><td>02/05</td><td>Stelvio</td><td><span class="disc-tag sg">SG</span></td><td>Speed 5</td><td class="tabular">6</td><td>Salt · -1°C</td><td><button class="btn ghost" data-toast="Video Stelvio 02/05">📹</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card glow">
+        <div class="card-header"><h3 class="card-title">Annotazioni recenti</h3></div>
+        <div class="stagger">
+          <div class="alert-row"><span class="dot good"></span><div class="label"><strong>Odermatt</strong> · ottima posizione esterno</div></div>
+          <div class="alert-row"><span class="dot warn"></span><div class="label"><strong>Rast</strong> · porta 3 in apertura tardiva</div></div>
+          <div class="alert-row"><span class="dot good"></span><div class="label"><strong>Durrer</strong> · linea km 1.2</div></div>
+          <div class="alert-row"><span class="dot warn"></span><div class="label"><strong>Holdener</strong> · attivazione pre-manche</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STAFF SWISS-SKI ============ -->
+<section data-pane="staff" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Swiss Ski Team
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Staff</strong>
+    </div>
+    <span class="swiss-banner"><span class="swiss-flag"></span>FSI · Roster ufficiale</span>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions">
+      <a class="btn" href="https://www.swiss-ski.ch/ski-alpin/staff/" target="_blank" rel="noopener" data-handled="1">↗ swiss-ski.ch</a>
+      <button class="btn primary" data-action="new-staff">+ Nuovo membro</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="page-header">
+      <p class="page-eyebrow">Roster ufficiale Swiss-Ski · 20 membri</p>
+      <h2>Staff <em>tecnico</em> &amp; medico</h2>
+      <p>Direzione tecnica, gruppo Mastery WC Speed Frauen (il tuo team), gruppo tecnico femminile, gruppo speed maschile. Foto e ruoli aggiornati dal sito ufficiale Swiss-Ski.</p>
+    </div>
+
+    <div class="staff-search">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="staff-search-input" placeholder="Cerca per nome o ruolo…" />
+      </div>
+      <div class="staff-filter-tabs">
+        <div class="staff-filter-tab active" data-staff-filter="all">Tutti</div>
+        <div class="staff-filter-tab" data-staff-filter="speed-women">★ Mio gruppo</div>
+        <div class="staff-filter-tab" data-staff-filter="direction">Direzione</div>
+        <div class="staff-filter-tab" data-staff-filter="trainers">Allenatori</div>
+        <div class="staff-filter-tab" data-staff-filter="medical">Medical</div>
+      </div>
+    </div>
+
+    <div id="staff-container"></div>
+  </div>
+</section>
+
+<!-- ============ REPORT FEDERAZIONE ============ -->
+<section data-pane="report" style="display:none;">
+  <div class="topbar">
+    <div class="crumb">Swiss Ski Team
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      <strong>Report Federazione</strong>
+    </div>
+    <span class="swiss-banner"><span class="swiss-flag"></span>FSI · Comunicazione automatica</span>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-actions">
+      <button class="btn" data-action="manage-recipients">Destinatari</button>
+      <button class="btn primary" data-action="custom-report">+ Report custom</button>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="page-header">
+      <p class="page-eyebrow">Comunicazione automatica · Swiss-Ski</p>
+      <h2>Report <em>federazione</em></h2>
+      <p>Aggiornamenti PDF brandizzati Swiss-Ski generati e inviati automaticamente al direttore tecnico, allo staff medico, alla comunicazione e agli sponsor. Configura schedule, destinatari, sezioni — o genera ad-hoc.</p>
+    </div>
+
+    <!-- KPI HERO STRIP -->
+    <div class="report-hero-grid stagger">
+      <div class="report-hero-stat">
+        <div class="report-hero-stat-label">Inviati stagione</div>
+        <div class="report-hero-stat-value tick" data-count="38">0</div>
+        <div class="report-hero-stat-meta"><span class="text-good">↑ 100% delivery rate</span></div>
+      </div>
+      <div class="report-hero-stat">
+        <div class="report-hero-stat-label">Prossimo invio</div>
+        <div class="report-hero-stat-value" id="rep-next-cd">—</div>
+        <div class="report-hero-stat-meta" id="rep-next-name">—</div>
+      </div>
+      <div class="report-hero-stat">
+        <div class="report-hero-stat-label">Destinatari attivi</div>
+        <div class="report-hero-stat-value tick" data-count="8">0</div>
+        <div class="report-hero-stat-meta">3 internal · 5 external</div>
+      </div>
+      <div class="report-hero-stat">
+        <div class="report-hero-stat-label">Open rate medio</div>
+        <div class="report-hero-stat-value"><span class="tick" data-count="94">0</span><sub>%</sub></div>
+        <div class="report-hero-stat-meta">+8% vs scorsa stagione</div>
+      </div>
+    </div>
+
+    <!-- ACTIVE REPORTS -->
+    <h3 class="section-title" style="margin-top:8px;">Report attivi · automatici</h3>
+    <div class="grid grid-3 stagger" id="reports-grid" style="margin-bottom:28px;"></div>
+
+    <!-- CUSTOM BUILDER -->
+    <h3 class="section-title">Report custom · genera ad-hoc</h3>
+    <div class="custom-builder" style="margin-bottom:28px;">
+      <div class="custom-builder-row">
+        <div class="field"><label class="field-label">Periodo</label>
+          <select class="field-select" id="cb-period">
+            <option>Ultimi 7 giorni</option>
+            <option>Ultimi 30 giorni</option>
+            <option>Stagione completa 2025/26</option>
+            <option>Personalizzato…</option>
+          </select>
+        </div>
+        <div class="field"><label class="field-label">Atleti</label>
+          <select class="field-select">
+            <option>Tutta la squadra (16)</option>
+            <option>Solo Speed group (8)</option>
+            <option>Solo Tech group (10)</option>
+            <option>Solo donne (10)</option>
+            <option>Solo uomini (6)</option>
+            <option>Solo in rehab (2)</option>
+          </select>
+        </div>
+        <div class="field"><label class="field-label">Formato</label>
+          <select class="field-select">
+            <option>PDF brandizzato Swiss-Ski</option>
+            <option>PDF compatto · executive</option>
+            <option>Excel · dati grezzi</option>
+            <option>CSV · solo metriche</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field"><label class="field-label">Sezioni da includere</label>
+        <div class="section-checkboxes" id="cb-sections">
+          <span class="section-check selected" data-sec="kpi">KPI squadra</span>
+          <span class="section-check selected" data-sec="load">Carico &amp; ACWR</span>
+          <span class="section-check selected" data-sec="wellness">Wellness</span>
+          <span class="section-check selected" data-sec="tests">Test fisici</span>
+          <span class="section-check selected" data-sec="results">Risultati gare</span>
+          <span class="section-check selected" data-sec="injuries">Infortuni</span>
+          <span class="section-check" data-sec="benchmark">Benchmark vs WC</span>
+          <span class="section-check" data-sec="financials">Costi &amp; logistica</span>
+          <span class="section-check" data-sec="forecast">Forecast prossimo periodo</span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:18px;">
+        <button class="btn" data-action="preview-custom">👁 Anteprima</button>
+        <button class="btn primary" data-action="generate-custom">📄 Genera &amp; invia</button>
+      </div>
+    </div>
+
+    <!-- RECIPIENTS -->
+    <div class="card card-pad-0 glow" style="margin-bottom:24px;">
+      <div style="padding:18px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <h3 class="card-title">Destinatari</h3>
+          <p class="card-sub">8 destinatari · iscrizioni gestite per singolo report</p>
+        </div>
+        <button class="btn" data-action="manage-recipients">+ Aggiungi destinatario</button>
+      </div>
+      <div id="recipients-list"></div>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="card card-pad-0 glow">
+      <div style="padding:18px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <h3 class="card-title">Storico invii</h3>
+          <p class="card-sub">38 report inviati questa stagione · clicca un invio per i dettagli</p>
+        </div>
+        <button class="btn" data-action="export-csv-results">📊 Export storico</button>
+      </div>
+      <div id="report-history-list"></div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- ============ DRAWER · ATHLETE PROFILE ============ -->
+<div class="drawer-backdrop" id="drawer-backdrop" onclick="closeDrawer()"></div>
+<aside class="drawer" id="athlete-drawer">
+  <div class="drawer-head">
+    <div class="drawer-back" onclick="closeDrawer()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </div>
+    <div class="drawer-title">Profilo atleta · <strong id="dr-title-name">—</strong></div>
+    <div class="drawer-actions">
+      <button class="btn" data-action="export-pdf-athlete">📄 PDF</button>
+      <button class="btn primary" data-action="edit-athlete">Modifica</button>
+    </div>
+  </div>
+
+  <div class="drawer-body">
+
+    <!-- TRADING CARD HERO -->
+    <div class="tcard with-photo" id="dr-tcard">
+      <div class="tcard-watermark" id="dr-watermark">—</div>
+      <div style="position:absolute;top:24px;right:24px;display:flex;align-items:center;gap:6px;z-index:3;"><span class="swiss-flag lg" style="box-shadow:0 4px 12px rgba(0,0,0,0.2);"></span></div>
+      <span class="tcard-eyebrow">Swiss-Ski · World Cup Team</span>
+      <h2 id="dr-name">—</h2>
+      <p class="meta" id="dr-meta">—</p>
+      <div class="tcard-stats">
+        <div class="tcard-stat"><strong id="dr-rank">—</strong><span>Posizione WC</span></div>
+        <div class="tcard-stat"><strong id="dr-points">—</strong><span>Punti WC</span></div>
+        <div class="tcard-stat"><strong id="dr-podiums">—</strong><span>Podi</span></div>
+        <div class="tcard-stat"><strong id="dr-wins">—</strong><span>Vittorie</span></div>
+      </div>
+    </div>
+
+    <!-- INJURY (if any) -->
+    <div id="dr-injury" class="card" style="background:var(--bad-soft);border-color:#F5C5C5;margin-bottom:18px;display:none;"></div>
+
+    <!-- LIVE METRICS + STATUS -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr) auto;gap:10px;margin-bottom:18px;">
+      <div class="stat"><div class="stat-label">Readiness</div><div class="stat-value" id="dr-readiness">—</div></div>
+      <div class="stat"><div class="stat-label">HRV</div><div class="stat-value" id="dr-hrv">—</div></div>
+      <div class="stat"><div class="stat-label">Sonno</div><div class="stat-value" id="dr-sleep">—</div></div>
+      <div class="stat"><div class="stat-label">Carico</div><div class="stat-value" style="font-size:18px;" id="dr-load">—</div></div>
+      <div class="stat" style="display:flex;flex-direction:column;justify-content:center;align-items:center;"><div class="stat-label">Stato</div><span class="pill good" id="dr-status">—</span></div>
+    </div>
+
+    <!-- PERFORMANCE DNA -->
+    <h3 class="section-title">Performance DNA · scala 0–100 vs WC</h3>
+    <div class="dna-strip with-labels stagger" id="dr-dna" style="margin-bottom:24px;"></div>
+
+    <!-- BENCHMARKS -->
+    <h3 class="section-title">Benchmark · vs squadra &amp; WC Top10</h3>
+    <div id="dr-benchmarks" style="margin-bottom:24px;"></div>
+
+    <!-- CHARTS -->
+    <div class="grid grid-2" style="margin-bottom:18px;">
+      <div class="card">
+        <div class="card-header"><h3 class="card-title">CMJ · 8 settimane</h3></div>
+        <div class="chart-container" style="height:200px;"><canvas id="dr-cmj-chart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3 class="card-title">Profilo radar vs WC Top10</h3></div>
+        <div class="chart-container" style="height:200px;"><canvas id="dr-radar"></canvas></div>
+      </div>
+    </div>
+
+    <!-- WC DISCIPLINE RANKS -->
+    <div class="card glow" style="margin-bottom:18px;">
+      <div class="card-header"><h3 class="card-title">Posizione per disciplina</h3><p class="card-sub">Classifica WC singola specialità</p></div>
+      <div id="dr-disc-ranks" class="stagger"></div>
+    </div>
+
+    <!-- RECENT RESULTS -->
+    <div class="card glow">
+      <div class="card-header"><h3 class="card-title">Ultimi risultati</h3><p class="card-sub">Stagione 2025/26</p></div>
+      <div id="dr-recent-results" class="stagger"></div>
+    </div>
+
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:24px;">
+      <button class="btn" data-action="open-programma">Programmazione</button>
+      <button class="btn" data-toast="Storico test">Storico test</button>
+      <button class="btn primary" data-action="export-pdf-athlete">📄 Report PDF</button>
+    </div>
+  </div>
+</aside>
+
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+<script>
+const T = window.DATA.swissTeam;
+
+function tagsForAthlete(a) {
+  const tags = ['all'];
+  if (a.disc.includes('DH') || a.disc.includes('SG')) tags.push('speed');
+  if (a.disc.includes('GS') || a.disc.includes('SL')) tags.push('tech');
+  tags.push(a.sex === 'F' ? 'women' : 'men');
+  if (a.injury) tags.push('rehab');
+  return tags.join(',');
+}
+
+function rosterShort() {
+  document.getElementById('roster-list').innerHTML = T.athletes.slice(0, 7).map(a => `
+    <div class="athlete-row rich" data-athlete="${a.id}">
+      <div class="athlete-avatar">${UTIL.initials(a.name)}</div>
+      <div class="athlete-name"><strong>${a.name}</strong><span>${a.born} · ${a.focus}</span></div>
+      <div>${a.disc.slice(0,2).map(d => `<span class="disc-tag ${d.toLowerCase()}">${d}</span>`).join('')}</div>
+      ${renderDnaCompact(a.id)}
+      <div class="readiness"><div class="readiness-bar ${UTIL.readinessClass(a.readiness)}" style="width:${a.readiness}%"></div></div>
+      <span class="pill ${a.wcOverall && a.wcOverall <= 10 ? 'good' : a.wcOverall && a.wcOverall <= 25 ? 'info' : 'muted'}" style="font-feature-settings:'tnum';">${a.wcOverall ? '#'+a.wcOverall+' WC' : 'Rehab'}</span>
+      <span class="muted tabular" style="font-size:11.5px;">${a.wcPoints} pt</span>
+    </div>
+  `).join('');
+}
+
+function athletesFull() {
+  document.getElementById('athletes-full').innerHTML = T.athletes.map(a => `
+    <div class="athlete-row rich" data-athlete="${a.id}" data-tags="${tagsForAthlete(a)}" data-search="${a.name.toLowerCase()} ${a.disc.join(' ').toLowerCase()}">
+      <div class="athlete-avatar">${UTIL.initials(a.name)}</div>
+      <div class="athlete-name"><strong>${a.name}</strong><span>${a.born} · ${a.focus} · ${a.sex}</span></div>
+      <div>${a.disc.map(d => `<span class="disc-tag ${d.toLowerCase()}">${d}</span>`).join('')}</div>
+      ${renderDnaCompact(a.id)}
+      <div class="readiness"><div class="readiness-bar ${UTIL.readinessClass(a.readiness)}" style="width:${a.readiness}%"></div></div>
+      <span class="pill ${a.wcOverall && a.wcOverall <= 10 ? 'good' : a.wcOverall && a.wcOverall <= 25 ? 'info' : 'muted'}" style="font-feature-settings:'tnum';">${a.wcOverall ? '#'+a.wcOverall+' WC' : '— WC'}</span>
+      <span class="pill ${a.injury ? 'bad' : 'good'}">${a.status}</span>
+    </div>
+  `).join('');
+}
+
+function racesUpcoming() {
+  const today = new Date('2026-05-06');
+  document.getElementById('race-list').innerHTML = T.races.slice(0, 4).map(r => {
+    const d = new Date(r.date);
+    const days = Math.ceil((d - today) / (1000*60*60*24));
+    return `<div class="race-row" data-race="${r.id}">
+      <div class="race-date"><strong>${d.getDate().toString().padStart(2,'0')}</strong><span>${d.toLocaleDateString('it-IT',{month:'short'})}</span></div>
+      <div class="race-name"><strong>${r.loc}</strong><span>${r.disc} · ${r.cat}</span></div>
+      <span class="pill muted">${days <= 0 ? 'oggi' : 'fra '+days+'gg'}</span>
+      <button class="btn ghost" data-toast="Dettaglio gara ${r.loc}">→</button>
+    </div>`;
+  }).join('');
+}
+
+function recentResults() {
+  document.getElementById('results-recent').innerHTML = T.results.slice(0, 5).map(r => {
+    const a = T.athletes.find(x => x.id === r.athleteId);
+    const cls = r.position === 1 ? 'gold' : r.position === 2 ? 'silver' : r.position === 3 ? 'bronze' : (r.position <= 10 ? 'top10' : '');
+    return `<div class="alert-row" data-athlete="${r.athleteId}">
+      <div class="position-badge ${cls}" style="width:30px;height:30px;font-size:12px;">${r.position}</div>
+      <div class="label"><strong>${a ? a.name : '—'}</strong> · ${r.race} <span class="muted">(${r.disc})</span></div>
+      <span class="when tabular">${r.gap}</span>
+    </div>`;
+  }).join('');
+}
+
+function testUpcoming() {
+  document.getElementById('test-upcoming').innerHTML = T.upcomingTests.map(t => {
+    const d = new Date(t.date);
+    return `<div class="alert-row">
+      <div style="text-align:center;min-width:36px;">
+        <strong style="display:block;font-size:14px;line-height:1;" class="tabular">${d.getDate()}</strong>
+        <span style="font-size:9.5px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;">${d.toLocaleDateString('it-IT',{month:'short'})}</span>
+      </div>
+      <div class="label"><strong>${t.name}</strong><br/><span class="muted" style="font-size:11.5px;">${t.loc} · ${t.who}</span></div>
+    </div>`;
+  }).join('');
+}
+
+function testTable() {
+  const benches = T.benchmarks;
+  document.getElementById('test-table').innerHTML = T.athletes.slice(0, 12).map(a => {
+    const b = benches[a.sex === 'F' ? 'female' : 'male'];
+    const vsTop = a.tests.cmj - b.cmj.wcTop10;
+    const isAbove = vsTop >= 0;
+    // Generate trend (8 sessions) ending at current value
+    const baseT = a.tests.cmj - 2.4;
+    const trend = Array.from({length: 8}, (_, i) => +(baseT + (i / 7) * 2.4 + (Math.random()-0.5)*0.4).toFixed(2));
+    trend[7] = a.tests.cmj;
+    return `<tr data-athlete="${a.id}">
+      <td><strong>${a.name}</strong></td>
+      <td>${a.disc.map(d => `<span class="disc-tag ${d.toLowerCase()}">${d}</span>`).join('')}</td>
+      <td class="tabular"><span style="font-weight:600;">${a.tests.cmj}</span>${sparkline(trend, isAbove ? 'good' : '')}</td>
+      <td class="tabular">${a.tests.sj}</td>
+      <td class="tabular">${a.tests.dj}</td>
+      <td class="tabular">${a.tests.squat1RM}</td>
+      <td class="${isAbove ? 'text-good' : 'text-bad'} tabular" style="font-weight:600;">${isAbove ? '+' : ''}${vsTop.toFixed(1)}cm</td>
+      <td><button class="btn ghost" data-toast="Profilo ${a.name}">→</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function phases() {
+  const phs = ['gen','gen','gen','gen','spec','spec','preag','preag','ag','ag','ag','trans'];
+  const labels = ['Gen','Gen','Gen','Gen','Spec','Spec','Pre-ag','Pre-ag','Ag','Ag','Ag','Trans'];
+  document.getElementById('phase-grid').innerHTML = phs.map((p, i) => `<div class="phase-block ${p}">${labels[i]}</div>`).join('');
+}
+
+function calDays() {
+  const days = 31, startDay = 4;
+  const cells = [];
+  for (let i = 0; i < startDay; i++) cells.push(`<div class="cal-day" style="opacity:0.25;"></div>`);
+  for (let d = 1; d <= days; d++) {
+    let events = [];
+    if ([6,16,23].includes(d)) events.push('race');
+    if ([4,5,11,12,18,19,25,26].includes(d)) events.push('gym');
+    if ([7,8,9,13,14,15,20,21,22].includes(d)) events.push('snow');
+    if ([8,15,22].includes(d)) events.push('travel');
+    cells.push(`<div class="cal-day ${d === 6 ? 'today' : ''}">
+      <span class="num">${d}</span>
+      <div class="events">${events.map(e => `<div class="event ${e}"></div>`).join('')}</div>
+    </div>`);
+  }
+  document.getElementById('cal-days').innerHTML = cells.join('');
+}
+
+function renderWeekView() {
+  const grid = document.getElementById('week-grid');
+  grid.innerHTML = T.weekPlan.days.map((d, i) => {
+    const isToday = i === 2;
+    return `<div class="week-day ${isToday ? 'today selected' : ''}" data-day-idx="${i}">
+      <div class="week-day-name">${d.day}</div>
+      <div class="week-day-date">${d.date.split('/')[0]}</div>
+      <div class="week-day-sessions">
+        ${d.sessions.map(s => `<div class="week-session-chip"><span class="chip-dot chip-${s.type}"></span>${s.time !== '—' ? s.time : 'OFF'} ${s.type !== 'off' ? '· ' + s.title.substring(0, 18) + (s.title.length > 18 ? '…' : '') : ''}</div>`).join('')}
+      </div>
+      <div class="week-day-load">${d.sessions.reduce((sum,s) => sum + (s.load || 0), 0)} au · ${d.sessions.reduce((sum,s) => sum + (s.athletes || 0), 0) || '—'} atl.</div>
+    </div>`;
+  }).join('');
+}
+
+function renderSessionDetail(idx) {
+  const day = T.weekPlan.days[idx];
+  const area = document.getElementById('session-detail-area');
+  if (!day || !day.sessions.length) { area.innerHTML = ''; return; }
+
+  if (day.sessions[0].type === 'off') {
+    area.innerHTML = `<div class="card glow" style="text-align:center;padding:40px;color:var(--text-3);"><strong style="display:block;font-size:16px;color:var(--text);margin-bottom:6px;">Riposo · ${day.day} ${day.date}</strong>Giornata di scarico completo, no sessioni programmate.</div>`;
+    return;
+  }
+
+  area.innerHTML = day.sessions.map(s => `
+    <div class="session-detail" style="margin-bottom:14px;">
+      <div class="session-detail-head">
+        <span class="session-type-badge ${s.type}">${s.type}</span>
+        <div style="flex:1;">
+          <strong style="display:block;font-size:14px;">${s.title}</strong>
+          <span style="font-size:12px;color:var(--text-3);">${s.time} · ${s.loc} · ${s.dur}'</span>
+        </div>
+        <span class="pill info">Carico ${s.load} au</span>
+        <button class="btn" data-action="edit-session">Modifica</button>
+      </div>
+      <div class="session-detail-body">
+        ${s.type === 'gym' ? renderGymBlock(s) : s.type === 'snow' ? renderSnowBlock(s) : s.type === 'race' ? renderRaceBlock(s) : renderGenericBlock(s)}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderGymBlock(s) {
+  return `
+    <h4 class="section-title">Esercizi</h4>
+    <div class="workout-item"><div class="workout-num">1</div><div class="workout-name">Attivazione + Mobilità<span>FMS routine + drill anche/caviglia</span></div><div class="workout-stat"><strong>15'</strong>tempo</div><div class="workout-stat"><strong>—</strong>serie</div><div class="workout-stat"><strong>—</strong>carico</div><div class="workout-stat"><strong>RPE 3</strong>obiettivo</div></div>
+    <div class="workout-item"><div class="workout-num">2</div><div class="workout-name">Box Squat sub-max<span>Pausa 1" sul box</span></div><div class="workout-stat"><strong>5</strong>serie</div><div class="workout-stat"><strong>3</strong>rep</div><div class="workout-stat"><strong>85%</strong>1RM</div><div class="workout-stat"><strong>RPE 8</strong>obiettivo</div></div>
+    <div class="workout-item"><div class="workout-num">3</div><div class="workout-name">Drop Jump reattivo<span>Box 40cm · contatto &lt;200ms</span></div><div class="workout-stat"><strong>4</strong>serie</div><div class="workout-stat"><strong>5</strong>rep</div><div class="workout-stat"><strong>BW</strong>carico</div><div class="workout-stat"><strong>RSI &gt;2.5</strong>target</div></div>
+    <div class="workout-item"><div class="workout-num">4</div><div class="workout-name">Nordic Hamstring eccentrico<span>Protezione hamstring</span></div><div class="workout-stat"><strong>3</strong>serie</div><div class="workout-stat"><strong>6</strong>rep</div><div class="workout-stat"><strong>BW</strong>carico</div><div class="workout-stat"><strong>RPE 8</strong>obiettivo</div></div>
+    <h4 class="section-title" style="margin-top:24px;">Atleti assegnati</h4>
+    <div class="assign-grid">
+      <div class="assign-chip" data-athlete="lgb"><div class="av">LG</div>Gut-Behrami</div>
+      <div class="assign-chip" data-athlete="jfl"><div class="av">JF</div>Flury</div>
+      <div class="assign-chip" data-athlete="jha"><div class="av">JH</div>Hählen</div>
+      <div class="assign-chip" data-athlete="ddu"><div class="av">DD</div>Durrer</div>
+      <div class="assign-chip" data-athlete="sst"><div class="av">SJ</div>Jenal</div>
+      <div class="assign-chip modified" data-athlete="csu"><div class="av">CS</div>Suter</div>
+    </div>
+  `;
+}
+
+function renderSnowBlock(s) {
+  return `
+    ${raceTrackSvg()}
+    <h4 class="section-title" style="margin-top:24px;">Programma neve</h4>
+    <div class="workout-item"><div class="workout-num">1</div><div class="workout-name">Riscaldamento on-snow<span>Free skiing 15'</span></div><div class="workout-stat"><strong>15'</strong>durata</div><div class="workout-stat"><strong>—</strong>manche</div><div class="workout-stat"><strong>—</strong>tipo</div><div class="workout-stat"><strong>RPE 3</strong>obiettivo</div></div>
+    <div class="workout-item"><div class="workout-num">2</div><div class="workout-name">${s.title}<span>Tracciato corto · 25 porte · pendenza 60%</span></div><div class="workout-stat"><strong>—</strong>durata</div><div class="workout-stat"><strong>${Math.floor(s.dur / 18)}</strong>manche</div><div class="workout-stat"><strong>${s.title.includes('GS') ? 'GS' : s.title.includes('SG') ? 'SG' : 'DH'}</strong>tipo</div><div class="workout-stat"><strong>Max</strong>intensità</div></div>
+    <div class="workout-item"><div class="workout-num">3</div><div class="workout-name">Cool down + mobilità<span>Free skiing leggero</span></div><div class="workout-stat"><strong>10'</strong>durata</div><div class="workout-stat"><strong>—</strong>manche</div><div class="workout-stat"><strong>—</strong>tipo</div><div class="workout-stat"><strong>RPE 2</strong>obiettivo</div></div>
+    <h4 class="section-title" style="margin-top:24px;">Atleti assegnati</h4>
+    <div class="assign-grid">
+      <div class="assign-chip" data-athlete="mod"><div class="av">MO</div>Odermatt</div>
+      <div class="assign-chip" data-athlete="lme"><div class="av">LM</div>Meillard</div>
+      <div class="assign-chip" data-athlete="lgb"><div class="av">LG</div>Gut-Behrami</div>
+      <div class="assign-chip" data-athlete="cra"><div class="av">CR</div>Rast</div>
+      <div class="assign-chip" data-athlete="ddu"><div class="av">DD</div>Durrer</div>
+    </div>
+  `;
+}
+
+function renderRaceBlock(s) {
+  return `
+    <div class="card" style="background:var(--accent-tint);border-color:var(--accent-soft);margin-bottom:16px;">
+      <strong style="font-size:15px;color:var(--accent);">🏁 Giorno gara — protocollo pre-gara attivo</strong>
+      <p class="muted" style="margin:6px 0 0;font-size:12.5px;">Briefing · attivazione 60' pre-start · ricognizione · 1ª manche 11:30 · 2ª manche 14:30</p>
+    </div>
+    <h4 class="section-title">Convocazione</h4>
+    <div class="assign-grid">
+      <div class="assign-chip" data-athlete="lgb"><div class="av">LG</div>Gut-Behrami</div>
+      <div class="assign-chip" data-athlete="jfl"><div class="av">JF</div>Flury</div>
+      <div class="assign-chip" data-athlete="jha"><div class="av">JH</div>Hählen</div>
+      <div class="assign-chip" data-athlete="ddu"><div class="av">DD</div>Durrer</div>
+      <div class="assign-chip" data-athlete="sro"><div class="av">SR</div>Rogentin</div>
+      <div class="assign-chip" data-athlete="fvo"><div class="av">FA</div>von Allmen</div>
+    </div>
+  `;
+}
+
+function renderGenericBlock(s) {
+  return `<div style="padding:14px;color:var(--text-3);font-size:13px;text-align:center;">Sessione "${s.type}" · ${s.dur}' · ${s.athletes} atleti · ${s.load} au</div>`;
+}
+
+// GARE — race location photos (Unsplash IDs alpine/ski)
+const RACE_PHOTOS = {
+  'r-2026-05-09': 'https://images.unsplash.com/photo-1606902965551-dce093cda6e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', // Matterhorn
+  'r-2026-05-16': 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', // alps
+  'r-2026-05-23': 'https://images.unsplash.com/photo-1486162553930-c2d6a6c3e2b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', // snow
+  'r-2026-06-06': 'https://images.unsplash.com/photo-1605540436563-5bca919ae766?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', // ski action
+  'r-2026-06-13': 'https://images.unsplash.com/photo-1542800013-1ea51571a0a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80', // mountains
+};
+
+// Mountain SVG silhouettes — 4 different shapes rotated for variety
+const MOUNTAIN_SVGS = [
+  // Sharp jagged peaks (alpine)
+  `<svg viewBox="0 0 400 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="m1" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="rgba(255,255,255,0.18)"/><stop offset="100%" stop-color="rgba(255,255,255,0.04)"/></linearGradient></defs>
+    <path d="M 0 200 L 0 130 L 35 90 L 70 110 L 110 60 L 145 95 L 180 50 L 210 80 L 250 35 L 290 75 L 330 55 L 370 95 L 400 70 L 400 200 Z" fill="url(#m1)"/>
+    <path d="M 0 200 L 0 165 L 50 145 L 100 155 L 150 140 L 200 150 L 250 135 L 300 145 L 350 130 L 400 145 L 400 200 Z" fill="rgba(255,255,255,0.10)"/>
+  </svg>`,
+  // Rounded peaks (Scandinavian)
+  `<svg viewBox="0 0 400 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="m2" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="rgba(255,255,255,0.18)"/><stop offset="100%" stop-color="rgba(255,255,255,0.04)"/></linearGradient></defs>
+    <path d="M 0 200 L 0 140 Q 50 80 100 110 Q 150 70 200 95 Q 250 50 300 90 Q 350 70 400 100 L 400 200 Z" fill="url(#m2)"/>
+    <path d="M 0 200 L 0 170 Q 80 150 160 165 Q 240 145 320 160 Q 380 150 400 165 L 400 200 Z" fill="rgba(255,255,255,0.10)"/>
+  </svg>`,
+  // Massive wide peaks (Rockies)
+  `<svg viewBox="0 0 400 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="m3" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="rgba(255,255,255,0.18)"/><stop offset="100%" stop-color="rgba(255,255,255,0.04)"/></linearGradient></defs>
+    <path d="M 0 200 L 0 120 L 80 70 L 130 100 L 200 40 L 280 90 L 350 60 L 400 95 L 400 200 Z" fill="url(#m3)"/>
+    <path d="M 0 200 L 0 160 L 120 140 L 200 155 L 290 135 L 380 150 L 400 145 L 400 200 Z" fill="rgba(255,255,255,0.10)"/>
+  </svg>`,
+  // Soft rolling (New England)
+  `<svg viewBox="0 0 400 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="m4" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="rgba(255,255,255,0.18)"/><stop offset="100%" stop-color="rgba(255,255,255,0.04)"/></linearGradient></defs>
+    <path d="M 0 200 L 0 150 Q 70 110 140 130 Q 210 110 280 125 Q 340 115 400 130 L 400 200 Z" fill="url(#m4)"/>
+    <path d="M 0 200 L 0 175 Q 100 165 200 175 Q 300 165 400 175 L 400 200 Z" fill="rgba(255,255,255,0.10)"/>
+  </svg>`,
+];
+
+const MOUNTAIN_BY_LOCATION = {
+  zermatt: 0, solden: 0, saalbach: 0, lenzerheide: 0,  // Alpine
+  kvitfjell: 1, are: 1, levi: 1,                        // Scandinavian
+  beaver: 2, aspen: 2,                                  // Rockies
+  killington: 3,                                        // New England
+};
+
+function renderGareUpcoming() {
+  const today = new Date('2026-05-07');
+  // Shorter race id for matching mountain set
+  const shortId = (id) => id.replace('r-2026-', '').split('-').slice(-1)[0];
+  document.getElementById('races-upcoming').innerHTML = T.races.map(r => {
+    const d = new Date(r.date);
+    const days = Math.ceil((d - today) / (1000*60*60*24));
+    const isNext = days <= 7 && days >= 0;
+    const isUrgent = days <= 3 && days >= 0;
+
+    // Map race id to mountain
+    const locKey = r.loc.toLowerCase().split(/[^a-z]/)[0]; // first word lowercase
+    let mtnIdx = 0;
+    if (locKey.includes('zerm') || locKey.includes('söld') || locKey.includes('saal') || locKey.includes('lenz')) mtnIdx = 0;
+    else if (locKey.includes('kvit') || locKey.includes('are') || locKey.includes('levi')) mtnIdx = 1;
+    else if (locKey.includes('beav') || locKey.includes('aspen')) mtnIdx = 2;
+    else if (locKey.includes('kill')) mtnIdx = 3;
+
+    return `<div class="race-card-v2 ${isNext ? 'next' : ''}" data-race="${r.id}">
+      <div class="race-mountain">${MOUNTAIN_SVGS[mtnIdx]}</div>
+      <div class="race-top">
+        <div class="race-countdown-v2 ${isUrgent ? 'urgent' : ''}">
+          <span class="num">${days <= 0 ? '0' : days}</span>
+          <span class="unit">${days <= 0 ? 'oggi' : 'giorni'}</span>
+        </div>
+        <div class="race-discipline">
+          ${r.disc.split('+').map(d => `<span class="race-discipline-tag ${d.trim().toLowerCase()}">${d.trim()}</span>`).join('')}
+        </div>
+      </div>
+      <div class="race-middle">
+        <div class="race-meta">${r.country} · ${d.toLocaleDateString('it-IT',{day:'2-digit',month:'long'}).toUpperCase()}</div>
+        <h3>${r.loc}</h3>
+      </div>
+      <div class="race-bottom">
+        <div class="gender-pills">
+          <div class="gender-pill ${r.men ? 'active' : ''}">M</div>
+          <div class="gender-pill ${r.women ? 'active' : ''}">F</div>
+        </div>
+        <div class="race-athletes-count">
+          ${isNext ? `<strong>6</strong> atleti convocati` : `${r.cat}`}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderGareResults() {
+  document.getElementById('results-list').innerHTML = T.results.map(r => {
+    const a = T.athletes.find(x => x.id === r.athleteId);
+    const cls = r.position === 1 ? 'gold' : r.position === 2 ? 'silver' : r.position === 3 ? 'bronze' : (r.position <= 10 ? 'top10' : '');
+    return `<div class="results-row" data-athlete="${r.athleteId}">
+      <div class="position-badge ${cls}">${r.position}</div>
+      <div>
+        <strong style="font-size:14px;">${a ? a.name : '—'}</strong>
+        <div class="muted" style="font-size:11.5px;">${r.race} · ${r.loc}</div>
+      </div>
+      <span class="disc-tag ${r.disc.toLowerCase()}">${r.disc}</span>
+      <span class="muted tabular" style="font-size:12px;">${r.time}</span>
+      <span class="${r.gap === '—' ? 'text-good' : ''} tabular" style="font-size:12.5px;font-weight:600;">${r.gap}</span>
+      <span class="pill ${r.position <= 3 ? 'good' : 'muted'}">${r.wcPts}pt</span>
+    </div>`;
+  }).join('');
+}
+
+function renderWcStandings() {
+  const sorted = T.athletes.filter(a => a.wcOverall).sort((a, b) => a.wcOverall - b.wcOverall).slice(0, 6);
+  document.getElementById('wc-standings').innerHTML = sorted.map(a => `
+    <div class="podium-card" data-athlete="${a.id}" style="cursor:pointer;">
+      <div class="podium-rank">#${a.wcOverall}</div>
+      <div style="position:relative;z-index:1;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div class="athlete-avatar" style="width:34px;height:34px;font-size:11px;">${UTIL.initials(a.name)}</div>
+          <div>
+            <strong style="display:block;font-size:14px;">${a.name}</strong>
+            <span class="muted" style="font-size:11.5px;">${a.sex === 'F' ? 'Donne' : 'Uomini'} · ${a.focus}</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;">
+          <div><strong style="display:block;font-size:18px;font-weight:600;">${a.wins}</strong><span class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;">Vit.</span></div>
+          <div><strong style="display:block;font-size:18px;font-weight:600;">${a.podiums}</strong><span class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;">Podi</span></div>
+          <div><strong style="display:block;font-size:18px;font-weight:600;">${a.top10s}</strong><span class="muted" style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;">Top10</span></div>
+        </div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);font-size:11.5px;color:var(--text-3);display:flex;justify-content:space-between;">
+          <span>Punti WC</span><strong style="color:var(--text);font-feature-settings:'tnum';">${a.wcPoints.toLocaleString('it-IT')}</strong>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// PODIUM v2 — Magazine layout (hero + sides)
+function renderPodium3D() {
+  const top3 = T.athletes.filter(a => a.wcOverall).sort((a, b) => a.wcOverall - b.wcOverall).slice(0, 3);
+  if (top3.length < 3) { document.getElementById('podium-3d').innerHTML = ''; return; }
+  const [first, second, third] = top3;
+
+  // Discipline crystal globes for #1 (mock: top in disciplines where they ranked #1)
+  const globes = (a) => {
+    const list = Object.entries(a.discRank || {}).filter(([_, r]) => r === 1);
+    return list.map(([d]) => `<span class="crystal-globe">${d} · Coppa specialità</span>`).join('');
+  };
+
+  const html = `
+    <div class="podium-magazine">
+      <!-- HERO #1 -->
+      <div class="podium-hero" data-athlete="${first.id}">
+        <div class="podium-hero-left">
+          <div>
+            <div class="podium-hero-rank">
+              <div class="num">${first.wcOverall}</div>
+              <div class="badge">★ Leader Coppa del Mondo</div>
+            </div>
+            <h2>${first.name.split(' ').slice(0,-1).join(' ')} <em>${first.name.split(' ').slice(-1)[0]}</em></h2>
+            <div class="subtitle">${first.sex === 'F' ? 'Donne' : 'Uomini'} · ${first.focus} · ${first.born} · ${first.height}cm / ${first.weight}kg</div>
+          </div>
+
+          <div>
+            <div class="podium-hero-stats">
+              <div class="podium-hero-stat"><strong>${first.wcPoints.toLocaleString('it-IT')}</strong><span>Punti WC</span></div>
+              <div class="podium-hero-stat"><strong>${first.wins}</strong><span>Vittorie</span></div>
+              <div class="podium-hero-stat"><strong>${first.podiums}</strong><span>Podi</span></div>
+              <div class="podium-hero-stat"><strong>${first.top10s}</strong><span>Top 10</span></div>
+            </div>
+            <div class="podium-hero-quote">Forma della carriera. Verso il 4° titolo overall consecutivo · stagione storica per la Svizzera.</div>
+          </div>
+        </div>
+
+        <div class="podium-hero-right">
+          <div class="disc-rank-panel">
+            <div class="disc-rank-title">Posizione per disciplina · Coppa del Mondo</div>
+            ${Object.entries(first.discRank).filter(([_,v]) => v != null).map(([disc, rank]) => {
+              const pct = Math.max(8, 100 - (rank - 1) * 6);
+              const cls = rank === 1 ? 'gold' : rank <= 3 ? 'silver' : rank <= 10 ? '' : 'muted';
+              const numCls = rank === 1 ? 'gold' : '';
+              return `<div class="disc-rank-row">
+                <div class="disc-rank-tag ${disc.toLowerCase()}">${disc}</div>
+                <div class="disc-rank-bar"><div class="disc-rank-bar-fill ${cls}" style="width:${pct}%;"></div></div>
+                <div class="disc-rank-num ${numCls}">#${rank}<small>WC</small></div>
+              </div>`;
+            }).join('')}
+          </div>
+
+          <div class="podium-hero-globes">
+            ${globes(first) || '<span class="crystal-globe">Tour generale</span>'}
+            <span class="crystal-globe podium-globe">${first.raceCount} gare</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDES -->
+      <div class="podium-sides">
+        <div class="podium-side silver" data-athlete="${second.id}">
+          <div>
+            <div class="podium-side-rank">
+              <div class="num">${second.wcOverall}</div>
+              <div class="badge">Argento</div>
+            </div>
+            <h3>${second.name}</h3>
+            <div class="subtitle">${second.sex === 'F' ? 'Donne' : 'Uomini'} · ${second.focus}</div>
+          </div>
+          <div class="podium-side-stats">
+            <div class="podium-side-stat"><strong>${second.wcPoints.toLocaleString('it-IT')}</strong><span>Pt</span></div>
+            <div class="podium-side-stat"><strong>${second.wins}</strong><span>Vit</span></div>
+            <div class="podium-side-stat"><strong>${second.podiums}</strong><span>Podi</span></div>
+            <div class="podium-side-stat"><strong>${second.top10s}</strong><span>T10</span></div>
+          </div>
+        </div>
+        <div class="podium-side bronze" data-athlete="${third.id}">
+          <div>
+            <div class="podium-side-rank">
+              <div class="num">${third.wcOverall}</div>
+              <div class="badge">Bronzo</div>
+            </div>
+            <h3>${third.name}</h3>
+            <div class="subtitle">${third.sex === 'F' ? 'Donne' : 'Uomini'} · ${third.focus}</div>
+          </div>
+          <div class="podium-side-stats">
+            <div class="podium-side-stat"><strong>${third.wcPoints.toLocaleString('it-IT')}</strong><span>Pt</span></div>
+            <div class="podium-side-stat"><strong>${third.wins}</strong><span>Vit</span></div>
+            <div class="podium-side-stat"><strong>${third.podiums}</strong><span>Podi</span></div>
+            <div class="podium-side-stat"><strong>${third.top10s}</strong><span>T10</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('podium-3d').innerHTML = html;
+}
+
+// CARTELLE CLINICHE
+function renderRehabTabs() {
+  const cases = Object.values(T.rehab);
+  document.getElementById('rehab-tabs').innerHTML = cases.map((c, i) => {
+    return `<div class="rehab-tab ${i === 0 ? 'active' : ''}" data-rehab-tab="${c.athleteId}">
+      <div class="av">${UTIL.initials(c.name)}</div>
+      <div>
+        <strong style="display:block;font-size:13px;">${c.name}</strong>
+        <span style="font-size:11px;color:var(--text-3);">${c.diagnosis.split(' ').slice(0,4).join(' ')}…</span>
+      </div>
+      <span class="meta">${c.daysSince}gg</span>
+    </div>`;
+  }).join('');
+}
+
+function renderRehabDetail(athleteId) {
+  const c = T.rehab[athleteId] || Object.values(T.rehab)[0];
+  if (!c) return;
+  const rtsDate = new Date(c.rtsForecast);
+  const today = new Date('2026-05-06');
+  const daysToRts = Math.ceil((rtsDate - today) / (1000*60*60*24));
+
+  const html = `
+    <div class="rehab-hero">
+      <div class="rehab-hero-avatar">${UTIL.initials(c.name)}</div>
+      <div class="rehab-hero-info">
+        <h3>${c.name}</h3>
+        <p class="diag">${c.diagnosis}</p>
+        <div class="rehab-hero-meta">
+          <div>Data infortunio<strong>${new Date(c.injuryDate).toLocaleDateString('it-IT')}</strong></div>
+          <div>Giorno post-trauma<strong>+${c.daysSince}</strong></div>
+          ${c.surgery ? `<div>Intervento<strong>${new Date(c.surgery.date).toLocaleDateString('it-IT')}</strong></div>` : ''}
+          <div>Centro<strong style="font-size:11.5px;">${c.surgery ? c.surgery.center : '—'}</strong></div>
+        </div>
+      </div>
+      <div class="rehab-hero-rts">
+        <div class="rehab-hero-rts-label">RTS previsto</div>
+        <div class="rehab-hero-rts-date">${rtsDate.toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}</div>
+        <div class="rehab-hero-rts-days">fra ${daysToRts} giorni</div>
+      </div>
+    </div>
+
+    <div class="card glow" style="margin-bottom:18px;">
+      <div class="card-header">
+        <div><h3 class="card-title">Fasi di rehabilitazione</h3><p class="card-sub">${c.phases.filter(p => p.complete).length} completate · 1 in corso · ${c.phases.filter(p => !p.complete && !p.current).length} da iniziare</p></div>
+      </div>
+      <div class="phases-track">
+        ${c.phases.map(p => `<div class="phase-cell ${p.complete ? 'complete' : ''} ${p.current ? 'current' : ''}">
+          <div class="phase-cell-name">${p.name}</div>
+          <div class="phase-cell-dates">${new Date(p.start).toLocaleDateString('it-IT',{day:'2-digit',month:'short'})} → ${p.end === '—' ? '—' : new Date(p.end).toLocaleDateString('it-IT',{day:'2-digit',month:'short'})}</div>
+          <div class="phase-cell-goal">${p.goals}</div>
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:18px;align-items:start;">
+      <div class="card glow">
+        <div class="card-header">
+          <div><h3 class="card-title">Distretto interessato</h3><p class="card-sub">Mappa anatomica · ${c.athleteId === 'csu' ? 'ginocchio dx · LCA' : c.athleteId === 'gca' ? 'spalla dx · Bankart' : 'lombare'}</p></div>
+        </div>
+        ${bodySvg(c.athleteId === 'csu' ? 'knee-right' : c.athleteId === 'gca' ? 'shoulder-right' : 'lumbar')}
+      </div>
+      <div class="card glow">
+        <div class="card-header">
+          <div><h3 class="card-title">Criteri Return-to-Sport</h3><p class="card-sub">${c.rtsCriteria.filter(r => r.status === 'done').length} di ${c.rtsCriteria.length} completati</p></div>
+        </div>
+        ${c.rtsCriteria.map(r => `
+          <div class="rts-row">
+            <div style="width:20px;height:20px;border-radius:50%;background:${r.status === 'done' ? 'var(--good-soft)' : r.status === 'warn' ? 'var(--warn-soft)' : 'var(--surface-3)'};color:${r.status === 'done' ? 'var(--good)' : r.status === 'warn' ? 'var(--warn)' : 'var(--text-4)'};display:grid;place-items:center;font-size:10px;font-weight:700;">${r.status === 'done' ? '✓' : r.status === 'warn' ? '!' : '○'}</div>
+            <div class="rts-name">${r.name}<span>Target ${r.target} · ultimo ${r.last}</span></div>
+            <div class="rts-value ${r.status}">${r.value}</div>
+            <div class="rts-progress"><div class="rts-progress-fill ${r.status}" style="width:${r.current ? Math.min(100, (r.current / 100) * 100) : 0}%;"></div></div>
+            <button class="btn ghost" data-toast="Test ${r.name} programmato">+</button>
+          </div>
+        `).join('')}
+      </div>
+      <div class="card glow">
+        <div class="card-header"><h3 class="card-title">Carico settimanale</h3><p class="card-sub">Andamento riprogressivo</p></div>
+        <div class="chart-container" style="height:200px;"><canvas id="rehab-load-${c.athleteId}"></canvas></div>
+        <div class="divider"></div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px;"><span class="muted">Settimana corr.</span><strong class="tabular">${c.loadHistory[c.loadHistory.length-1].value} au</strong></div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px;"><span class="muted">vs scorsa sett.</span><strong class="text-good tabular">+${c.loadHistory[c.loadHistory.length-1].value - c.loadHistory[c.loadHistory.length-2].value} au</strong></div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;"><span class="muted">% di carico pieno</span><strong class="tabular">${Math.round((c.loadHistory[c.loadHistory.length-1].value/3000)*100)}%</strong></div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:18px;">
+      <div class="card card-pad-0 glow">
+        <div style="padding:18px 22px;border-bottom:1px solid var(--border);">
+          <h3 class="card-title">Log giornaliero · ultimi 5 giorni</h3>
+          <p class="card-sub">Dolore (NRS) · gonfiore · ROM · fatica · umore</p>
+        </div>
+        <div class="daily-log-row">
+          <div class="head">Data</div><div class="head">Dolore</div><div class="head">Gonfio</div><div class="head">ROM</div><div class="head">Fatica</div><div class="head">Umore</div><div class="head">Note</div>
+        </div>
+        ${c.dailyMetrics.map(m => `<div class="daily-log-row">
+          <div class="tabular muted">${m.day}</div>
+          <div class="metric-cell ${m.pain >= 4 ? 'bad' : m.pain >= 2 ? 'warn' : 'good'}">${m.pain}</div>
+          <div class="metric-cell ${m.swelling >= 2 ? 'bad' : m.swelling >= 1 ? 'warn' : 'good'}">${m.swelling}</div>
+          <div class="metric-cell">${m.rom}°</div>
+          <div class="metric-cell ${m.fatigue >= 5 ? 'bad' : m.fatigue >= 4 ? 'warn' : 'good'}">${m.fatigue}</div>
+          <div class="metric-cell ${m.mood >= 8 ? 'good' : m.mood >= 6 ? 'warn' : 'bad'}">${m.mood}</div>
+          <div style="font-size:11.5px;color:var(--text-3);">${m.notes}</div>
+        </div>`).join('')}
+      </div>
+
+      <div class="card glow">
+        <div class="card-header"><h3 class="card-title">Esercizi correnti</h3><p class="card-sub">Fase ${c.phases.find(p => p.current)?.name || '—'}</p></div>
+        ${c.currentExercises.map((ex, i) => `<div class="workout-item">
+          <div class="workout-num">${i+1}</div>
+          <div class="workout-name">${ex.name}<span>${ex.notes}</span></div>
+          <div class="workout-stat"><strong>${ex.sets}</strong>serie</div>
+          <div class="workout-stat"><strong>${ex.reps}</strong>rep</div>
+          <div class="workout-stat"><strong>${ex.load}</strong>carico</div>
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="grid grid-3" style="margin-bottom:18px;">
+      <div class="card glow">
+        <div class="card-header"><h3 class="card-title">Imaging</h3><p class="card-sub">Esami strumentali</p></div>
+        ${c.imaging.map(im => `<div class="img-row">
+          <div class="img-date">${new Date(im.date).toLocaleDateString('it-IT')}</div>
+          <div class="img-type">${im.type}</div>
+          <div class="img-find">${im.findings}</div>
+        </div>`).join('')}
+        <button class="btn" style="margin-top:14px;width:100%;" data-action="upload-document">+ Aggiungi referto</button>
+      </div>
+
+      <div class="card glow">
+        <div class="card-header"><h3 class="card-title">Staff medico</h3><p class="card-sub">Team coinvolto</p></div>
+        ${c.team.map(t => `<div class="team-contact">
+          <div class="team-contact-name"><strong>${t.name}</strong><span>${t.role} · ${t.center}</span></div>
+          <div class="team-contact-call" title="${t.contact}" data-toast="Chiamata ${t.name}">📞</div>
+        </div>`).join('')}
+      </div>
+
+      <div class="card glow">
+        <div class="card-header"><h3 class="card-title">Comunicazione</h3><p class="card-sub">Note staff</p></div>
+        ${c.communication.map(m => `<div class="comm-row">
+          <div class="comm-avatar">${UTIL.initials(m.from)}</div>
+          <div class="comm-content">
+            <div class="comm-meta"><span class="comm-from">${m.from}</span><span class="comm-time">${m.date}</span></div>
+            <div class="comm-text">${m.text}</div>
+          </div>
+        </div>`).join('')}
+        <button class="btn" style="margin-top:14px;width:100%;" data-action="new-message">+ Nuovo messaggio</button>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;justify-content:flex-end;">
+      <button class="btn" data-action="export-pdf-rehab">📄 Esporta cartella</button>
+      <button class="btn" data-action="change-phase">Cambio fase</button>
+      <button class="btn primary" data-action="new-test">+ Programma test</button>
+    </div>
+  `;
+
+  document.getElementById('rehab-detail').innerHTML = html;
+
+  setTimeout(() => {
+    const el = document.getElementById('rehab-load-' + c.athleteId);
+    if (el) {
+      if (el._chart) el._chart.destroy();
+      el._chart = barChart(el, c.loadHistory.map(h => h.week), [{ label: 'Carico (au)', data: c.loadHistory.map(h => h.value), color: '#C8102E' }]);
+    }
+  }, 80);
+}
+
+function renderInjuryHistory() {
+  document.getElementById('injury-history').innerHTML = T.injuryHistory.map(i => `
+    <tr data-athlete="${i.athleteId}">
+      <td>${i.date}</td>
+      <td><strong>${i.name}</strong></td>
+      <td>${i.area}</td>
+      <td>${i.diag}</td>
+      <td class="tabular">${i.daysOut}</td>
+      <td><span class="pill ${i.status === 'rehab' ? 'warn' : i.status === 'pre-rts' ? 'info' : 'good'}">${i.status === 'rehab' ? 'Rehab' : i.status === 'pre-rts' ? 'Pre-RTS' : 'Risolto'}</span></td>
+    </tr>
+  `).join('');
+}
+
+// ============ SNOWFLAKES (weather widget) ============
+function initSnowflakes() {
+  const container = document.getElementById('weather-snow');
+  if (!container || container.dataset.init) return;
+  container.dataset.init = '1';
+  const flakes = ['❄', '❅', '❆', '✦'];
+  for (let i = 0; i < 18; i++) {
+    const f = document.createElement('span');
+    f.className = 'snowflake';
+    f.textContent = flakes[Math.floor(Math.random() * flakes.length)];
+    f.style.left = (Math.random() * 100) + '%';
+    f.style.top = (Math.random() * -50) + 'px';
+    f.style.fontSize = (Math.random() * 6 + 8) + 'px';
+    f.style.animationDuration = (Math.random() * 4 + 5) + 's';
+    f.style.animationDelay = (Math.random() * 5) + 's';
+    f.style.opacity = (Math.random() * 0.5 + 0.3);
+    container.appendChild(f);
+  }
+}
+
+// ============ ANATOMICAL BODY SVG ============
+function bodySvg(injuryRegion) {
+  // Pin positions calibrated to body.png (567×423 aspect-locked).
+  // Image shows mannequin facing viewer — athlete's RIGHT is image LEFT.
+  const pins = {
+    'knee-right':     { left: 47.5, top: 80.5, label: 'Ginocchio dx · LCA' },
+    'knee-left':      { left: 53.0, top: 80.5, label: 'Ginocchio sx' },
+    'shoulder-right': { left: 41.5, top: 27.5, label: 'Spalla dx · Bankart' },
+    'shoulder-left':  { left: 58.5, top: 27.5, label: 'Spalla sx' },
+    'ankle-right':    { left: 47.0, top: 95.0, label: 'Caviglia dx' },
+    'ankle-left':     { left: 53.0, top: 95.0, label: 'Caviglia sx' },
+    'thumb-right':    { left: 32.0, top: 62.0, label: 'Pollice dx' },
+    'thumb-left':     { left: 68.0, top: 62.0, label: 'Pollice sx' },
+    'lumbar':         { left: 50.0, top: 50.5, label: 'Lombare' },
+    'chest':          { left: 50.0, top: 38.0, label: 'Torace' },
+    'hip':            { left: 50.0, top: 60.0, label: 'Bacino' },
+  };
+  const pin = pins[injuryRegion];
+
+  return `<div class="anatomy-stage realistic">
+    <img src="assets/body.png" class="anatomy-img" alt="Corpo anatomico"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+    <div class="anatomy-fallback" style="display:none;">
+      <div style="font-size:32px;margin-bottom:10px;opacity:0.4;">🧍</div>
+      <strong>Mappa anatomica</strong>
+      Salva l'immagine fornita come<br/><code style="background:rgba(255,255,255,0.1);padding:2px 6px;border-radius:4px;font-size:11px;">assets/body.png</code>
+    </div>
+    <div class="ellipse-mask"></div>
+    <div class="stage-axis">3D Scan · Live</div>
+    <div class="stage-brand"><span class="swiss-flag"></span>Swiss-Ski Performance Lab</div>
+    <div class="stage-meta">${injuryRegion.replace('-',' ').toUpperCase()} · 2026</div>
+    ${pin ? `
+      <div class="injury-pin" style="left:${pin.left}%;top:${pin.top}%;">
+        <div class="injury-pin-label">${pin.label}</div>
+      </div>
+    ` : ''}
+  </div>`;
+}
+
+// ============ RACE TRACK SVG (configurabile) ============
+const TRACK_DEFAULTS = {
+  GS: { gates: 28, length: 980, drop: 320, gateGap: 22, target: 65 },
+  SL: { gates: 62, length: 580, drop: 200, gateGap: 9, target: 48 },
+  SG: { gates: 38, length: 1840, drop: 580, gateGap: 32, target: 84 },
+  DH: { gates: 35, length: 2820, drop: 880, gateGap: 48, target: 124 },
+  AC: { gates: 42, length: 1280, drop: 420, gateGap: 26, target: 76 },
+};
+const SNOW_LABELS = { hard: 'Hard pack', salt: 'Salt', soft: 'Soft', frozen: 'Frozen', icy: 'Ghiaccio' };
+const SET_LABELS = { technical: 'Technical', gliding: 'Gliding', mixed: 'Mixed', rhythm: 'Rhythm change' };
+
+function generateGatePositions(count) {
+  // Distribute gates along the serpentine path with alternating colors
+  const positions = [];
+  const path = [
+    { x: 30, y: 30 }, { x: 130, y: 70 }, { x: 200, y: 100 }, { x: 270, y: 90 },
+    { x: 330, y: 60 }, { x: 400, y: 30 }, { x: 480, y: 50 }, { x: 540, y: 95 },
+    { x: 590, y: 130 }, { x: 660, y: 140 }, { x: 720, y: 105 }, { x: 770, y: 50 },
+  ];
+  // Smooth interpolation
+  for (let i = 0; i < count; i++) {
+    const t = i / Math.max(1, count - 1);
+    const idx = t * (path.length - 1);
+    const i0 = Math.floor(idx);
+    const i1 = Math.min(path.length - 1, i0 + 1);
+    const f = idx - i0;
+    const x = path[i0].x + (path[i1].x - path[i0].x) * f;
+    const y = path[i0].y + (path[i1].y - path[i0].y) * f + (Math.sin(t * Math.PI * 4) * 6);
+    positions.push({ x, y, blue: i % 2 === 1 });
+  }
+  return positions;
+}
+
+function raceTrackSvg() {
+  const tc = window.__trackConfig || { type: 'GS', ...TRACK_DEFAULTS.GS, slope: 33, gateGap: 22, snow: 'hard', set: 'technical', width: 28 };
+  const gates = generateGatePositions(tc.gates);
+  const fastTime = tc.target ? `${Math.floor(tc.target / 60)}:${(tc.target % 60).toFixed(2).padStart(5,'0')}` : '1:08';
+  const split1 = (tc.target * 0.27).toFixed(2);
+  const split2 = (tc.target * 0.55).toFixed(2);
+  const split3 = (tc.target * 0.82).toFixed(2);
+
+  return `<div class="race-track-wrapper" id="race-track-wrapper">
+    <button class="track-config-cta" data-action="track-config">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+      Configura tracciato
+    </button>
+
+    <h4 class="section-title" style="margin:0 0 14px;">Tracciato ${tc.type} · ${tc.gates} porte · ${tc.length}m</h4>
+
+    <div class="track-meta-bar">
+      <div><span>Specialità:</span> <strong>${tc.type}</strong></div>
+      <div><span>Porte:</span> <strong>${tc.gates}</strong></div>
+      <div><span>Lunghezza:</span> <strong>${tc.length}m</strong></div>
+      <div><span>Dislivello:</span> <strong>${tc.drop}m</strong></div>
+      <div><span>Pendenza:</span> <strong>${tc.slope}%</strong></div>
+      <div><span>Distanza porte:</span> <strong>${tc.gateGap}m</strong></div>
+      <div><span>Larghezza:</span> <strong>${tc.width}m</strong></div>
+      <div><span>Neve:</span> <strong>${SNOW_LABELS[tc.snow] || 'Hard pack'}</strong></div>
+      <div><span>Set:</span> <strong>${SET_LABELS[tc.set] || 'Technical'}</strong></div>
+      <div><span>Target:</span> <strong>${fastTime}</strong></div>
+    </div>
+
+    <svg class="race-track-svg" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+      <path class="race-track-shadow" d="M 30 30 Q 100 30 130 70 Q 160 110 230 110 Q 300 110 330 60 Q 360 20 430 30 Q 500 40 530 90 Q 560 140 630 140 Q 700 140 730 100 Q 760 60 770 50"/>
+      <path class="race-track-path" d="M 30 30 Q 100 30 130 70 Q 160 110 230 110 Q 300 110 330 60 Q 360 20 430 30 Q 500 40 530 90 Q 560 140 630 140 Q 700 140 730 100 Q 760 60 770 50"/>
+
+      ${gates.map(g => `<circle class="race-track-gate ${g.blue ? 'blue' : ''}" cx="${g.x.toFixed(1)}" cy="${g.y.toFixed(1)}" r="${tc.type === 'SL' ? 2.5 : tc.type === 'GS' ? 4 : 4.5}"/>`).join('')}
+
+      <g class="race-track-checkpoint">
+        <line x1="220" y1="105" x2="220" y2="135" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="2,2"/>
+        <text x="220" y="155">Split 1</text>
+        <line x1="440" y1="35" x2="440" y2="65" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="2,2"/>
+        <text x="440" y="80">Split 2</text>
+        <line x1="650" y1="145" x2="650" y2="175" stroke="var(--text-3)" stroke-width="1" stroke-dasharray="2,2"/>
+        <text x="650" y="190">Split 3</text>
+      </g>
+
+      <g>
+        <text x="30" y="20" font-size="9" font-weight="700" fill="var(--text)">START</text>
+        <text x="770" y="40" font-size="9" font-weight="700" fill="var(--text)">FINISH</text>
+      </g>
+
+      <circle class="race-track-runner" cx="0" cy="0" r="6" style="offset-path: path('M 30 30 Q 100 30 130 70 Q 160 110 230 110 Q 300 110 330 60 Q 360 20 430 30 Q 500 40 530 90 Q 560 140 630 140 Q 700 140 730 100 Q 760 60 770 50');"/>
+    </svg>
+
+    <div class="race-track-legend">
+      <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);vertical-align:middle;margin-right:6px;"></span>Porte rosse · ${Math.ceil(tc.gates / 2)}</span>
+      <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--info);vertical-align:middle;margin-right:6px;"></span>Porte blu · ${Math.floor(tc.gates / 2)}</span>
+      <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);vertical-align:middle;margin-right:6px;"></span>Atleta in pista · live</span>
+      <span style="margin-left:auto;color:var(--text-2);font-weight:600;">⏱ Best: ${fastTime}</span>
+    </div>
+
+    <div class="race-track-splits">
+      <div class="split-cell"><span>Split 1</span><strong>${split1}</strong></div>
+      <div class="split-cell fastest"><span>Split 2</span><strong>${split2}</strong></div>
+      <div class="split-cell"><span>Split 3</span><strong>${split3}</strong></div>
+      <div class="split-cell"><span>Finish</span><strong>${fastTime}</strong></div>
+    </div>
+  </div>`;
+}
+
+// Re-render when config applied
+window.__rerenderTrack = function() {
+  document.querySelectorAll('#race-track-wrapper').forEach(el => {
+    el.outerHTML = raceTrackSvg();
+  });
+};
+
+// ============ HEATMAP CALENDAR ============
+function heatmapAnnual() {
+  // 53 weeks × 7 days = 371 cells
+  const months = ['Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic','Gen','Feb','Mar','Apr'];
+  let html = '';
+  // header months
+  months.forEach((m, i) => {
+    html += `<div class="heatmap-month" style="grid-column:${i*4+2}/span 4;grid-row:1;">${m}</div>`;
+  });
+  // day labels
+  ['L','M','M','G','V','S','D'].forEach((d, i) => {
+    html += `<div class="heatmap-day" style="grid-column:1;grid-row:${i+2};">${i % 2 === 1 ? d : ''}</div>`;
+  });
+  // cells
+  for (let w = 0; w < 53; w++) {
+    for (let d = 0; d < 7; d++) {
+      const r = Math.random();
+      let cls;
+      if (d === 6) cls = 'off'; // Sunday off
+      else if (r < 0.05 && w > 26) cls = 'race';
+      else if (r < 0.18) cls = 'l4';
+      else if (r < 0.40) cls = 'l3';
+      else if (r < 0.62) cls = 'l2';
+      else if (r < 0.82) cls = 'l1';
+      else cls = '';
+      html += `<div class="heatmap-cell ${cls}" style="grid-column:${w+2};grid-row:${d+2};" title="W${w+1} · ${cls}"></div>`;
+    }
+  }
+  return html;
+}
+
+// ============ SPARKLINE SVG ============
+function sparkline(values, type = '') {
+  const max = Math.max(...values);
+  const min = Math.min(...values);
+  const range = max - min || 1;
+  const w = 60, h = 18;
+  const pts = values.map((v, i) => {
+    const x = (i / (values.length - 1)) * w;
+    const y = h - ((v - min) / range) * h;
+    return `${x},${y.toFixed(1)}`;
+  }).join(' ');
+  const path = `M ${pts.split(' ').join(' L ')}`;
+  const areaPath = `M 0,${h} L ${pts.split(' ').join(' L ')} L ${w},${h} Z`;
+  return `<svg class="sparkline ${type}" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+    <path class="sparkline-area" d="${areaPath}"/>
+    <path d="${path}"/>
+  </svg>`;
+}
+
+window.__renderRehab = renderRehabDetail;
+window.__renderSession = renderSessionDetail;
+
+// ============ STAFF SWISS-SKI ============
+function renderStaff(filter = 'all', search = '') {
+  const container = document.getElementById('staff-container');
+  if (!container) return;
+  const groups = T.staffGroups;
+  const all = T.staffReal;
+
+  // Apply filter
+  let visible = all;
+  if (filter === 'trainers') {
+    visible = all.filter(s => /trainer|coach/i.test(s.role));
+  } else if (filter === 'medical') {
+    visible = all.filter(s => /fisio|osteo|physio|medico|medical/i.test(s.role));
+  } else if (filter !== 'all') {
+    visible = all.filter(s => s.group === filter);
+  }
+  if (search) {
+    const q = search.toLowerCase();
+    visible = visible.filter(s => s.name.toLowerCase().includes(q) || s.role.toLowerCase().includes(q) || (s.role_full || '').toLowerCase().includes(q));
+  }
+
+  // Group by section (preserve original group order)
+  const groupOrder = ['direction','speed-women','tech-women','speed-men'];
+  const grouped = {};
+  groupOrder.forEach(g => grouped[g] = []);
+  visible.forEach(s => { (grouped[s.group] = grouped[s.group] || []).push(s); });
+
+  let html = '';
+  groupOrder.forEach(g => {
+    const members = grouped[g] || [];
+    if (!members.length) return;
+    const meta = groups[g];
+    if (!meta) return;
+    html += `<div class="staff-group-header ${meta.primary ? 'primary' : ''}">
+      <div class="staff-group-marker ${meta.color}"></div>
+      <div class="staff-group-info">
+        <h3>${meta.label}</h3>
+        <span>${meta.sub}</span>
+      </div>
+      <div class="staff-group-count">${members.length} ${members.length === 1 ? 'membro' : 'membri'}</div>
+    </div>`;
+    html += `<div class="staff-grid stagger">`;
+    html += members.map(s => `
+      <div class="staff-card ${s.primary ? 'primary' : ''}" data-staff="${s.name}" title="${s.role_full || s.role}">
+        <div class="staff-photo-wrap">
+          <img class="staff-photo" src="${s.img}" alt="${s.name}" loading="lazy" onerror="this.style.display='none';"/>
+          <div class="staff-photo-flag ${s.country}" title="${s.country}"></div>
+        </div>
+        <div class="staff-info">
+          <h4 class="staff-name">${s.name}</h4>
+          <p class="staff-role">${s.role}</p>
+          <div class="staff-actions">
+            <div class="staff-action-btn" data-action="staff-message" data-name="${s.name}" title="Messaggia">✉</div>
+            <div class="staff-action-btn" data-action="staff-call" data-name="${s.name}" title="Chiama">📞</div>
+            <div class="staff-action-btn" data-action="staff-profile" data-name="${s.name}" title="Profilo">👤</div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+    html += `</div>`;
+  });
+
+  if (!visible.length) {
+    html = `<div style="padding:60px;text-align:center;color:var(--text-3);"><div style="font-size:32px;margin-bottom:8px;opacity:0.4;">🔍</div><strong>Nessun risultato</strong><br/><span style="font-size:13px;">Prova con altri filtri o termine di ricerca</span></div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+// Wire filter tabs + search
+document.addEventListener('click', (e) => {
+  const tab = e.target.closest('.staff-filter-tab[data-staff-filter]');
+  if (tab) {
+    document.querySelectorAll('.staff-filter-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const search = document.getElementById('staff-search-input')?.value || '';
+    renderStaff(tab.dataset.staffFilter, search);
+  }
+});
+
+// Add staff actions
+Object.assign(ACTIONS, {
+  'staff-message': (btn) => toast(`Messaggio a ${btn.dataset.name}`, 'info', '✉'),
+  'staff-call': (btn) => toast(`Chiamata a ${btn.dataset.name}…`, 'info', '📞'),
+  'staff-profile': (btn) => toast(`Profilo ${btn.dataset.name}`, 'info', '👤'),
+  'new-staff': () => openFormModal({
+    title: 'Nuovo membro staff', subtitle: 'Aggiungi al roster Swiss-Ski',
+    body: `
+      <div class="field-row">
+        <div class="field"><label class="field-label">Nome</label><input type="text" class="field-input" placeholder="Nome cognome"/></div>
+        <div class="field"><label class="field-label">Email</label><input type="email" class="field-input"/></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label class="field-label">Ruolo</label><input type="text" class="field-input" placeholder="Es: Trainer / Konditionstrainer"/></div>
+        <div class="field"><label class="field-label">Nazionalità</label>
+          <select class="field-select"><option>Svizzera (CH)</option><option>Italia (IT)</option><option>Austria (AT)</option><option>Germania (DE)</option><option>Slovenia (SI)</option><option>Francia (FR)</option></select>
+        </div>
+      </div>
+      <div class="field"><label class="field-label">Gruppo</label>
+        <select class="field-select">
+          <option>Mastery WC Speed Frauen</option>
+          <option>Mastery WC GS+SL Frauen</option>
+          <option>Mastery WC Speed Männer</option>
+          <option>Direzione tecnica</option>
+        </select>
+      </div>
+    `,
+    actions: [
+      { text: 'Annulla', action: 'close-fm' },
+      { text: 'Aggiungi al roster', primary: true, action: 'save-staff' },
+    ]
+  }),
+  'save-staff': () => { closeFormModal(); toast('Nuovo membro aggiunto al roster', 'success', '✓'); },
+});
+
+window.__renderStaff = renderStaff;
+
+// ============ REPORT FEDERAZIONE ============
+const REPORT_ICONS = { weekly: '📊', monthly: '📈', prerace: '🏁' };
+const REPORT_LABELS = { weekly: 'Settimanale', monthly: 'Mensile', prerace: 'Pre-gara' };
+
+function fmtDateLong(iso) {
+  const d = new Date(iso);
+  return d.toLocaleString('it-IT', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+function fmtRelative(iso) {
+  const target = new Date(iso).getTime();
+  const now = Date.now();
+  const diff = target - now;
+  if (Math.abs(diff) < 60000) return 'adesso';
+  const days = Math.floor(Math.abs(diff) / (1000*60*60*24));
+  const hours = Math.floor((Math.abs(diff) % (1000*60*60*24)) / (1000*60*60));
+  if (diff > 0) {
+    if (days > 0) return `fra ${days}gg ${hours}h`;
+    return `fra ${hours}h`;
+  } else {
+    if (days > 0) return `${days}gg fa`;
+    return `${hours}h fa`;
+  }
+}
+
+function renderReports() {
+  const reports = T.reports;
+  const grid = document.getElementById('reports-grid');
+  if (!grid) return;
+  grid.innerHTML = Object.values(reports).map(r => {
+    const recipients = T.recipients.filter(rc => rc.subs.includes(r.id));
+    return `<div class="report-card ${r.id} ${r.enabled ? '' : 'disabled'}" data-report-id="${r.id}">
+      <div class="report-card-head">
+        <div class="report-card-icon">${REPORT_ICONS[r.id]}</div>
+        <div class="report-card-info">
+          <h3>${r.name}</h3>
+          <p>${r.description}</p>
+        </div>
+        <div class="toggle-sw ${r.enabled ? 'on' : ''}" data-action="toggle-report" data-rid="${r.id}" title="Attiva/disattiva"></div>
+      </div>
+
+      <div class="report-schedule">${r.cron}</div>
+
+      <ul class="report-sections">
+        ${r.sections.slice(0, 5).map(s => `<li>${s}</li>`).join('')}
+        ${r.sections.length > 5 ? `<li style="color:var(--text-3);font-style:italic;">+ ${r.sections.length - 5} altre sezioni</li>` : ''}
+      </ul>
+
+      <div class="report-time-meta">
+        <div class="report-time-cell">Ultimo invio<strong>${fmtDateLong(r.lastSent)}</strong></div>
+        <div class="report-time-cell">Prossimo<strong>${fmtRelative(r.nextSend)}</strong></div>
+      </div>
+
+      <div style="font-size:11.5px;color:var(--text-3);padding:8px 0;display:flex;justify-content:space-between;align-items:center;">
+        <span>📩 ${recipients.length} destinatari · ${r.sentCount} inviati totali</span>
+        <span class="tabular">${r.avgSize}</span>
+      </div>
+
+      <div class="report-card-actions">
+        <button class="btn" data-action="preview-report" data-rid="${r.id}">👁 Anteprima</button>
+        <button class="btn" data-action="edit-report" data-rid="${r.id}">⚙ Configura</button>
+        <button class="btn primary" data-action="force-send" data-rid="${r.id}">📤 Invia ora</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Update countdown KPI
+  const upcomingReport = Object.values(reports)
+    .filter(r => r.enabled)
+    .sort((a, b) => new Date(a.nextSend) - new Date(b.nextSend))[0];
+  if (upcomingReport) {
+    document.getElementById('rep-next-cd').textContent = fmtRelative(upcomingReport.nextSend);
+    document.getElementById('rep-next-name').textContent = upcomingReport.name + ' · ' + new Date(upcomingReport.nextSend).toLocaleString('it-IT', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+  }
+}
+
+function renderRecipients() {
+  const el = document.getElementById('recipients-list');
+  if (!el) return;
+  el.innerHTML = T.recipients.map(rc => `
+    <div class="recipient-row" data-recipient-id="${rc.id}">
+      <div class="recipient-avatar">${UTIL.initials(rc.name)}</div>
+      <div class="recipient-name">
+        <strong>${rc.name} ${rc.primary ? '<span class="pill bad" style="font-size:9px;padding:1px 6px;margin-left:4px;">PRIMARY</span>' : ''}</strong>
+        <span>${rc.role}</span>
+        <span class="email">${rc.email}</span>
+      </div>
+      <div class="recipient-subs">
+        <div class="recipient-sub-tag ${rc.subs.includes('weekly') ? 'weekly' : ''}" title="${rc.subs.includes('weekly') ? 'Riceve settimanale' : 'Non iscritto a settimanale'}">W</div>
+        <div class="recipient-sub-tag ${rc.subs.includes('monthly') ? 'monthly' : ''}" title="${rc.subs.includes('monthly') ? 'Riceve mensile' : 'Non iscritto a mensile'}">M</div>
+        <div class="recipient-sub-tag ${rc.subs.includes('prerace') ? 'prerace' : ''}" title="${rc.subs.includes('prerace') ? 'Riceve pre-gara' : 'Non iscritto a pre-gara'}">P</div>
+      </div>
+      <div style="display:flex;gap:4px;">
+        <button class="btn ghost" data-action="edit-recipient" data-rid="${rc.id}">⚙</button>
+        <button class="btn ghost" data-action="remove-recipient" data-rid="${rc.id}" style="color:var(--bad);">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderReportHistory() {
+  const el = document.getElementById('report-history-list');
+  if (!el) return;
+  el.innerHTML = T.reportHistory.map(h => {
+    const d = new Date(h.date);
+    return `<div class="report-history-row" data-action="open-report" data-filename="${h.filename}">
+      <div class="report-history-icon ${h.type}">${REPORT_ICONS[h.type][0] || '?'}</div>
+      <div class="report-history-name">
+        ${h.filename}
+        <span>${REPORT_LABELS[h.type]} · ${d.toLocaleString('it-IT', { weekday: 'short', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}${h.error ? ' · <span class="text-bad">' + h.error + '</span>' : ''}</span>
+      </div>
+      <div class="report-history-meta">
+        <strong>${h.recipients}</strong>
+        <span>destinatari</span>
+      </div>
+      <div class="report-history-meta">
+        <strong>${h.size}</strong>
+        <span>peso</span>
+      </div>
+      <div title="Open rate ${h.openRate}%">
+        <div class="open-rate-bar" style="--rate:${h.openRate}%;"></div>
+        <div style="font-size:10.5px;color:var(--text-3);text-align:right;margin-top:3px;font-feature-settings:'tnum';">${h.openRate}%</div>
+      </div>
+      <span class="report-history-status ${h.status}">${h.status === 'sent' ? '✓ Inviato' : h.status === 'failed' ? '✕ Fallito' : '… Attesa'}</span>
+    </div>`;
+  }).join('');
+}
+
+window.__renderReports = function() {
+  renderReports();
+  renderRecipients();
+  renderReportHistory();
+  if (window.__animateCounters) setTimeout(() => window.__animateCounters(), 50);
+};
+
+// ============ REPORT ACTIONS ============
+Object.assign(ACTIONS, {
+  'toggle-report': (btn) => {
+    const rid = btn.dataset.rid;
+    const r = T.reports[rid];
+    if (!r) return;
+    r.enabled = !r.enabled;
+    renderReports();
+    toast(`Report ${REPORT_LABELS[rid]} ${r.enabled ? 'attivato' : 'disattivato'}`, 'success', '✓');
+  },
+  'preview-report': (btn) => {
+    const rid = btn.dataset.rid;
+    const r = T.reports[rid];
+    if (!r) return;
+    openFormModal({
+      title: `Anteprima · ${r.name}`,
+      subtitle: `Prossimo invio: ${fmtDateLong(r.nextSend)} · ${T.recipients.filter(rc => rc.subs.includes(rid)).length} destinatari`,
+      body: pdfPreviewHtml(rid),
+      actions: [
+        { text: 'Chiudi', action: 'close-fm' },
+        { text: '⚙ Configura', action: 'edit-report-from-preview' },
+        { text: '📤 Invia ora', primary: true, action: 'force-send-from-preview' },
+      ]
+    });
+    window.__activeReportId = rid;
+  },
+  'edit-report': (btn) => {
+    const rid = btn.dataset.rid;
+    const r = T.reports[rid];
+    if (!r) return;
+    openFormModal({
+      title: `Configura · ${r.name}`,
+      subtitle: r.description,
+      body: reportConfigForm(rid),
+      actions: [
+        { text: 'Annulla', action: 'close-fm' },
+        { text: 'Salva', primary: true, action: 'save-report-config' },
+      ]
+    });
+    window.__activeReportId = rid;
+  },
+  'edit-report-from-preview': () => ACTIONS['edit-report']({ dataset: { rid: window.__activeReportId } }),
+  'force-send-from-preview': () => ACTIONS['force-send']({ dataset: { rid: window.__activeReportId } }),
+  'save-report-config': () => { closeFormModal(); toast('Configurazione report salvata', 'success', '✓'); },
+  'force-send': (btn) => {
+    const rid = btn.dataset.rid;
+    const r = T.reports[rid];
+    if (!r) return;
+    const recipients = T.recipients.filter(rc => rc.subs.includes(rid));
+    toast(`Generazione ${r.name}…`, 'info', '⌛');
+    setTimeout(() => {
+      // Add to history
+      T.reportHistory.unshift({
+        date: new Date().toISOString(),
+        type: rid, status: 'sent', size: r.avgSize,
+        recipients: recipients.length,
+        filename: `${REPORT_LABELS[rid]}_OnDemand_Swiss-Ski.pdf`,
+        openRate: 0,
+      });
+      r.lastSent = new Date().toISOString();
+      r.sentCount += 1;
+      renderReports(); renderReportHistory();
+      toast(`📤 ${r.name} inviato a ${recipients.length} destinatari`, 'success', '✓');
+    }, 1100);
+  },
+  'manage-recipients': () => openFormModal({
+    title: 'Gestione destinatari',
+    subtitle: `${T.recipients.length} destinatari attivi · iscrizioni per singolo report`,
+    body: recipientsManageForm(),
+    actions: [
+      { text: 'Chiudi', action: 'close-fm' },
+      { text: 'Salva modifiche', primary: true, action: 'save-recipients' },
+    ]
+  }),
+  'save-recipients': () => { closeFormModal(); renderRecipients(); toast('Destinatari aggiornati', 'success', '✓'); },
+  'edit-recipient': (btn) => {
+    const rid = btn.dataset.rid;
+    const rc = T.recipients.find(r => r.id === rid);
+    if (!rc) return;
+    openFormModal({
+      title: `Modifica destinatario · ${rc.name}`,
+      subtitle: rc.role,
+      body: recipientEditForm(rid),
+      actions: [
+        { text: 'Annulla', action: 'close-fm' },
+        { text: 'Salva', primary: true, action: 'save-recipient-edit' },
+      ]
+    });
+    window.__activeRecipientId = rid;
+  },
+  'save-recipient-edit': () => {
+    const rid = window.__activeRecipientId;
+    const rc = T.recipients.find(r => r.id === rid);
+    if (!rc) return;
+    const subs = [];
+    document.querySelectorAll('[data-sub]').forEach(el => {
+      if (el.classList.contains('selected')) subs.push(el.dataset.sub);
+    });
+    rc.subs = subs;
+    closeFormModal(); renderRecipients(); renderReports();
+    toast(`Iscrizioni di ${rc.name} aggiornate`, 'success', '✓');
+  },
+  'remove-recipient': (btn) => {
+    const rid = btn.dataset.rid;
+    const rc = T.recipients.find(r => r.id === rid);
+    if (!rc) return;
+    if (rc.primary) { toast('Impossibile rimuovere il destinatario primario', 'warn', '!'); return; }
+    T.recipients = T.recipients.filter(r => r.id !== rid);
+    renderRecipients();
+    toast(`${rc.name} rimosso dai destinatari`, 'success', '✓');
+  },
+  'custom-report': () => {
+    // Scroll to custom builder
+    const cb = document.querySelector('.custom-builder');
+    if (cb) cb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => cb?.style.setProperty('animation', 'tickFlash 1.5s'), 200);
+    toast('Compila i parametri qui sotto', 'info', '↓');
+  },
+  'preview-custom': () => openFormModal({
+    title: 'Anteprima report custom',
+    subtitle: 'Periodo selezionato · sezioni scelte',
+    body: pdfPreviewHtml('custom'),
+    actions: [
+      { text: 'Chiudi', action: 'close-fm' },
+      { text: '📄 Genera &amp; invia', primary: true, action: 'generate-custom' },
+    ]
+  }),
+  'generate-custom': () => {
+    closeFormModal();
+    toast('Generazione report custom…', 'info', '⌛');
+    setTimeout(() => {
+      T.reportHistory.unshift({
+        date: new Date().toISOString(), type: 'monthly', status: 'sent',
+        size: '4.6 MB', recipients: 1,
+        filename: 'Custom_OnDemand_Swiss-Ski.pdf', openRate: 0,
+      });
+      renderReportHistory();
+      toast('✓ Report custom generato · scaricato', 'success', '⤓');
+    }, 1400);
+  },
+  'open-report': (btn) => {
+    const fname = btn.dataset.filename;
+    toast(`Apertura ${fname}…`, 'info', '👁');
+  },
+});
+
+// ============ FORMS for report ============
+function pdfPreviewHtml(type) {
+  const titles = { weekly: 'Report Settimanale', monthly: 'Report Mensile', prerace: 'Report Pre-gara', custom: 'Report Custom' };
+  const subs = {
+    weekly: 'Settimana 19 · 04 → 10 maggio 2026',
+    monthly: 'Aprile 2026',
+    prerace: 'Zermatt-Cervinia · DH · 09 maggio',
+    custom: 'Periodo personalizzato',
+  };
+  return `<div style="display:grid;grid-template-columns:1fr 1.4fr;gap:18px;align-items:start;">
+    <div class="pdf-preview">
+      <div class="pdf-preview-head">
+        <div class="pdf-preview-brand">
+          <strong>SWISS-SKI</strong>
+          <span>Federazione svizzera sport invernali</span>
+        </div>
+        <div class="pdf-preview-flag"></div>
+      </div>
+      <div class="pdf-preview-title">${titles[type] || 'Report'}</div>
+      <div class="pdf-preview-sub">${subs[type] || ''}</div>
+
+      <div class="pdf-preview-section">KPI Squadra</div>
+      <div class="pdf-preview-stats">
+        <div class="pdf-preview-stat"><strong>81%</strong><span>Read.</span></div>
+        <div class="pdf-preview-stat"><strong>1.05</strong><span>ACWR</span></div>
+        <div class="pdf-preview-stat"><strong>7.6</strong><span>Wellness</span></div>
+        <div class="pdf-preview-stat"><strong>14/16</strong><span>Disp.</span></div>
+      </div>
+
+      <div class="pdf-preview-section">Carico settimanale</div>
+      <div class="pdf-preview-line med"></div>
+      <div class="pdf-preview-line"></div>
+      <div class="pdf-preview-line short"></div>
+
+      <div class="pdf-preview-section">Infortuni</div>
+      <div class="pdf-preview-line"></div>
+      <div class="pdf-preview-line med"></div>
+
+      <div class="pdf-preview-section">Performance vs WC</div>
+      <div class="pdf-preview-line short"></div>
+      <div class="pdf-preview-line"></div>
+    </div>
+
+    <div>
+      <div class="fm-section" style="margin-top:0;padding-top:0;border-top:none;">Contenuto del PDF</div>
+      <ul class="report-sections">
+        ${(T.reports[type]?.sections || ['KPI squadra','Carico & ACWR','Wellness','Test fisici','Risultati gare','Infortuni']).map(s => `<li>${s}</li>`).join('')}
+      </ul>
+      <div class="fm-section">Destinatari (${T.recipients.filter(rc => rc.subs.includes(type) || type === 'custom').length})</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        ${T.recipients.filter(rc => rc.subs.includes(type) || type === 'custom').slice(0, 6).map(rc => `<span class="pill muted" style="font-size:11px;">${UTIL.initials(rc.name)} · ${rc.name.split(' ')[0]} ${rc.name.split(' ').slice(-1)[0][0]}.</span>`).join('')}
+      </div>
+      <div class="fm-section">Pianificazione</div>
+      <div style="font-size:13px;color:var(--text-2);line-height:1.6;">
+        <strong>${T.reports[type]?.cron || 'On demand'}</strong><br/>
+        ${type !== 'custom' ? 'Prossimo invio: <strong>' + fmtDateLong(T.reports[type].nextSend) + '</strong>' : 'Generato al click "Genera &amp; invia"'}
+      </div>
+    </div>
+  </div>`;
+}
+
+function reportConfigForm(rid) {
+  const r = T.reports[rid];
+  return `
+    <div class="fm-section">Schedule</div>
+    <div class="field-row">
+      <div class="field"><label class="field-label">Frequenza</label>
+        <select class="field-select">
+          <option ${r.id === 'weekly' ? 'selected' : ''}>Settimanale</option>
+          <option ${r.id === 'monthly' ? 'selected' : ''}>Mensile</option>
+          <option ${r.id === 'prerace' ? 'selected' : ''}>Pre-gara (48h prima)</option>
+          <option>On demand</option>
+        </select>
+      </div>
+      <div class="field"><label class="field-label">Orario invio</label><input type="time" class="field-input" value="${rid === 'monthly' ? '06:00' : '09:00'}"/></div>
+    </div>
+
+    <div class="fm-section">Sezioni incluse</div>
+    <div class="section-checkboxes">
+      ${r.sections.map((s, i) => `<span class="section-check selected" data-sec="${i}">${s}</span>`).join('')}
+    </div>
+
+    <div class="fm-section">Destinatari iscritti</div>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      ${T.recipients.map(rc => `
+        <label style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:var(--surface-2);cursor:pointer;">
+          <input type="checkbox" ${rc.subs.includes(rid) ? 'checked' : ''}/>
+          <div style="flex:1;"><strong style="font-size:13px;">${rc.name}</strong><br/><span style="font-size:11.5px;color:var(--text-3);">${rc.role} · ${rc.email}</span></div>
+        </label>
+      `).join('')}
+    </div>
+
+    <div class="fm-section">Branding &amp; firma</div>
+    <div class="field"><label class="field-label">Firma email</label>
+      <textarea class="field-textarea" placeholder="Firma…">Marcello Tavola — Head Coach &amp; Athletic Trainer\nSwiss-Ski World Cup Team\n\nQuesto report è generato automaticamente. Non rispondere a questa email.</textarea>
+    </div>
+  `;
+}
+
+function recipientsManageForm() {
+  return `
+    <div class="fm-section">Aggiungi nuovo destinatario</div>
+    <div class="field-row">
+      <div class="field"><label class="field-label">Nome</label><input type="text" class="field-input" placeholder="Nome cognome"/></div>
+      <div class="field"><label class="field-label">Email</label><input type="email" class="field-input" placeholder="email@swiss-ski.ch"/></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label class="field-label">Ruolo</label><input type="text" class="field-input" placeholder="Es: Direttore tecnico"/></div>
+      <div class="field"><label class="field-label">Iscrizioni</label>
+        <div class="section-checkboxes">
+          <span class="section-check selected">Settimanale</span>
+          <span class="section-check">Mensile</span>
+          <span class="section-check">Pre-gara</span>
+        </div>
+      </div>
+    </div>
+    <div class="fm-section">Destinatari attuali</div>
+    <div style="display:flex;flex-direction:column;gap:6px;max-height:280px;overflow-y:auto;">
+      ${T.recipients.map(rc => `
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:var(--surface-2);">
+          <div class="recipient-avatar" style="width:30px;height:30px;font-size:10px;">${UTIL.initials(rc.name)}</div>
+          <div style="flex:1;"><strong style="font-size:13px;">${rc.name}</strong><br/><span style="font-size:11.5px;color:var(--text-3);">${rc.role}</span></div>
+          <span class="pill muted">${rc.subs.length} report</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function recipientEditForm(rid) {
+  const rc = T.recipients.find(r => r.id === rid);
+  return `
+    <div class="field-row">
+      <div class="field"><label class="field-label">Nome</label><input type="text" class="field-input" value="${rc.name}"/></div>
+      <div class="field"><label class="field-label">Ruolo</label><input type="text" class="field-input" value="${rc.role}"/></div>
+    </div>
+    <div class="field"><label class="field-label">Email</label><input type="email" class="field-input" value="${rc.email}"/></div>
+    <div class="fm-section">Iscrizioni report</div>
+    <div class="section-checkboxes">
+      <span class="section-check ${rc.subs.includes('weekly') ? 'selected' : ''}" data-sub="weekly">Settimanale</span>
+      <span class="section-check ${rc.subs.includes('monthly') ? 'selected' : ''}" data-sub="monthly">Mensile</span>
+      <span class="section-check ${rc.subs.includes('prerace') ? 'selected' : ''}" data-sub="prerace">Pre-gara</span>
+    </div>
+  `;
+}
+
+// Section checkbox toggle handler
+document.addEventListener('click', (e) => {
+  const sec = e.target.closest('.section-check[data-sub], .section-check[data-sec]');
+  if (sec) sec.classList.toggle('selected');
+});
+
+window.__renderCharts = function(view) {
+  if (view === 'dashboard') {
+    const wlEl = document.getElementById('ch-workload');
+    if (wlEl && !wlEl._chart) {
+      wlEl._chart = lineChart(wlEl,
+        DATA.testHistory.workload.map(w => w.week),
+        [
+          { label: 'Acuto (7gg)', data: DATA.testHistory.workload.map(w => w.acute), color: '#C8102E', fill: true },
+          { label: 'Cronico (28gg)', data: DATA.testHistory.workload.map(w => w.chronic), color: '#1D4ED8' },
+        ], { legend: true });
+    }
+    const cmjEl = document.getElementById('ch-cmj');
+    if (cmjEl && !cmjEl._chart) {
+      cmjEl._chart = lineChart(cmjEl,
+        DATA.testHistory.cmj.map(w => w.week),
+        [
+          { label: 'Squadra CH', data: DATA.testHistory.cmj.map(w => w.avg), color: '#0F766E', fill: true },
+          { label: 'WC avg', data: DATA.testHistory.cmj.map((w,i) => +(38.6 + i * 0.15).toFixed(1)), color: '#76767E' },
+        ], { legend: true, beginAtZero: false });
+    }
+    // animate gauge
+    const g = document.getElementById('gauge-readiness');
+    if (g && !g.dataset.animated) {
+      g.dataset.animated = '1';
+      animateGauge(g, 81);
+    }
+  }
+  if (view === 'test') {
+    const wlEl = document.getElementById('ch-wellness');
+    if (wlEl && !wlEl._chart) {
+      wlEl._chart = lineChart(wlEl,
+        DATA.testHistory.wellness.map(w => w.day),
+        [
+          { label: 'Sonno (h)', data: DATA.testHistory.wellness.map(w => w.sleep), color: '#1D4ED8' },
+          { label: 'Umore', data: DATA.testHistory.wellness.map(w => w.mood), color: '#0F766E' },
+          { label: 'Fatica', data: DATA.testHistory.wellness.map(w => w.fatigue), color: '#B45309' },
+          { label: 'Dolori', data: DATA.testHistory.wellness.map(w => w.soreness), color: '#B91C1C' },
+        ], { legend: true, beginAtZero: false });
+    }
+  }
+};
+
+window.__paneInit = {
+  dashboard: () => { initSnowflakes(); initEcg(); },
+  programma: () => { renderWeekView(); renderSessionDetail(2); },
+  gare: () => {
+    renderGareUpcoming(); renderGareResults(); renderWcStandings(); renderPodium3D();
+    const m = document.getElementById('eu-map-container');
+    if (m && !m.dataset.init) { m.dataset.init = '1'; m.innerHTML = europeMapSvg(); }
+  },
+  infortuni: () => { renderRehabTabs(); renderRehabDetail(Object.keys(T.rehab)[0]); renderInjuryHistory(); },
+  test: () => {
+    const hm = document.getElementById('heatmap-annual');
+    if (hm && !hm.dataset.init) { hm.dataset.init = '1'; hm.innerHTML = heatmapAnnual(); }
+  },
+  report: () => { window.__renderReports && window.__renderReports(); },
+  staff: () => {
+    if (window.__renderStaff) window.__renderStaff('all', '');
+    const inp = document.getElementById('staff-search-input');
+    if (inp && !inp.dataset.bound) {
+      inp.dataset.bound = '1';
+      inp.addEventListener('input', () => {
+        const active = document.querySelector('.staff-filter-tab.active')?.dataset.staffFilter || 'all';
+        window.__renderStaff(active, inp.value);
+      });
+    }
+  },
+};
+
+// initial
+rosterShort();
+athletesFull();
+racesUpcoming();
+recentResults();
+testUpcoming();
+testTable();
+phases();
+calDays();
+
+attachSearch(document.getElementById('athletes-search'), 'athletes');
+attachSearch(document.getElementById('dashboard-search'), 'athletes');
+
+window.__renderCharts('dashboard');
+initCountdown();
+initSnowflakes();
+initEcg();
+initCopilot();
+startLiveTicker();
+</script>
+</body>
+</html>

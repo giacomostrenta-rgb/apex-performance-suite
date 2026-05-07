@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>APEX — Performance Suite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app.css" />
+</head>
+<body>
+<main class="entry cinematic">
+
+  <!-- Particle field -->
+  <canvas id="particles-canvas" class="particles-canvas"></canvas>
+
+  <!-- Cursor glow -->
+  <div class="cursor-glow"></div>
+
+  <!-- Mountain horizon SVG -->
+  <div class="mountain-bg">
+    <svg viewBox="0 0 1440 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,200 L0,140 L80,80 L160,120 L240,40 L320,90 L400,30 L480,70 L560,20 L640,60 L720,10 L800,50 L880,30 L960,80 L1040,40 L1120,100 L1200,50 L1280,90 L1360,60 L1440,110 L1440,200 Z" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <header class="entry-nav">
+    <div class="entry-brand">
+      <div class="entry-brand-mark">A</div>
+      <div class="entry-brand-text">
+        APEX
+        <small>Performance Suite · v0.4</small>
+      </div>
+    </div>
+    <nav class="entry-nav-links">
+      <a href="#">Cosa è</a>
+      <a href="#">Roadmap</a>
+      <a href="#" class="magnetic" style="background:var(--text);color:white;display:inline-block;padding:8px 14px;">Accedi</a>
+    </nav>
+  </header>
+
+  <section class="entry-main" style="position:relative;z-index:2;">
+    <span class="entry-eyebrow">
+      <span class="pulse"></span>
+      Sistema operativo · stagione attiva da 4 settimane
+    </span>
+
+    <h1 class="entry-title">
+      Una sala macchine<br/>
+      per <em>la squadra</em><br/>
+      e per <em>i tuoi atleti</em>.
+    </h1>
+
+    <p class="entry-sub">
+      Programmazione, monitoraggio del carico, test fisici, infortuni, calendario di Coppa del Mondo. E in parallelo, i tuoi clienti privati di personal training. Un solo strumento, due mondi che non si toccano.
+    </p>
+
+    <div class="entry-grid">
+
+      <a class="entry-card team magnetic" href="team.html">
+        <div class="entry-card-deco"></div>
+        <div class="entry-card-mark">T</div>
+        <div class="entry-card-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </div>
+        <span class="entry-card-tag">Modulo 01</span>
+        <div class="entry-card-icon">🇨🇭</div>
+        <h2>Swiss Ski <em>Team</em></h2>
+        <p>Squadra nazionale svizzera di Coppa del Mondo. Roster, programmazione stagionale, test, gare, video, calendario FIS, cartelle cliniche, report federazione.</p>
+        <div class="entry-card-stats">
+          <div class="entry-card-stat"><strong class="tick" data-count="16">0</strong><span>Atleti</span></div>
+          <div class="entry-card-stat"><strong class="tick" data-count="21">0</strong><span>Vittorie WC</span></div>
+          <div class="entry-card-stat"><strong class="tick" data-count="58">0</strong><span>Podi stagione</span></div>
+        </div>
+      </a>
+
+      <a class="entry-card personal magnetic" href="personal.html">
+        <div class="entry-card-deco"></div>
+        <div class="entry-card-mark">P</div>
+        <div class="entry-card-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </div>
+        <span class="entry-card-tag">Modulo 02</span>
+        <div class="entry-card-icon">👤</div>
+        <h2>Personal <em>Athletes</em></h2>
+        <p>Clienti privati di personal training: schede personalizzate, calendario sessioni, progress tracking, fatturazione, comunicazione diretta con i clienti.</p>
+        <div class="entry-card-stats">
+          <div class="entry-card-stat"><strong class="tick" data-count="8">0</strong><span>Clienti attivi</span></div>
+          <div class="entry-card-stat"><strong class="tick" data-count="12">0</strong><span>Sessioni 7gg</span></div>
+          <div class="entry-card-stat"><strong class="tick" data-count="87" data-suffix="%">0</strong><span>Aderenza</span></div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <footer class="entry-footer">
+    <span>Sistema gestionale per Marcello Tavola — Head Coach Swiss-Ski WC</span>
+    <span>Demo prototipo · in sviluppo</span>
+  </footer>
+</main>
+
+<script src="assets/app.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => window.__animateCounters(), 600);
+    initMagneticButtons();
+  });
+</script>
+</body>
+</html>
