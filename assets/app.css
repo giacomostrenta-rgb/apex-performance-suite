@@ -5373,144 +5373,71 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
    v6 — REALISTIC ANATOMY + SWISS-SKI IDENTITY + FORM MODALS
    ============================================================ */
 
-/* Realistic anatomy stage — premium dark studio backdrop */
+/* Realistic anatomy stage — clean professional backdrop */
 .anatomy-stage.realistic {
   position: relative;
-  aspect-ratio: 567 / 423;
+  aspect-ratio: 1008 / 1561;
   height: auto;
   width: 100%;
-  max-width: 720px;
+  max-width: 380px;
   margin: 0 auto;
   padding: 0;
-  border: 1px solid #1A2438;
-  border-radius: 16px;
+  border: 1px solid #2A2A30;
+  border-radius: 14px;
   overflow: hidden;
-  background:
-    /* spotlight from above */
-    radial-gradient(ellipse 60% 80% at 50% 0%, rgba(212,165,116,0.10), transparent 60%),
-    /* subtle red glow from one side (Swiss accent) */
-    radial-gradient(circle at 100% 50%, rgba(200,16,46,0.06), transparent 50%),
-    /* deep navy base */
-    linear-gradient(180deg, #0B1929 0%, #0E1F33 50%, #14253D 100%);
-  box-shadow:
-    inset 0 0 100px rgba(0,0,0,0.4),
-    0 20px 60px -15px rgba(0,0,0,0.4);
+  background: #20201E;
+  box-shadow: 0 10px 30px -10px rgba(0,0,0,0.25);
 }
 
-/* Topographic contour lines decoration */
-.anatomy-stage.realistic::before {
-  content: '';
-  position: absolute; inset: 0;
-  background-image:
-    radial-gradient(ellipse 35% 50% at 50% 50%, transparent 0%, transparent 30%, rgba(255,255,255,0.025) 31%, rgba(255,255,255,0.025) 32%, transparent 33%),
-    radial-gradient(ellipse 45% 60% at 50% 50%, transparent 0%, transparent 40%, rgba(255,255,255,0.02) 41%, rgba(255,255,255,0.02) 42%, transparent 43%),
-    radial-gradient(ellipse 55% 70% at 50% 50%, transparent 0%, transparent 50%, rgba(255,255,255,0.015) 51%, rgba(255,255,255,0.015) 52%, transparent 53%),
-    radial-gradient(ellipse 65% 80% at 50% 50%, transparent 0%, transparent 60%, rgba(255,255,255,0.012) 61%, rgba(255,255,255,0.012) 62%, transparent 63%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Floor reflection & vignette */
-.anatomy-stage.realistic::after {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 70% 12% at 50% 95%, rgba(0,0,0,0.5), transparent 60%),
-    radial-gradient(ellipse 80% 80% at 50% 50%, transparent 50%, rgba(0,0,0,0.35) 100%);
-  pointer-events: none;
-  z-index: 3;
-}
+/* Decorative overlays disabled for new clean body image */
+.anatomy-stage.realistic::before,
+.anatomy-stage.realistic::after { display: none; }
 
 .anatomy-img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  filter:
-    drop-shadow(0 0 30px rgba(212,165,116,0.12))
-    drop-shadow(0 14px 40px rgba(0,0,0,0.6))
-    contrast(1.15)
-    brightness(1.02);
-  position: relative; z-index: 2;
-  mix-blend-mode: screen;
+  object-fit: cover;
+  position: relative; z-index: 1;
+  display: block;
 }
 
-/* CSS mask strip over the waist to hide the bright ellipse */
-.anatomy-stage.realistic .ellipse-mask {
-  position: absolute;
-  left: 28%; right: 28%;
-  top: 56.5%; height: 6.5%;
-  z-index: 4; pointer-events: none;
-  background:
-    linear-gradient(90deg,
-      transparent 0%,
-      rgba(85,90,100,0.0) 5%,
-      rgba(85,90,100,0.55) 18%,
-      rgba(85,90,100,0.85) 35%,
-      rgba(85,90,100,0.95) 50%,
-      rgba(85,90,100,0.85) 65%,
-      rgba(85,90,100,0.55) 82%,
-      rgba(85,90,100,0.0) 95%,
-      transparent 100%);
-  filter: blur(4px);
-  border-radius: 50%;
-}
+/* Legacy ellipse-mask non più necessaria con la nuova immagine */
+.anatomy-stage.realistic .ellipse-mask { display: none; }
 
-/* Brand watermark on stage */
-.anatomy-stage.realistic .stage-brand {
-  position: absolute;
-  bottom: 14px; left: 16px;
+/* Legacy stage overlays disabilitati */
+.anatomy-stage.realistic .stage-brand,
+.anatomy-stage.realistic .stage-meta,
+.anatomy-stage.realistic .stage-axis { display: none; }
+
+/* Injury pin nuovo stile — pallino rosso pulsante con label flag */
+.anatomy-stage.realistic .injury-pin {
+  width: 20px; height: 20px;
+  border: 3px solid white;
+  box-shadow:
+    0 0 0 6px rgba(200,16,46,0.20),
+    0 0 24px rgba(200,16,46,0.6),
+    0 4px 12px rgba(0,0,0,0.5);
   z-index: 5;
-  display: flex; align-items: center; gap: 8px;
-  color: rgba(255,255,255,0.5);
-  font-size: 9.5px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.18em;
 }
-.anatomy-stage.realistic .stage-brand .swiss-flag { width: 12px; height: 12px; opacity: 0.9; }
-
-.anatomy-stage.realistic .stage-meta {
-  position: absolute;
-  bottom: 14px; right: 16px;
-  z-index: 5;
-  color: rgba(255,255,255,0.5);
-  font-size: 9.5px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.14em;
-  font-feature-settings: 'tnum';
-}
-
-.anatomy-stage.realistic .stage-axis {
-  position: absolute;
-  top: 14px; right: 16px;
-  z-index: 5;
-  color: rgba(255,255,255,0.45);
-  font-size: 9px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.16em;
-  display: flex; align-items: center; gap: 8px;
-}
-.anatomy-stage.realistic .stage-axis::before {
-  content: ''; width: 8px; height: 8px; border-radius: 50%;
-  background: var(--good);
-  animation: pulseGreen 2s infinite;
-}
-
-/* Crosshair around the injury pin */
 .anatomy-stage.realistic .injury-pin::before,
 .anatomy-stage.realistic .injury-pin::after {
   background: var(--accent);
 }
-.anatomy-stage.realistic .injury-pin {
-  box-shadow: 0 0 0 4px rgba(200,16,46,0.25), 0 0 24px rgba(200,16,46,0.5), 0 4px 12px rgba(0,0,0,0.4);
-}
 .anatomy-stage.realistic .injury-pin-label {
-  background: rgba(255,255,255,0.95);
+  background: white;
   color: var(--text);
-  backdrop-filter: blur(6px);
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  box-shadow: 0 6px 20px -4px rgba(0,0,0,0.4);
+  left: 36px;
 }
 .anatomy-stage.realistic .injury-pin-label::before {
-  border-right-color: rgba(255,255,255,0.95);
+  border-right-color: white;
+  border-width: 6px;
 }
 
 /* Override fallback colors for dark backdrop */

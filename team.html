@@ -1527,20 +1527,27 @@ function initSnowflakes() {
 
 // ============ ANATOMICAL BODY SVG ============
 function bodySvg(injuryRegion) {
-  // Pin positions calibrated to body.png (567×423 aspect-locked).
-  // Image shows mannequin facing viewer — athlete's RIGHT is image LEFT.
+  // Pin positions calibrated to NEW body.png (1008×1561, aspect 0.646).
+  // Image: 3D mannequin frontale — athlete's RIGHT is image LEFT.
+  // Coordinate verticali principali (% di 1561):
+  //   testa ~5% · spalle ~21% · torace ~30% · ombelico ~46%
+  //   bacino ~55% · ginocchia ~77% · caviglie ~95%
   const pins = {
-    'knee-right':     { left: 47.5, top: 80.5, label: 'Ginocchio dx · LCA' },
-    'knee-left':      { left: 53.0, top: 80.5, label: 'Ginocchio sx' },
-    'shoulder-right': { left: 41.5, top: 27.5, label: 'Spalla dx · Bankart' },
-    'shoulder-left':  { left: 58.5, top: 27.5, label: 'Spalla sx' },
-    'ankle-right':    { left: 47.0, top: 95.0, label: 'Caviglia dx' },
-    'ankle-left':     { left: 53.0, top: 95.0, label: 'Caviglia sx' },
-    'thumb-right':    { left: 32.0, top: 62.0, label: 'Pollice dx' },
-    'thumb-left':     { left: 68.0, top: 62.0, label: 'Pollice sx' },
-    'lumbar':         { left: 50.0, top: 50.5, label: 'Lombare' },
-    'chest':          { left: 50.0, top: 38.0, label: 'Torace' },
-    'hip':            { left: 50.0, top: 60.0, label: 'Bacino' },
+    'knee-right':     { left: 44, top: 77.5, label: 'Ginocchio dx' },
+    'knee-left':      { left: 56, top: 77.5, label: 'Ginocchio sx' },
+    'shoulder-right': { left: 36, top: 22,   label: 'Spalla dx' },
+    'shoulder-left':  { left: 64, top: 22,   label: 'Spalla sx' },
+    'ankle-right':    { left: 44, top: 95,   label: 'Caviglia dx' },
+    'ankle-left':     { left: 56, top: 95,   label: 'Caviglia sx' },
+    'wrist-right':    { left: 28, top: 58,   label: 'Polso dx' },
+    'wrist-left':     { left: 72, top: 58,   label: 'Polso sx' },
+    'thumb-right':    { left: 26, top: 60,   label: 'Pollice dx' },
+    'thumb-left':     { left: 74, top: 60,   label: 'Pollice sx' },
+    'lumbar':         { left: 50, top: 46,   label: 'Lombare' },
+    'chest':          { left: 50, top: 30,   label: 'Torace' },
+    'hip':            { left: 50, top: 55,   label: 'Bacino' },
+    'thigh-right':    { left: 44, top: 65,   label: 'Coscia dx' },
+    'thigh-left':     { left: 56, top: 65,   label: 'Coscia sx' },
   };
   const pin = pins[injuryRegion];
 
