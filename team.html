@@ -1395,7 +1395,8 @@ function renderRehabDetail(athleteId) {
       </div>
     </div>
 
-    <div class="grid grid-2" style="margin-bottom:18px;align-items:start;">
+    <!-- ROW 1: Body anatomy (1fr) + RTS criteria (1.8fr) -->
+    <div class="grid grid-1-2" style="gap:14px;margin-bottom:14px;align-items:start;">
       <div class="card glow">
         <div class="card-header">
           <div><h3 class="card-title">Distretto interessato</h3><p class="card-sub">Mappa anatomica · ${c.athleteId === 'csu' ? 'ginocchio dx · LCA' : c.athleteId === 'gca' ? 'spalla dx · Bankart' : 'lombare'}</p></div>
@@ -1416,17 +1417,19 @@ function renderRehabDetail(athleteId) {
           </div>
         `).join('')}
       </div>
+    </div>
+
+    <!-- ROW 2: Carico (1fr) + Log giornaliero (2fr) -->
+    <div class="grid grid-1-2" style="gap:14px;margin-bottom:14px;align-items:start;">
       <div class="card glow">
         <div class="card-header"><h3 class="card-title">Carico settimanale</h3><p class="card-sub">Andamento riprogressivo</p></div>
-        <div class="chart-container" style="height:200px;"><canvas id="rehab-load-${c.athleteId}"></canvas></div>
+        <div class="chart-container" style="height:180px;"><canvas id="rehab-load-${c.athleteId}"></canvas></div>
         <div class="divider"></div>
         <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px;"><span class="muted">Settimana corr.</span><strong class="tabular">${c.loadHistory[c.loadHistory.length-1].value} au</strong></div>
         <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px;"><span class="muted">vs scorsa sett.</span><strong class="text-good tabular">+${c.loadHistory[c.loadHistory.length-1].value - c.loadHistory[c.loadHistory.length-2].value} au</strong></div>
         <div style="display:flex;justify-content:space-between;font-size:12.5px;"><span class="muted">% di carico pieno</span><strong class="tabular">${Math.round((c.loadHistory[c.loadHistory.length-1].value/3000)*100)}%</strong></div>
       </div>
-    </div>
 
-    <div class="grid grid-2" style="margin-bottom:18px;">
       <div class="card card-pad-0 glow">
         <div style="padding:18px 22px;border-bottom:1px solid var(--border);">
           <h3 class="card-title">Log giornaliero · ultimi 5 giorni</h3>
@@ -1445,7 +1448,10 @@ function renderRehabDetail(athleteId) {
           <div style="font-size:11.5px;color:var(--text-3);">${m.notes}</div>
         </div>`).join('')}
       </div>
+    </div>
 
+    <!-- ROW 3: Esercizi correnti (full width) -->
+    <div style="margin-bottom:14px;">
       <div class="card glow">
         <div class="card-header"><h3 class="card-title">Esercizi correnti</h3><p class="card-sub">Fase ${c.phases.find(p => p.current)?.name || '—'}</p></div>
         ${c.currentExercises.map((ex, i) => `<div class="workout-item">
