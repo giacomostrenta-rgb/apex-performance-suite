@@ -2798,6 +2798,66 @@ function renderSessionDetails(s) {
   </div>`;
 }
 
+// ============ NEXT ACTIVITIES per atleta ============
+function nextActivitiesHtml(a) {
+  const today = new Date('2026-05-07'); today.setHours(0,0,0,0);
+  const events = T.calendarEvents
+    .filter(e => e.athleteIds.includes(a.id) && new Date(e.date) >= today)
+    .sort((x, y) => {
+      const d = new Date(x.date) - new Date(y.date);
+      if (d !== 0) return d;
+      return (x.time || '').localeCompare(y.time || '');
+    })
+    .slice(0, 5);
+
+  if (!events.length) {
+    return `<div class="next-acts">
+      <div class="next-acts-head">
+        <h4><span class="live-dot"></span>Prossime attività</h4>
+      </div>
+      <div class="next-acts-empty">
+        <strong>Nessuna attività programmata</strong>
+        Aggiungi sessioni o eventi dal calendario.
+      </div>
+    </div>`;
+  }
+
+  const dateLabel = (iso) => {
+    const d = new Date(iso);
+    const diff = Math.round((d - today) / (1000*60*60*24));
+    if (diff === 0) return 'OGGI';
+    if (diff === 1) return 'DOMANI';
+    return d.toLocaleDateString('it-IT', { weekday: 'short', day: '2-digit', month: 'short' }).toUpperCase();
+  };
+
+  return `<div class="next-acts">
+    <div class="next-acts-head">
+      <h4><span class="live-dot"></span>Prossime attività</h4>
+      <div class="count">${events.length} eventi · prossimi giorni</div>
+    </div>
+    <div class="next-acts-grid">
+      ${events.map(e => {
+        const t = T.sessionTypes[e.type] || { color: '#76767E', soft: '#EFEFF1', icon: '', label: e.type };
+        const isToday = new Date(e.date).getTime() === today.getTime();
+        return `<div class="next-act ${isToday ? 'today' : ''}" style="border-left-color:${t.color};" data-action="open-day" data-date="${e.date}">
+          <div class="next-act-meta">
+            <span class="next-act-date">${dateLabel(e.date)}</span>
+            <span class="next-act-time">${e.time !== '—' && e.time ? e.time : ''}</span>
+          </div>
+          <div class="next-act-title">${e.title}</div>
+          <div class="next-act-bottom">
+            <span class="next-act-type" style="color:${t.color};">
+              <span class="next-act-type-ico" style="background:${t.soft};">${t.icon}</span>
+              ${t.short}
+            </span>
+            <span class="next-act-loc">${e.loc !== '—' ? e.loc : ''}</span>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+
 function renderAthletePageTabs(a) {
   // ===== PROFILO TAB (anagrafica + readiness derivation) =====
   const sex = a.sex === 'F' ? 'female' : 'male';
@@ -2808,6 +2868,8 @@ function renderAthletePageTabs(a) {
   const computedReadiness = Math.round(components.reduce((s, c) => s + c.score * c.weight, 0));
 
   document.getElementById('ap-profilo').innerHTML = `
+    ${nextActivitiesHtml(a)}
+
     <div class="grid grid-2-1" style="gap:18px;margin-bottom:18px;">
       <div>
         <h3 class="section-title">Anagrafica</h3>

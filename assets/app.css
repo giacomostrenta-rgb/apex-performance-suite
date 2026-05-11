@@ -2955,6 +2955,114 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 
 /* ============================================================
+   v17 — NEXT ACTIVITIES CARD (athlete profile)
+   ============================================================ */
+.next-acts {
+  background: linear-gradient(155deg, #FFFFFF 0%, var(--surface-2) 100%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+}
+.next-acts-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.next-acts-head h4 {
+  margin: 0;
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--text-3);
+  display: flex; align-items: center; gap: 8px;
+}
+.next-acts-head h4 .live-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--good); display: inline-block;
+  animation: pulseGreen 1.6s infinite;
+}
+.next-acts-head .count {
+  font-size: 11.5px; color: var(--text-3);
+  font-weight: 600;
+}
+.next-acts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+.next-act {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  border-left-width: 4px;
+  cursor: pointer;
+  transition: all .15s var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+.next-act:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+}
+.next-act.today {
+  background: linear-gradient(155deg, #FFF8E1 0%, #FFFAF0 100%);
+}
+.next-act-meta {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 8px;
+}
+.next-act-date {
+  font-size: 10.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-3);
+  font-feature-settings: 'tnum';
+}
+.next-act.today .next-act-date { color: #B45309; }
+.next-act-time {
+  font-size: 12px; font-weight: 700;
+  font-feature-settings: 'tnum';
+  color: var(--text);
+}
+.next-act-title {
+  font-size: 13.5px; font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.next-act-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+.next-act-type {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 600;
+}
+.next-act-type-ico {
+  width: 18px; height: 18px;
+  border-radius: 4px;
+  display: grid; place-items: center;
+}
+.next-act-type-ico svg { width: 11px; height: 11px; }
+.next-act-loc {
+  font-size: 11px; color: var(--text-3);
+  display: inline-flex; align-items: center; gap: 4px;
+  max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.next-acts-empty {
+  text-align: center;
+  padding: 28px 14px;
+  color: var(--text-3);
+  font-size: 13px;
+}
+.next-acts-empty strong {
+  display: block; color: var(--text);
+  font-size: 14px; font-weight: 600;
+  margin-bottom: 4px;
+}
+
+/* ============================================================
    v15 — ATHLETE PAGE: sessioni espandibili + readiness derivation
    ============================================================ */
 
