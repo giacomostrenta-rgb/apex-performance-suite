@@ -478,48 +478,67 @@
     </div>
   </div>
   <div class="content">
-    <div class="page-header">
-      <p class="page-eyebrow">Pianificazione squadra</p>
-      <h2>Calendario</h2>
-      <p>Allenamenti, gare, rehab, recovery, trasferte. Clicca un giorno per i dettagli, clicca + per aggiungere un evento.</p>
-    </div>
+    <div class="cal-shell">
+      <!-- MAIN CALENDAR -->
+      <div class="cal-main">
+        <!-- Editorial header -->
+        <div class="cal-editorial-head">
+          <div class="cal-editorial-eyebrow">Pianificazione squadra · Stagione 2025/26</div>
+          <div class="cal-editorial-row">
+            <h1 class="cal-editorial-title" id="cal-month-title">—</h1>
+            <div class="cal-editorial-controls">
+              <div class="cal-view-toggle">
+                <button class="active" data-cal-view="month">Mese</button>
+                <button data-cal-view="week">Settimana</button>
+                <button data-cal-view="day">Giorno</button>
+              </div>
+              <button class="cal-nav-btn" data-action="cal-prev-month" title="Mese precedente">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <button class="cal-today-btn" data-action="cal-today">Oggi</button>
+              <button class="cal-nav-btn" data-action="cal-next-month" title="Mese successivo">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+              <button class="cal-today-btn" style="background:#0F766E;border-color:#0F766E;box-shadow:0 4px 12px -4px rgba(15,118,110,0.4);" data-action="new-event">+ Nuovo</button>
+            </div>
+          </div>
+        </div>
 
-    <!-- Apple-style calendar -->
-    <div class="apple-cal">
-      <div class="apple-cal-header">
-        <div class="apple-cal-nav">
-          <button class="apple-cal-today" data-action="cal-today">Oggi</button>
+        <!-- Month stats bar -->
+        <div class="cal-stats-bar" id="cal-stats-bar"></div>
+
+        <!-- Filters -->
+        <div class="cal-filters" id="cal-filters"></div>
+
+        <!-- Weekdays -->
+        <div class="cal-weekdays">
+          <div class="cal-weekday">Lun</div>
+          <div class="cal-weekday">Mar</div>
+          <div class="cal-weekday">Mer</div>
+          <div class="cal-weekday">Gio</div>
+          <div class="cal-weekday">Ven</div>
+          <div class="cal-weekday wkn">Sab</div>
+          <div class="cal-weekday wkn">Dom</div>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;">
-          <button class="apple-cal-btn" data-action="cal-prev-month" title="Mese precedente">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
-          </button>
-          <div class="apple-cal-title" id="apple-cal-title">—</div>
-          <button class="apple-cal-btn" data-action="cal-next-month" title="Mese successivo">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
-          </button>
-        </div>
-        <div class="apple-cal-nav apple-cal-nav-right">
-          <button class="apple-cal-today" style="background:#34C759;color:white;" data-action="new-event">+ Evento</button>
-        </div>
+
+        <!-- Grid -->
+        <div class="cal-grid-premium" id="cal-grid-premium"></div>
       </div>
 
-      <!-- Filters by event type -->
-      <div class="apple-cal-filters" id="apple-cal-filters"></div>
+      <!-- SIDEBAR -->
+      <aside class="cal-sidebar">
+        <div class="cal-sidebar-head">
+          <div class="cal-sidebar-eyebrow" id="cal-side-eyebrow">OGGI · 07 maggio</div>
+          <h3 class="cal-sidebar-title" id="cal-side-title">Mercoledì</h3>
+          <div class="cal-sidebar-sub" id="cal-side-sub">—</div>
+        </div>
+        <div class="cal-agenda" id="cal-side-agenda"></div>
 
-      <!-- Weekday header -->
-      <div class="apple-cal-weekdays">
-        <div class="apple-cal-weekday">Lun</div>
-        <div class="apple-cal-weekday">Mar</div>
-        <div class="apple-cal-weekday">Mer</div>
-        <div class="apple-cal-weekday">Gio</div>
-        <div class="apple-cal-weekday">Ven</div>
-        <div class="apple-cal-weekday" style="color:#FF3B30;">Sab</div>
-        <div class="apple-cal-weekday" style="color:#FF3B30;">Dom</div>
-      </div>
-
-      <!-- Calendar grid -->
-      <div class="apple-cal-grid" id="apple-cal-grid"></div>
+        <div class="cal-sidebar-section">
+          <h5>Prossimi 7 giorni</h5>
+          <div id="cal-side-upcoming"></div>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
@@ -2327,22 +2346,28 @@ function renderCalendarLegend() {
 // Filtri attivi (set di tipi visibili)
 let _calFilters = new Set(Object.keys((window.DATA && window.DATA.swissTeam && window.DATA.swissTeam.sessionTypes) || {}));
 
+// Selected day for sidebar (default today)
+let _calSelectedDate = '2026-05-07';
+
 function renderCalendarV2() {
   const year = _calMonth.getFullYear();
   const month = _calMonth.getMonth();
   const today = new Date('2026-05-07'); today.setHours(0,0,0,0);
 
-  // Update title
-  const monthName = _calMonth.toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
-  const titleEl = document.getElementById('apple-cal-title');
-  if (titleEl) titleEl.textContent = monthName;
+  // Editorial title — month italic in serif accent
+  const titleEl = document.getElementById('cal-month-title');
+  if (titleEl) {
+    const monthName = _calMonth.toLocaleDateString('it-IT', { month: 'long' });
+    const yearStr = _calMonth.getFullYear();
+    titleEl.innerHTML = `<em>${monthName}</em> ${yearStr}`;
+  }
 
   // Render filters
-  const filtersEl = document.getElementById('apple-cal-filters');
+  const filtersEl = document.getElementById('cal-filters');
   if (filtersEl && !filtersEl.dataset.rendered) {
     filtersEl.dataset.rendered = '1';
     filtersEl.innerHTML = Object.entries(T.sessionTypes).map(([k, t]) => `
-      <div class="apple-cal-filter active" data-cal-filter="${k}" style="color:${t.color};">
+      <div class="cal-filter active" data-cal-filter="${k}" style="color:${t.color};">
         <span class="dot" style="background:${t.color};"></span>${t.short}
       </div>
     `).join('');
@@ -2356,23 +2381,38 @@ function renderCalendarV2() {
     });
   }
 
-  // Find Monday of week containing 1st of month
-  const first = new Date(year, month, 1);
-  const dayOfWeek = (first.getDay() + 6) % 7; // 0=Mon
-  const start = new Date(year, month, 1 - dayOfWeek);
-
-  // Events indexed by date, filtered
+  // Events filtered
   const evByDate = {};
   T.calendarEvents.forEach(e => {
     if (!_calFilters.has(e.type)) return;
     (evByDate[e.date] = evByDate[e.date] || []).push(e);
   });
-
-  // Sort events within each day by time
   Object.values(evByDate).forEach(arr => arr.sort((a,b) => (a.time || '').localeCompare(b.time || '')));
 
-  // Render 6 weeks = 42 cells
-  const grid = document.getElementById('apple-cal-grid');
+  // Month stats
+  const monthEvents = T.calendarEvents.filter(e => {
+    const d = new Date(e.date);
+    return d.getFullYear() === year && d.getMonth() === month && _calFilters.has(e.type);
+  });
+  const counts = monthEvents.reduce((acc, e) => { acc[e.type] = (acc[e.type] || 0) + 1; return acc; }, {});
+  const statsBar = document.getElementById('cal-stats-bar');
+  if (statsBar) {
+    statsBar.innerHTML = `
+      <div class="cal-stat"><strong>${monthEvents.length}</strong><span>Eventi totali</span></div>
+      <div class="cal-stat"><strong>${counts.palestra || 0}</strong><span>Palestra</span></div>
+      <div class="cal-stat"><strong>${counts.sci || 0}</strong><span>Sci</span></div>
+      <div class="cal-stat"><strong>${counts.gara || 0}</strong><span>Gare</span></div>
+      <div class="cal-stat"><strong>${counts.rehab || 0}</strong><span>Rehab</span></div>
+      <div class="cal-stat"><strong>${counts.recovery || 0}</strong><span>Recovery</span></div>
+      <div class="cal-stat" style="margin-left:auto;"><strong>${monthEvents.reduce((s,e) => s + (e.duration || 0), 0) / 60 | 0}h</strong><span>Durata totale</span></div>
+    `;
+  }
+
+  // Grid
+  const first = new Date(year, month, 1);
+  const dayOfWeek = (first.getDay() + 6) % 7;
+  const start = new Date(year, month, 1 - dayOfWeek);
+  const grid = document.getElementById('cal-grid-premium');
   if (!grid) return;
   const cells = [];
   for (let i = 0; i < 42; i++) {
@@ -2380,27 +2420,124 @@ function renderCalendarV2() {
     const iso = d.toISOString().split('T')[0];
     const isOther = d.getMonth() !== month;
     const isToday = d.getTime() === today.getTime();
-    const dow = (d.getDay() + 6) % 7; // 0=Mon, 5-6=weekend
+    const isSelected = iso === _calSelectedDate;
+    const dow = (d.getDay() + 6) % 7;
     const isWeekend = dow >= 5;
     const events = evByDate[iso] || [];
+    const totalLoad = events.reduce((s, e) => s + (e.load || 0), 0);
 
-    cells.push(`<div class="apple-cal-cell ${isOther ? 'other-month' : ''} ${isToday ? 'today' : ''} ${isWeekend ? 'weekend' : ''}" data-action="open-day" data-date="${iso}">
-      <div class="apple-cal-num">${d.getDate()}</div>
-      <div class="apple-cal-events">
-        ${events.slice(0, 4).map(e => {
-          const t = T.sessionTypes[e.type] || { color: '#8E8E93' };
+    cells.push(`<div class="cal-day ${isOther ? 'other-month' : ''} ${isToday ? 'today' : ''} ${isWeekend ? 'weekend' : ''} ${isSelected ? 'selected' : ''} ${totalLoad > 0 ? 'has-load' : ''}" data-action="select-day" data-date="${iso}">
+      <div class="cal-day-head">
+        <span class="cal-day-num">${d.getDate()}</span>
+        ${totalLoad > 0 ? `<span class="cal-day-load">${totalLoad}au</span>` : ''}
+      </div>
+      <div class="cal-events">
+        ${events.slice(0, 3).map(e => {
+          const t = T.sessionTypes[e.type] || { color: '#8E8E93', soft: '#F2F2F7' };
           const athlete = e.athleteIds.length ? (T.athletes.find(x => x.id === e.athleteIds[0])?.name.split(' ')[0] || '') : '';
           const txt = e.athleteIds.length === 1 && athlete ? athlete : e.title;
           const extra = e.athleteIds.length > 1 ? ` +${e.athleteIds.length - 1}` : '';
-          return `<div class="apple-cal-event" style="background:${t.color};" title="${e.time} · ${e.title} · ${e.athleteIds.length} atleti">
-            ${e.time !== '—' && e.time ? `<span class="ev-time">${e.time}</span>` : ''}${txt}${extra}
+          return `<div class="cal-event" style="--ev-color:${t.color};--ev-soft:${t.soft};" title="${e.time} · ${e.title} · ${e.athleteIds.length} atleti">
+            <span class="ev-ico">${t.icon || ''}</span>
+            ${e.time !== '—' && e.time ? `<span class="ev-time">${e.time}</span>` : ''}
+            <span class="ev-label">${txt}${extra}</span>
           </div>`;
         }).join('')}
-        ${events.length > 4 ? `<div class="apple-cal-more">+${events.length - 4} altri</div>` : ''}
+        ${events.length > 3 ? `<div class="cal-event-more">+${events.length - 3} altri</div>` : ''}
       </div>
+      <div class="cal-day-add">+</div>
     </div>`);
   }
   grid.innerHTML = cells.join('');
+
+  // Sidebar
+  renderCalSidebar();
+}
+
+function renderCalSidebar() {
+  const iso = _calSelectedDate;
+  const d = new Date(iso);
+  const today = new Date('2026-05-07'); today.setHours(0,0,0,0);
+  const isToday = d.getTime() === today.getTime();
+
+  // Header
+  const eyebrow = isToday ? `OGGI · ${d.toLocaleDateString('it-IT', { day: '2-digit', month: 'long' })}` :
+    d.toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' }).toUpperCase();
+  document.getElementById('cal-side-eyebrow').textContent = eyebrow;
+  document.getElementById('cal-side-title').textContent = d.toLocaleDateString('it-IT', { weekday: 'long' });
+
+  // Events for this day, filtered
+  const events = T.calendarEvents
+    .filter(e => e.date === iso && _calFilters.has(e.type))
+    .sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+
+  const totalAth = new Set(events.flatMap(e => e.athleteIds)).size;
+  const totalLoad = events.reduce((s, e) => s + (e.load || 0), 0);
+  document.getElementById('cal-side-sub').innerHTML = events.length ?
+    `<strong style="color:var(--text);">${events.length} eventi</strong> · ${totalAth} atleti · ${totalLoad} au` :
+    'Nessun evento';
+
+  // Agenda items
+  const agendaEl = document.getElementById('cal-side-agenda');
+  if (!events.length) {
+    agendaEl.innerHTML = `<div class="cal-agenda-empty">
+      <strong>Giornata libera</strong>
+      Click sui giorni del calendario per vedere le attività programmate.
+    </div>`;
+  } else {
+    agendaEl.innerHTML = events.map(e => {
+      const t = T.sessionTypes[e.type] || { color: '#76767E', icon: '', short: e.type };
+      const athNames = e.athleteIds.slice(0, 3).map(id => {
+        const a = T.athletes.find(x => x.id === id);
+        return a ? a.name.split(' ')[0] : '';
+      }).filter(Boolean).join(', ');
+      const more = e.athleteIds.length > 3 ? ` +${e.athleteIds.length - 3}` : '';
+      return `<div class="cal-agenda-item" data-action="open-day" data-date="${e.date}">
+        <div class="cal-agenda-time">${e.time !== '—' && e.time ? e.time : '—'}</div>
+        <div class="cal-agenda-content" style="--ev-color:${t.color};">
+          <strong>${e.title}</strong>
+          <div class="agenda-meta">
+            <span class="agenda-type" style="--ev-color:${t.color};">${t.icon || ''}${t.short}</span>
+            <span>· ${e.duration ? e.duration + '\\'' : '—'}</span>
+            <span>· ${e.athleteIds.length} atl${e.athleteIds.length > 1 ? 'eti' : 'eta'}</span>
+          </div>
+          ${athNames ? `<div style="margin-top:6px;font-size:11px;color:var(--text-3);">${athNames}${more}</div>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Upcoming 7 days
+  const upcomingEl = document.getElementById('cal-side-upcoming');
+  const upcomingEvents = [];
+  for (let off = 1; off <= 7; off++) {
+    const dd = new Date(today); dd.setDate(today.getDate() + off);
+    const iso2 = dd.toISOString().split('T')[0];
+    T.calendarEvents.forEach(e => {
+      if (e.date === iso2 && _calFilters.has(e.type) && upcomingEvents.length < 5) {
+        upcomingEvents.push(e);
+      }
+    });
+  }
+  if (!upcomingEvents.length) {
+    upcomingEl.innerHTML = '<div style="text-align:center;color:var(--text-3);font-size:12px;padding:14px 0;">Nessun evento</div>';
+  } else {
+    upcomingEl.innerHTML = upcomingEvents.slice(0, 5).map(e => {
+      const dd = new Date(e.date);
+      const t = T.sessionTypes[e.type] || { color: '#76767E', short: e.type };
+      return `<div class="cal-upcoming-item" data-action="select-day" data-date="${e.date}" style="cursor:pointer;">
+        <div class="cal-upcoming-day" style="border-left:3px solid ${t.color};">
+          <strong>${dd.getDate()}</strong>
+          <span>${dd.toLocaleDateString('it-IT', { month: 'short' })}</span>
+        </div>
+        <div class="up-info">
+          <strong>${e.title}</strong>
+          <span>${e.time !== '—' && e.time ? e.time + ' · ' : ''}${t.short}</span>
+        </div>
+        <span class="pill muted" style="font-size:10px;font-feature-settings:'tnum';">${e.athleteIds.length}</span>
+      </div>`;
+    }).join('');
+  }
 }
 
 // Calendar event form
@@ -2432,7 +2569,12 @@ function calendarEventForm() {
 Object.assign(ACTIONS, {
   'cal-prev-month': () => { _calMonth.setMonth(_calMonth.getMonth() - 1); renderCalendarV2(); },
   'cal-next-month': () => { _calMonth.setMonth(_calMonth.getMonth() + 1); renderCalendarV2(); },
-  'cal-today': () => { _calMonth = new Date('2026-05-01'); renderCalendarV2(); },
+  'cal-today': () => { _calMonth = new Date('2026-05-01'); _calSelectedDate = '2026-05-07'; renderCalendarV2(); },
+  'select-day': (btn) => {
+    _calSelectedDate = btn.dataset.date;
+    // Update grid (re-render) and sidebar
+    renderCalendarV2();
+  },
   'open-day': (btn) => {
     const date = btn.dataset.date;
     const events = T.calendarEvents.filter(e => e.date === date);
