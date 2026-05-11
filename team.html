@@ -3069,9 +3069,11 @@ window.openAthletePage = function(id) {
     inj.style.display = 'none';
   }
 
-  // Reset to first tab
-  document.querySelectorAll('[data-page-tab]').forEach(t => t.classList.toggle('active', t.dataset.pageTab === 'anagrafica'));
-  document.querySelectorAll('[data-page-pane]').forEach(p => p.classList.toggle('active', p.dataset.pagePane === 'anagrafica'));
+  // Reset to first tab (Profilo & Readiness)
+  document.querySelectorAll('[data-page-tab]').forEach(t => t.classList.toggle('active', t.dataset.pageTab === 'profilo'));
+  document.querySelectorAll('[data-page-pane]').forEach(p => p.classList.toggle('active', p.dataset.pagePane === 'profilo'));
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'instant' });
 
   // Render all tabs into page IDs (reuse drawer renderers by remapping target IDs temporarily)
   renderAthletePageTabs(a);
