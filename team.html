@@ -2449,6 +2449,13 @@ function renderCalendarV2() {
   const wkdEl = document.querySelector('.cal-weekdays');
   if (wkdEl) wkdEl.style.display = _calView === 'month' ? '' : 'none';
 
+  // Apply view class to grid (resets month grid CSS for week/day)
+  const gridEl = document.getElementById('cal-grid-premium');
+  if (gridEl) {
+    gridEl.classList.remove('view-month', 'view-week', 'view-day');
+    gridEl.classList.add('view-' + _calView);
+  }
+
   // Dispatch render
   if (_calView === 'week') { renderWeekTimeline(); renderCalSidebar(); return; }
   if (_calView === 'day') { renderDayTimeline(); renderCalSidebar(); return; }

@@ -2961,6 +2961,32 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: #F0F0F2;
   gap: 1px;
 }
+.cal-grid-premium.view-week,
+.cal-grid-premium.view-day {
+  display: block;
+  background: white;
+  gap: 0;
+}
+.cal-grid-premium.view-week .cal-timeline,
+.cal-grid-premium.view-day .cal-timeline {
+  background: white;
+}
+
+/* Force a safe default size for icons embedded anywhere */
+.cal-tl-event svg,
+.cal-event svg,
+.next-act-type-ico svg,
+.agenda-type svg,
+.sess-cat-icon svg,
+.next-act svg {
+  width: 14px; height: 14px;
+}
+.cal-tl-event svg { width: 12px; height: 12px; }
+.cal-event svg { width: 11px; height: 11px; }
+.next-act-type-ico svg { width: 11px; height: 11px; }
+.agenda-type svg { width: 10px; height: 10px; }
+.sess-cat-icon svg { width: 22px; height: 22px; }
+.next-act .next-act-type svg { width: 11px; height: 11px; }
 .cal-day {
   background: white;
   min-height: 130px;
