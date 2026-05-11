@@ -1458,36 +1458,14 @@ function renderRehabDetail(athleteId) {
       </div>
     </div>
 
-    <div class="grid grid-3" style="margin-bottom:18px;">
-      <div class="card glow">
-        <div class="card-header"><h3 class="card-title">Imaging</h3><p class="card-sub">Esami strumentali</p></div>
-        ${c.imaging.map(im => `<div class="img-row">
-          <div class="img-date">${new Date(im.date).toLocaleDateString('it-IT')}</div>
-          <div class="img-type">${im.type}</div>
-          <div class="img-find">${im.findings}</div>
-        </div>`).join('')}
-        <button class="btn" style="margin-top:14px;width:100%;" data-action="upload-document">+ Aggiungi referto</button>
-      </div>
-
-      <div class="card glow">
-        <div class="card-header"><h3 class="card-title">Staff medico</h3><p class="card-sub">Team coinvolto</p></div>
-        ${c.team.map(t => `<div class="team-contact">
-          <div class="team-contact-name"><strong>${t.name}</strong><span>${t.role} · ${t.center}</span></div>
-          <div class="team-contact-call" title="${t.contact}" data-toast="Chiamata ${t.name}">📞</div>
-        </div>`).join('')}
-      </div>
-
-      <div class="card glow">
-        <div class="card-header"><h3 class="card-title">Comunicazione</h3><p class="card-sub">Note staff</p></div>
-        ${c.communication.map(m => `<div class="comm-row">
-          <div class="comm-avatar">${UTIL.initials(m.from)}</div>
-          <div class="comm-content">
-            <div class="comm-meta"><span class="comm-from">${m.from}</span><span class="comm-time">${m.date}</span></div>
-            <div class="comm-text">${m.text}</div>
-          </div>
-        </div>`).join('')}
-        <button class="btn" style="margin-top:14px;width:100%;" data-action="new-message">+ Nuovo messaggio</button>
-      </div>
+    <div class="card glow" style="margin-bottom:18px;">
+      <div class="card-header"><h3 class="card-title">Imaging</h3><p class="card-sub">Esami strumentali</p></div>
+      ${c.imaging.map(im => `<div class="img-row">
+        <div class="img-date">${new Date(im.date).toLocaleDateString('it-IT')}</div>
+        <div class="img-type">${im.type}</div>
+        <div class="img-find">${im.findings}</div>
+      </div>`).join('')}
+      <button class="btn" style="margin-top:14px;" data-action="upload-document">+ Aggiungi referto</button>
     </div>
 
     <div style="display:flex;gap:8px;justify-content:flex-end;">
