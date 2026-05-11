@@ -2508,24 +2508,28 @@ function renderStatusKpi() {
   const active = all.filter(a => !a.injury && a.readiness >= 65).length;
   const rehab = all.filter(a => a.injury || /rehab/i.test(a.status || '')).length;
   const inactive = all.filter(a => !a.injury && a.readiness < 65).length;
+  const ICON_ACTIVE = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
+  const ICON_REHAB = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M7 10v12"/><path d="M17 10v12"/><path d="M7 14h10"/><path d="M5 6h14a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v0a2 2 0 0 1 2-2z"/></svg>';
+  const ICON_INACTIVE = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>';
+
   document.getElementById('status-kpi').innerHTML = `
     <div class="status-card status-active">
       <div class="status-card-num">${active}</div>
       <div class="status-card-label">Atleti attivi</div>
       <div class="status-card-sub">Disponibili per allenamento e gare</div>
-      <div class="status-card-icon">🟢</div>
+      <div class="status-card-icon" style="color:var(--good);">${ICON_ACTIVE}</div>
     </div>
     <div class="status-card status-rehab">
       <div class="status-card-num">${rehab}</div>
       <div class="status-card-label">In rehab</div>
       <div class="status-card-sub">Protocollo riabilitativo attivo</div>
-      <div class="status-card-icon">🟠</div>
+      <div class="status-card-icon" style="color:var(--warn);">${ICON_REHAB}</div>
     </div>
     <div class="status-card status-inactive">
       <div class="status-card-num">${inactive}</div>
       <div class="status-card-label">Inattivi</div>
       <div class="status-card-sub">Readiness sotto soglia 65%</div>
-      <div class="status-card-icon">⚪</div>
+      <div class="status-card-icon" style="color:var(--text-3);">${ICON_INACTIVE}</div>
     </div>
   `;
 }
@@ -2956,7 +2960,7 @@ function renderAthleteSessions(a) {
       <div style="font-size:12px;color:var(--text-3);">Totale <strong style="color:var(--text);font-weight:700;font-size:22px;letter-spacing:-0.025em;font-feature-settings:'tnum';">${totalS}</strong></div>
     </div>
 
-    ${Object.entries(T.sessionTypes).map(([k, t]) => {
+    ${Object.entries(T.sessionTypes).filter(([_,t]) => t.isSession).map(([k, t]) => {
       const count = sessions[k] || 0;
       const pct = totalS > 0 ? Math.round((count / totalS) * 100) : 0;
       return `<div class="sess-cat" data-cat-key="${k}">
@@ -2968,7 +2972,7 @@ function renderAthleteSessions(a) {
           </div>
           <div class="sess-cat-count">${count}</div>
           <div class="sess-cat-pct"><strong>${pct}%</strong>del totale</div>
-          <div class="sess-cat-chevron">▾</div>
+          <div class="sess-cat-chevron"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg></div>
         </div>
         <div class="sess-cat-bar"><div class="sess-cat-bar-fill" style="width:${pct}%;background:${t.color};"></div></div>
         <div class="sess-cat-body">
@@ -3021,7 +3025,7 @@ function renderSessCatContent(athleteId, type) {
               <span>${s.load} au</span>
               <span>RPE ${s.rpe}</span>
             </div>
-            <div style="color:var(--text-3);font-size:14px;">▸</div>
+            <div style="color:var(--text-3);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg></div>
           </div>
           <div class="sess-row-exercises">${renderSessionDetails(s)}</div>
         </div>`;

@@ -2986,9 +2986,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   width: 44px; height: 44px;
   border-radius: 12px;
   display: grid; place-items: center;
-  font-size: 20px;
   flex-shrink: 0;
 }
+.sess-cat-icon svg {
+  width: 22px; height: 22px;
+}
+.session-group-icon svg { width: 20px; height: 20px; }
 .sess-cat-title strong {
   display: block; font-size: 15px; font-weight: 700;
   letter-spacing: -0.012em;
