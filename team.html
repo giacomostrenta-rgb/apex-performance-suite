@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div class="nav-section">Generale</div>
+  <div class="nav-section">Operativo</div>
   <a class="nav-link active" href="#" data-view="dashboard">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
     Dashboard
@@ -36,29 +36,17 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="17" cy="7" r="3"/><path d="M21 21v-1.5a3.5 3.5 0 0 0-3-3.45"/></svg>
     Atleti<span class="badge">16</span>
   </a>
-  <a class="nav-link" href="#" data-view="programma">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9h18M3 15h18M9 3v18"/></svg>
-    Programmazione
-  </a>
-  <a class="nav-link" href="#" data-view="test">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 17 5-5 4 4 8-8"/><path d="M21 8V3h-5"/></svg>
-    Test &amp; Performance
+  <a class="nav-link" href="#" data-view="calendario">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    Calendario
   </a>
   <a class="nav-link" href="#" data-view="gare">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V2h12v7M6 9h12M6 9l-2 4h16l-2-4M5 22h14M9 18v4M15 18v4M9 13v5M15 13v5M12 13v9"/></svg>
     Gare &amp; Risultati
   </a>
-  <a class="nav-link" href="#" data-view="calendario">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-    Calendario
-  </a>
   <a class="nav-link" href="#" data-view="infortuni">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12h6M12 9v6"/><circle cx="12" cy="12" r="9"/></svg>
     Cartelle Cliniche<span class="badge">2</span>
-  </a>
-  <a class="nav-link" href="#" data-view="video">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-    Neve &amp; Video
   </a>
 
   <div class="nav-section">Squadra</div>
@@ -106,205 +94,54 @@
 
   <div class="content">
 
-    <!-- HERO greeting + readiness gauge -->
-    <div class="dash-hero with-photo" style="display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;">
-      <div>
-        <p class="page-eyebrow">Stagione 2025/26 · Settimana 19</p>
-        <h1>Buongiorno <em>Marcello</em>,<br/>la squadra è in forma.</h1>
-        <p style="font-size:15px;color:var(--text-2);max-width:560px;margin:8px 0 24px;line-height:1.55;">14 atleti disponibili, 2 in cartella clinica. Prossima gara fra 3 giorni a <strong style="color:var(--text);">Zermatt-Cervinia</strong>. Marco Odermatt &amp; Lara Gut-Behrami in posizione TOP 5 WC.</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn primary" data-action="briefing">📋 Briefing pre-gara</button>
-          <button class="btn" data-view="programma">→ Programma settimana</button>
-          <button class="btn ghost" data-action="export-pdf-report">📄 Report PDF</button>
-        </div>
-      </div>
-      <div style="text-align:center;">
-        <div class="gauge-hero" id="gauge-readiness">
-          <svg class="gauge-svg" viewBox="0 0 200 200">
-            <defs>
-              <linearGradient id="gauge-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#C8102E"/>
-                <stop offset="50%" stop-color="#D4A574"/>
-                <stop offset="100%" stop-color="#0F766E"/>
-              </linearGradient>
-            </defs>
-            <circle class="gauge-track" cx="100" cy="100" r="90"/>
-            <circle class="gauge-fill" cx="100" cy="100" r="90" style="--circ: 565;"/>
-          </svg>
-          <div class="gauge-center">
-            <div class="gauge-value tick live-tick" data-count="81" data-suffix="%" data-live-key="readiness" data-suffix="%">0%</div>
-            <div class="gauge-label">Squad Readiness</div>
-          </div>
-        </div>
-        <div style="margin-top:14px;font-size:11.5px;color:var(--text-3);"><span class="text-good" style="font-weight:600;">↑ +3%</span> vs settimana scorsa</div>
-      </div>
+    <div class="page-header" style="margin-bottom:20px;">
+      <p class="page-eyebrow" id="dash-eyebrow">Stagione 2025/26 · Oggi</p>
+      <h2>Stato <em>della squadra</em></h2>
+      <p>Fotografia sintetica della nazionale: chi è disponibile, chi è in recupero, readiness top 10 e cosa succede nei prossimi giorni.</p>
     </div>
 
-    <!-- COUNTDOWN BANNER -->
-    <div class="countdown-banner">
-      <div class="countdown-mountain">
-        <svg viewBox="0 0 600 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0,200 L0,150 L60,80 L120,120 L180,40 L240,90 L300,30 L360,70 L420,20 L480,60 L540,30 L600,80 L600,200 Z" fill="white"/>
-        </svg>
-      </div>
-      <div class="countdown-grid" data-countdown-target="2026-05-09T11:30:00" style="grid-template-columns:1fr auto auto;gap:32px;">
-        <div class="countdown-info">
-          <span class="eyebrow">Prossima gara · Coppa del Mondo</span>
-          <h3>Zermatt-Cervinia <em>DH</em></h3>
-          <p>09 maggio 2026 · 11:30 · convocati Speed Group · pista del Cervino</p>
-          <div style="margin-top:14px;display:flex;gap:8px;">
-            <button class="btn" style="background:rgba(255,255,255,0.10);border-color:rgba(255,255,255,0.15);color:white;" data-action="convocation">Convocazione</button>
-            <button class="btn" style="background:rgba(255,255,255,0.10);border-color:rgba(255,255,255,0.15);color:white;" data-action="briefing">Briefing</button>
-          </div>
-        </div>
+    <!-- STATUS KPI: 3 numeri big -->
+    <div class="grid grid-3 stagger" style="margin-bottom:24px;" id="status-kpi"></div>
 
-        <!-- WEATHER WIDGET -->
-        <div class="weather" id="weather-widget" style="min-width:240px;">
-          <div class="weather-snow" id="weather-snow"></div>
-          <div style="position:relative;z-index:2;display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-            <span style="font-size:28px;line-height:1;">❄</span>
-            <div>
-              <strong style="display:block;font-size:13px;color:white;font-weight:600;">Meteo · Zermatt</strong>
-              <span style="font-size:10.5px;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.1em;font-weight:600;">Previsioni 09 mag · 11:30</span>
-            </div>
-          </div>
-          <div class="weather-grid">
-            <div class="weather-cell"><strong>-2°</strong><span>Temp</span></div>
-            <div class="weather-cell"><strong>14<small style="font-size:10px;">km/h</small></strong><span>Vento</span></div>
-            <div class="weather-cell"><strong>2<small style="font-size:10px;">cm</small></strong><span>Neve</span></div>
-            <div class="weather-cell"><strong>92<small style="font-size:10px;">%</small></strong><span>Visibilità</span></div>
-          </div>
-        </div>
-
-        <div class="countdown-ticker">
-          <div class="ticker-cell"><div class="ticker-num" data-cd="d">00</div><div class="ticker-label">Giorni</div></div>
-          <div class="ticker-cell"><div class="ticker-num" data-cd="h">00</div><div class="ticker-label">Ore</div></div>
-          <div class="ticker-cell"><div class="ticker-num" data-cd="m">00</div><div class="ticker-label">Min</div></div>
-          <div class="ticker-cell"><div class="ticker-num" data-cd="s">00</div><div class="ticker-label">Sec</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- KPI strip -->
-    <div class="grid grid-4 stagger" style="margin-bottom:24px;">
-      <div class="stat-rich">
-        <div class="stat-glow"></div>
-        <div class="stat-label">Punti WC squadra</div>
-        <div class="stat-value tick" data-count="11242">0</div>
-        <div class="stat-trend up">↑ 2° posto Nations Cup</div>
-      </div>
-      <div class="stat-rich">
-        <div class="stat-glow" style="background:radial-gradient(circle,#FEF3C7,transparent 70%);"></div>
-        <div class="stat-label">Vittorie WC stagione</div>
-        <div class="stat-value tick" data-count="21">0</div>
-        <div class="stat-trend up">↑ +7 vs CH 2024/25</div>
-      </div>
-      <div class="stat-rich">
-        <div class="stat-glow" style="background:radial-gradient(circle,#DDE7FB,transparent 70%);"></div>
-        <div class="stat-label">Carico (ACWR)</div>
-        <div class="stat-value tick" data-count="1.05" data-decimals="2">0</div>
-        <div class="stat-trend flat">Zona 0.8–1.3</div>
-      </div>
-      <div class="stat-rich">
-        <div class="stat-glow" style="background:radial-gradient(circle,#D7F0EC,transparent 70%);"></div>
-        <div class="stat-label">Wellness score</div>
-        <div class="stat-value"><span class="tick" data-count="7.6" data-decimals="1">0</span><span class="stat-value-sub">/10</span></div>
-        <div class="stat-trend up">↑ +0.3 ultimi 7gg</div>
-      </div>
-    </div>
-
-    <div class="grid grid-2-1" style="margin-bottom:24px;">
-      <div class="card glow">
-        <div class="card-header">
+    <div class="grid grid-2-1" style="margin-bottom:24px;align-items:start;">
+      <!-- READINESS TOP 10 -->
+      <div class="card glow card-pad-0">
+        <div style="padding:20px 22px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end;">
           <div>
-            <h3 class="card-title">Roster · stato live</h3>
-            <p class="card-sub">Posizione WC, DNA performance, readiness — clicca per il drawer dettaglio</p>
+            <h3 class="card-title">Readiness · Top 10</h3>
+            <p class="card-sub">Atleti più in forma · clicca per il profilo completo</p>
           </div>
-          <a href="#" data-view="atleti" class="btn ghost">Vedi tutti →</a>
+          <a href="#" data-view="atleti" class="btn ghost">Tutti →</a>
         </div>
-        <div id="roster-list" class="stagger" style="margin:-8px -22px -22px -22px;"></div>
+        <div id="readiness-top10"></div>
       </div>
 
-      <div style="display:flex;flex-direction:column;gap:16px;">
-        <div class="card">
-          <div class="card-header"><h3 class="card-title">Azioni rapide</h3></div>
-          <div class="quick-actions stagger">
-            <button class="qa-btn" data-action="new-session"><div class="qa-btn-icon">📝</div><strong>Allenamento</strong><span>Da template</span></button>
-            <button class="qa-btn" data-action="new-test"><div class="qa-btn-icon">📊</div><strong>Test</strong><span>CMJ / 1RM</span></button>
-            <button class="qa-btn" data-action="upload-document"><div class="qa-btn-icon">🎥</div><strong>Video</strong><span>Carica analisi</span></button>
-            <button class="qa-btn" data-action="export-pdf-report"><div class="qa-btn-icon">📋</div><strong>Report</strong><span>Federazione</span></button>
-          </div>
+      <!-- Quick info: readiness media + prossima gara -->
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card glow" style="text-align:center;padding:22px;">
+          <div class="stat-label" style="text-align:center;margin-bottom:14px;">Readiness media squadra</div>
+          <div style="font-size:64px;font-weight:500;letter-spacing:-0.03em;line-height:1;font-feature-settings:'tnum';" id="readiness-avg">—</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:8px;" id="readiness-trend">—</div>
         </div>
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Alert &amp; promemoria</h3>
-            <span class="pill warn">3</span>
-          </div>
-          <div class="stagger">
-            <div class="alert-row" data-athlete="csu"><span class="dot bad"></span><div class="label"><strong>Suter</strong> — wellness sotto soglia 3gg</div><span class="when">2h</span></div>
-            <div class="alert-row" data-athlete="gca"><span class="dot warn"></span><div class="label"><strong>Caviezel</strong> — Y-Balance test in scadenza</div><span class="when">5h</span></div>
-            <div class="alert-row" data-athlete="mge"><span class="dot warn"></span><div class="label"><strong>Gisin</strong> — ACWR &gt; 1.4, valutare scarico</div><span class="when">ieri</span></div>
-          </div>
+        <div class="card glow">
+          <div class="card-header"><h3 class="card-title">Prossima gara</h3></div>
+          <div id="dashboard-next-race"></div>
         </div>
       </div>
     </div>
 
-    <div class="grid grid-2" style="margin-bottom:24px;">
-      <div class="card glow">
-        <div class="card-header">
-          <div><h3 class="card-title">Carico squadra</h3><p class="card-sub">sRPE settimanale · acuto vs cronico</p></div>
-          <span class="pill good">In zona</span>
+    <!-- CALENDARIO 7gg (-3 / today / +3) -->
+    <div class="card glow card-pad-0">
+      <div style="padding:18px 22px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <h3 class="card-title">Settimana corrente · 7 giorni</h3>
+          <p class="card-sub">3 giorni prima · oggi · 3 giorni dopo — eventi colorati per tipo</p>
         </div>
-        <div class="chart-container" style="height:240px;"><canvas id="ch-workload"></canvas></div>
+        <a href="#" data-view="calendario" class="btn ghost">Calendario completo →</a>
       </div>
-      <div class="card glow">
-        <div class="card-header">
-          <div><h3 class="card-title">CMJ medio · CH vs WC</h3><p class="card-sub">Squadra sopra il riferimento Coppa del Mondo</p></div>
-          <span class="pill good">+1.3cm vs WC</span>
-        </div>
-        <div class="chart-container" style="height:240px;"><canvas id="ch-cmj"></canvas></div>
-      </div>
+      <div id="dash-week-window" style="padding:18px 22px;"></div>
     </div>
 
-    <!-- LIVE HRV / ECG WAVEFORM -->
-    <div class="ecg-card" style="margin-bottom:24px;">
-      <div class="ecg-head">
-        <div class="ecg-title">
-          <div class="copilot-avatar" style="background:linear-gradient(135deg,#0F766E,#14B8A6);width:34px;height:34px;border-radius:10px;font-size:14px;">♥</div>
-          <div>
-            <strong>Team Heartbeat · Live HRV</strong>
-            <span>14 atleti connessi · sync in tempo reale</span>
-          </div>
-        </div>
-        <div class="ecg-bpm"><span data-live-key="hrv">72</span><small>ms rMSSD</small></div>
-      </div>
-      <div class="ecg-stage">
-        <svg class="ecg-svg" id="ecg-svg" preserveAspectRatio="none"></svg>
-      </div>
-      <div class="ecg-stats">
-        <div class="ecg-stat"><strong>72<small style="font-size:10px;color:rgba(255,255,255,0.5);">ms</small></strong><span>Squad avg</span></div>
-        <div class="ecg-stat"><strong>80<small style="font-size:10px;color:rgba(255,255,255,0.5);">ms</small></strong><span>Max · Odermatt</span></div>
-        <div class="ecg-stat"><strong>58<small style="font-size:10px;color:rgba(255,255,255,0.5);">ms</small></strong><span>Min · Suter</span></div>
-        <div class="ecg-stat"><strong>+4.2<small style="font-size:10px;color:rgba(255,255,255,0.5);">%</small></strong><span>Trend 7gg</span></div>
-      </div>
-    </div>
-
-    <div class="grid grid-2">
-      <div class="card glow">
-        <div class="card-header">
-          <div><h3 class="card-title">Prossime gare</h3><p class="card-sub">Calendario CdM</p></div>
-          <a href="#" data-view="gare" class="btn ghost">Tutte →</a>
-        </div>
-        <div id="race-list" class="stagger"></div>
-      </div>
-      <div class="card glow">
-        <div class="card-header">
-          <div><h3 class="card-title">Ultimi risultati</h3><p class="card-sub">Squadra · ultime gare</p></div>
-          <a href="#" data-view="gare" class="btn ghost">Tutti →</a>
-        </div>
-        <div id="results-recent" class="stagger"></div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -961,18 +798,42 @@ function rosterShort() {
   `).join('');
 }
 
+function athleteAge(a) {
+  if (!a.dob) return a.born ? (2026 - a.born) : '—';
+  const dob = new Date(a.dob);
+  const today = new Date('2026-05-07');
+  let age = today.getFullYear() - dob.getFullYear();
+  const m = today.getMonth() - dob.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+  return age;
+}
+function athleteStatusInfo(a) {
+  if (a.injury) return { cls: 'warn', label: 'In rehab' };
+  if (a.status === 'Rehab Phase 3' || a.status === 'Rehab Phase 4' || /rehab/i.test(a.status||'')) return { cls: 'warn', label: 'In rehab' };
+  if (a.readiness < 65) return { cls: 'bad', label: 'Inattivo' };
+  return { cls: 'good', label: 'Attivo' };
+}
 function athletesFull() {
-  document.getElementById('athletes-full').innerHTML = T.athletes.map(a => `
+  document.getElementById('athletes-full').innerHTML = T.athletes.map(a => {
+    const age = athleteAge(a);
+    const dob = a.dob ? new Date(a.dob).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
+    const status = athleteStatusInfo(a);
+    return `
     <div class="athlete-row rich" data-athlete="${a.id}" data-tags="${tagsForAthlete(a)}" data-search="${a.name.toLowerCase()} ${a.disc.join(' ').toLowerCase()}">
       <div class="athlete-avatar">${UTIL.initials(a.name)}</div>
-      <div class="athlete-name"><strong>${a.name}</strong><span>${a.born} · ${a.focus} · ${a.sex}</span></div>
+      <div class="athlete-name">
+        <strong>${a.name}</strong>
+        <span>${dob} · ${age} anni · ${a.height}cm · ${a.weight}kg</span>
+      </div>
       <div>${a.disc.map(d => `<span class="disc-tag ${d.toLowerCase()}">${d}</span>`).join('')}</div>
-      ${renderDnaCompact(a.id)}
-      <div class="readiness"><div class="readiness-bar ${UTIL.readinessClass(a.readiness)}" style="width:${a.readiness}%"></div></div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="readiness"><div class="readiness-bar ${UTIL.readinessClass(a.readiness)}" style="width:${a.readiness}%"></div></div>
+        <span class="tabular" style="font-size:11.5px;font-weight:600;min-width:34px;">${a.readiness}%</span>
+      </div>
       <span class="pill ${a.wcOverall && a.wcOverall <= 10 ? 'good' : a.wcOverall && a.wcOverall <= 25 ? 'info' : 'muted'}" style="font-feature-settings:'tnum';">${a.wcOverall ? '#'+a.wcOverall+' WC' : '— WC'}</span>
-      <span class="pill ${a.injury ? 'bad' : 'good'}">${a.status}</span>
-    </div>
-  `).join('');
+      <span class="pill ${status.cls}">${status.label}</span>
+    </div>`;
+  }).join('');
 }
 
 function racesUpcoming() {
@@ -2388,8 +2249,141 @@ window.__renderCharts = function(view) {
   }
 };
 
+// ============ NEW DASHBOARD (v11 — sintetica) ============
+function renderStatusKpi() {
+  const all = T.athletes;
+  const active = all.filter(a => !a.injury && a.readiness >= 65).length;
+  const rehab = all.filter(a => a.injury || /rehab/i.test(a.status || '')).length;
+  const inactive = all.filter(a => !a.injury && a.readiness < 65).length;
+  document.getElementById('status-kpi').innerHTML = `
+    <div class="status-card status-active">
+      <div class="status-card-num">${active}</div>
+      <div class="status-card-label">Atleti attivi</div>
+      <div class="status-card-sub">Disponibili per allenamento e gare</div>
+      <div class="status-card-icon">🟢</div>
+    </div>
+    <div class="status-card status-rehab">
+      <div class="status-card-num">${rehab}</div>
+      <div class="status-card-label">In rehab</div>
+      <div class="status-card-sub">Protocollo riabilitativo attivo</div>
+      <div class="status-card-icon">🟠</div>
+    </div>
+    <div class="status-card status-inactive">
+      <div class="status-card-num">${inactive}</div>
+      <div class="status-card-label">Inattivi</div>
+      <div class="status-card-sub">Readiness sotto soglia 65%</div>
+      <div class="status-card-icon">⚪</div>
+    </div>
+  `;
+}
+
+function renderReadinessTop10() {
+  const top = [...T.athletes]
+    .filter(a => !a.injury)
+    .sort((a, b) => b.readiness - a.readiness)
+    .slice(0, 10);
+  document.getElementById('readiness-top10').innerHTML = top.map((a, i) => `
+    <div class="ready-row" data-athlete="${a.id}">
+      <div class="ready-pos">${i + 1}</div>
+      <div class="athlete-avatar" style="width:34px;height:34px;font-size:11px;">${UTIL.initials(a.name)}</div>
+      <div>
+        <strong style="display:block;font-size:13.5px;font-weight:600;">${a.name}</strong>
+        <span style="font-size:11.5px;color:var(--text-3);">${a.focus} · ${a.sex === 'F' ? 'F' : 'M'}</span>
+      </div>
+      <div class="ready-bar"><div class="ready-bar-fill ${UTIL.readinessClass(a.readiness)}" style="width:${a.readiness}%;"></div></div>
+      <strong class="tabular ${a.readiness >= 85 ? 'text-good' : a.readiness >= 75 ? '' : 'text-warn'}" style="font-size:15px;font-weight:600;min-width:42px;text-align:right;">${a.readiness}%</strong>
+    </div>
+  `).join('');
+
+  // Readiness media
+  const avgEl = document.getElementById('readiness-avg');
+  if (avgEl) {
+    const all = T.athletes.filter(a => !a.injury);
+    const avg = Math.round(all.reduce((s,a) => s + a.readiness, 0) / all.length);
+    avgEl.innerHTML = `${avg}<span style="font-size:24px;color:var(--text-3);">%</span>`;
+    document.getElementById('readiness-trend').innerHTML = `<span class="text-good" style="font-weight:600;">↑ +3%</span> vs settimana scorsa · ${all.length}/${T.athletes.length} atleti`;
+  }
+}
+
+function renderDashboardWeekWindow() {
+  const today = new Date('2026-05-07');
+  const eventsByDate = {};
+  T.calendarEvents.forEach(e => { (eventsByDate[e.date] = eventsByDate[e.date] || []).push(e); });
+
+  const days = [];
+  for (let offset = -3; offset <= 3; offset++) {
+    const d = new Date(today); d.setDate(today.getDate() + offset);
+    const iso = d.toISOString().split('T')[0];
+    days.push({ date: d, iso, isToday: offset === 0, offset, events: eventsByDate[iso] || [] });
+  }
+
+  const dayName = (d) => d.toLocaleDateString('it-IT', { weekday: 'short' }).toUpperCase();
+  const dayLabel = (d, isToday) => isToday ? 'OGGI' : dayName(d);
+
+  document.getElementById('dash-week-window').innerHTML = `
+    <div class="week-window">
+      ${days.map(d => {
+        const evCount = d.events.length;
+        return `<div class="ww-day ${d.isToday ? 'today' : ''}" data-action="open-day" data-date="${d.iso}">
+          <div class="ww-day-head">
+            <span class="ww-day-name">${dayLabel(d.date, d.isToday)}</span>
+            <span class="ww-day-date">${d.date.getDate()}</span>
+          </div>
+          <div class="ww-day-events">
+            ${d.events.slice(0, 5).map(e => {
+              const t = T.sessionTypes[e.type] || { color: '#76767E', icon: '·', short: e.type };
+              return `<div class="ww-event" style="background:${t.color}15;border-left:3px solid ${t.color};color:${t.color};" title="${e.time} · ${e.title} · ${e.athleteIds.length} atleti">
+                <strong>${e.time !== '—' ? e.time : '—'}</strong> ${e.title.substring(0, 22)}${e.title.length > 22 ? '…' : ''}
+              </div>`;
+            }).join('')}
+            ${evCount > 5 ? `<div class="ww-event-more">+${evCount - 5} altre</div>` : ''}
+            ${evCount === 0 ? `<div class="ww-event-empty">Riposo</div>` : ''}
+          </div>
+          <div class="ww-day-count">${evCount > 0 ? evCount + ' event' + (evCount === 1 ? 'o' : 'i') : '—'}</div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="week-window-legend">
+      ${Object.entries(T.sessionTypes).map(([k, t]) => `
+        <span><span style="display:inline-block;width:10px;height:10px;background:${t.color};border-radius:3px;margin-right:6px;vertical-align:middle;"></span>${t.short}</span>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderDashboardNextRace() {
+  const today = new Date('2026-05-07');
+  const next = [...T.races].sort((a,b) => new Date(a.date) - new Date(b.date)).find(r => new Date(r.date) >= today);
+  if (!next) {
+    document.getElementById('dashboard-next-race').innerHTML = '<div class="muted" style="padding:14px;">Nessuna gara in programma</div>';
+    return;
+  }
+  const d = new Date(next.date);
+  const daysTo = Math.ceil((d - today) / (1000*60*60*24));
+  document.getElementById('dashboard-next-race').innerHTML = `
+    <div data-race="${next.id}" style="cursor:pointer;">
+      <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px;">
+        <span style="font-size:32px;font-weight:600;letter-spacing:-0.03em;color:var(--accent);line-height:1;font-feature-settings:'tnum';">${daysTo}</span>
+        <span style="font-size:13px;color:var(--text-3);font-weight:600;text-transform:uppercase;letter-spacing:0.12em;">${daysTo === 1 ? 'giorno' : 'giorni'}</span>
+      </div>
+      <strong style="display:block;font-size:18px;font-weight:600;letter-spacing:-0.015em;margin-bottom:2px;">${next.loc}</strong>
+      <span style="font-size:12.5px;color:var(--text-3);">${next.disc} · ${d.toLocaleDateString('it-IT', { weekday: 'long', day: '2-digit', month: 'long' })}</span>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+        <button class="btn" style="width:100%;justify-content:center;" data-action="convocation">Gestisci convocazione</button>
+      </div>
+    </div>
+  `;
+}
+
+window.__renderDashboardSimple = function() {
+  renderStatusKpi();
+  renderReadinessTop10();
+  renderDashboardWeekWindow();
+  renderDashboardNextRace();
+};
+
 window.__paneInit = {
-  dashboard: () => { initSnowflakes(); initEcg(); },
+  dashboard: () => { window.__renderDashboardSimple && window.__renderDashboardSimple(); },
   programma: () => { renderWeekView(); renderSessionDetail(2); },
   gare: () => {
     renderGareUpcoming(); renderGareResults(); renderWcStandings(); renderPodium3D();
@@ -2428,12 +2422,8 @@ calDays();
 attachSearch(document.getElementById('athletes-search'), 'athletes');
 attachSearch(document.getElementById('dashboard-search'), 'athletes');
 
-window.__renderCharts('dashboard');
-initCountdown();
-initSnowflakes();
-initEcg();
+window.__renderDashboardSimple();
 initCopilot();
-startLiveTicker();
 </script>
 </body>
 </html>

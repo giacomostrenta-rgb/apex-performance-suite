@@ -8,101 +8,113 @@ window.DATA = {
     season: '2025/26',
 
     // Atleti — con dati performance, benchmark squadra, ranking WC
+    // Event/session types
+    sessionTypes: {
+      palestra: { label: 'Palestra · Forza', short: 'Palestra', color: '#1D4ED8', soft: '#DDE7FB', icon: '💪' },
+      sci:      { label: 'Sci · Sport-specifico', short: 'Sci', color: '#0F766E', soft: '#D7F0EC', icon: '⛷️' },
+      gara:     { label: 'Gara · Coppa del Mondo', short: 'Gara', color: '#C8102E', soft: '#FBEAEC', icon: '🏁' },
+      rehab:    { label: 'Rehab · Recupero infortunio', short: 'Rehab', color: '#B45309', soft: '#FCEBCB', icon: '🩹' },
+      recovery: { label: 'Recovery · Scarico', short: 'Recovery', color: '#76767E', soft: '#EFEFF1', icon: '🌿' },
+      test:     { label: 'Test fisico', short: 'Test', color: '#7C3AED', soft: '#EDE3FB', icon: '📊' },
+      briefing: { label: 'Briefing / Meeting', short: 'Briefing', color: '#D97706', soft: '#FED7AA', icon: '📋' },
+      travel:   { label: 'Trasferta', short: 'Travel', color: '#475569', soft: '#E2E8F0', icon: '✈️' },
+    },
+
     athletes: [
-      { id: 'lgb', name: 'Lara Gut-Behrami', born: 1991, sex: 'F', disc: ['DH','SG','GS'], focus: 'SG/GS',
+      { id: 'lgb', name: 'Lara Gut-Behrami', born: 1991, dob: '1991-04-27', sex: 'F', disc: ['DH','SG','GS'], focus: 'SG/GS',
         readiness: 88, status: 'Available', load: 'Optimal', hrv: 72, sleep: 7.8,
         wcOverall: 4, wcPoints: 1248, podiums: 9, wins: 3, top10s: 18, raceCount: 22,
         discRank: { DH: 6, SG: 2, GS: 5 },
         tests: { cmj: 43.2, sj: 39.8, dj: 2.92, squat1RM: 145, vo2max: 56.8, ybalance: 102 },
         weight: 64, height: 168 },
-      { id: 'mge', name: 'Michelle Gisin', born: 1993, sex: 'F', disc: ['SL','AC','GS'], focus: 'AC/SL',
+      { id: 'mge', name: 'Michelle Gisin', born: 1993, dob: '1993-12-05', sex: 'F', disc: ['SL','AC','GS'], focus: 'AC/SL',
         readiness: 76, status: 'Available', load: 'High', hrv: 64, sleep: 7.2,
         wcOverall: 28, wcPoints: 412, podiums: 1, wins: 0, top10s: 5, raceCount: 19,
         discRank: { SL: 12, AC: 3, GS: 24 },
         tests: { cmj: 39.4, sj: 36.1, dj: 2.61, squat1RM: 122, vo2max: 58.4, ybalance: 99 },
         weight: 60, height: 162 },
-      { id: 'who', name: 'Wendy Holdener', born: 1993, sex: 'F', disc: ['SL','AC'], focus: 'SL',
+      { id: 'who', name: 'Wendy Holdener', born: 1993, dob: '1993-05-12', sex: 'F', disc: ['SL','AC'], focus: 'SL',
         readiness: 91, status: 'Available', load: 'Optimal', hrv: 78, sleep: 8.1,
         wcOverall: 11, wcPoints: 798, podiums: 5, wins: 1, top10s: 14, raceCount: 21,
         discRank: { SL: 4, AC: 1 },
         tests: { cmj: 41.8, sj: 38.2, dj: 2.81, squat1RM: 130, vo2max: 60.1, ybalance: 105 },
         weight: 61, height: 168 },
-      { id: 'cra', name: 'Camille Rast', born: 1999, sex: 'F', disc: ['SL','GS'], focus: 'SL',
+      { id: 'cra', name: 'Camille Rast', born: 1999, dob: '1999-07-10', sex: 'F', disc: ['SL','GS'], focus: 'SL',
         readiness: 85, status: 'Available', load: 'Optimal', hrv: 71, sleep: 7.6,
         wcOverall: 9, wcPoints: 854, podiums: 6, wins: 2, top10s: 12, raceCount: 20,
         discRank: { SL: 1, GS: 18 },
         tests: { cmj: 42.6, sj: 38.9, dj: 2.78, squat1RM: 128, vo2max: 57.2, ybalance: 103 },
         weight: 62, height: 166 },
-      { id: 'csu', name: 'Corinne Suter', born: 1994, sex: 'F', disc: ['DH','SG'], focus: 'DH',
+      { id: 'csu', name: 'Corinne Suter', born: 1994, dob: '1994-07-28', sex: 'F', disc: ['DH','SG'], focus: 'DH',
         readiness: 62, status: 'Rehab Phase 3', load: 'Reduced', hrv: 58, sleep: 6.9,
         injury: 'Ricostruzione LCA dx — return-to-snow',
         wcOverall: null, wcPoints: 0, podiums: 0, wins: 0, top10s: 0, raceCount: 0,
         discRank: { DH: null, SG: null },
         tests: { cmj: 36.4, sj: 33.8, dj: 2.41, squat1RM: 112, vo2max: 54.2, ybalance: 88 },
         weight: 67, height: 172 },
-      { id: 'jfl', name: 'Jasmine Flury', born: 1993, sex: 'F', disc: ['DH','SG'], focus: 'DH/SG',
+      { id: 'jfl', name: 'Jasmine Flury', born: 1993, dob: '1993-04-29', sex: 'F', disc: ['DH','SG'], focus: 'DH/SG',
         readiness: 82, status: 'Available', load: 'Optimal', hrv: 69, sleep: 7.5,
         wcOverall: 19, wcPoints: 562, podiums: 2, wins: 0, top10s: 9, raceCount: 18,
         discRank: { DH: 5, SG: 7 },
         tests: { cmj: 41.2, sj: 37.8, dj: 2.74, squat1RM: 134, vo2max: 56.4, ybalance: 100 },
         weight: 68, height: 173 },
-      { id: 'jha', name: 'Joana Hählen', born: 1992, sex: 'F', disc: ['DH','SG'], focus: 'DH',
+      { id: 'jha', name: 'Joana Hählen', born: 1992, dob: '1992-08-22', sex: 'F', disc: ['DH','SG'], focus: 'DH',
         readiness: 79, status: 'Available', load: 'High', hrv: 66, sleep: 7.1,
         wcOverall: 22, wcPoints: 488, podiums: 1, wins: 0, top10s: 7, raceCount: 17,
         discRank: { DH: 9, SG: 14 },
         tests: { cmj: 40.6, sj: 37.2, dj: 2.69, squat1RM: 132, vo2max: 55.8, ybalance: 97 },
         weight: 66, height: 170 },
-      { id: 'ddu', name: 'Delia Durrer', born: 2002, sex: 'F', disc: ['DH','SG','GS'], focus: 'SG',
+      { id: 'ddu', name: 'Delia Durrer', born: 2002, dob: '2002-04-08', sex: 'F', disc: ['DH','SG','GS'], focus: 'SG',
         readiness: 86, status: 'Available', load: 'Optimal', hrv: 74, sleep: 7.9,
         wcOverall: 17, wcPoints: 624, podiums: 2, wins: 0, top10s: 10, raceCount: 20,
         discRank: { DH: 11, SG: 6, GS: 22 },
         tests: { cmj: 42.1, sj: 38.4, dj: 2.85, squat1RM: 126, vo2max: 58.1, ybalance: 101 },
         weight: 63, height: 167 },
-      { id: 'mme', name: 'Mélanie Meillard', born: 1998, sex: 'F', disc: ['SL','GS'], focus: 'SL',
+      { id: 'mme', name: 'Mélanie Meillard', born: 1998, dob: '1998-12-04', sex: 'F', disc: ['SL','GS'], focus: 'SL',
         readiness: 81, status: 'Available', load: 'Optimal', hrv: 70, sleep: 7.4,
         wcOverall: 24, wcPoints: 442, podiums: 0, wins: 0, top10s: 6, raceCount: 19,
         discRank: { SL: 9, GS: 21 },
         tests: { cmj: 40.4, sj: 36.9, dj: 2.72, squat1RM: 121, vo2max: 57.6, ybalance: 98 },
         weight: 60, height: 165 },
-      { id: 'sst', name: 'Stephanie Jenal', born: 1996, sex: 'F', disc: ['SG','DH'], focus: 'SG',
+      { id: 'sst', name: 'Stephanie Jenal', born: 1996, dob: '1996-09-15', sex: 'F', disc: ['SG','DH'], focus: 'SG',
         readiness: 73, status: 'Available', load: 'High', hrv: 63, sleep: 7.0,
         wcOverall: 34, wcPoints: 286, podiums: 0, wins: 0, top10s: 3, raceCount: 16,
         discRank: { SG: 16, DH: 22 },
         tests: { cmj: 39.8, sj: 36.4, dj: 2.62, squat1RM: 124, vo2max: 56.0, ybalance: 95 },
         weight: 65, height: 169 },
 
-      { id: 'mod', name: 'Marco Odermatt', born: 1997, sex: 'M', disc: ['GS','SG','DH'], focus: 'All-round',
+      { id: 'mod', name: 'Marco Odermatt', born: 1997, dob: '1997-10-08', sex: 'M', disc: ['GS','SG','DH'], focus: 'All-round',
         readiness: 92, status: 'Available', load: 'Optimal', hrv: 80, sleep: 8.3,
         wcOverall: 1, wcPoints: 1864, podiums: 22, wins: 12, top10s: 25, raceCount: 26,
         discRank: { GS: 1, SG: 1, DH: 3 },
         tests: { cmj: 56.4, sj: 51.2, dj: 3.42, squat1RM: 198, vo2max: 64.8, ybalance: 108 },
         weight: 84, height: 183 },
-      { id: 'lme', name: 'Loïc Meillard', born: 1996, sex: 'M', disc: ['GS','SL','SG'], focus: 'GS/SL',
+      { id: 'lme', name: 'Loïc Meillard', born: 1996, dob: '1996-10-29', sex: 'M', disc: ['GS','SL','SG'], focus: 'GS/SL',
         readiness: 84, status: 'Available', load: 'Optimal', hrv: 72, sleep: 7.7,
         wcOverall: 8, wcPoints: 942, podiums: 7, wins: 1, top10s: 15, raceCount: 24,
         discRank: { GS: 4, SL: 6, SG: 12 },
         tests: { cmj: 54.2, sj: 49.8, dj: 3.21, squat1RM: 184, vo2max: 62.4, ybalance: 104 },
         weight: 78, height: 178 },
-      { id: 'jmu', name: 'Justin Murisier', born: 1991, sex: 'M', disc: ['GS','SG','DH'], focus: 'SG',
+      { id: 'jmu', name: 'Justin Murisier', born: 1991, dob: '1991-09-30', sex: 'M', disc: ['GS','SG','DH'], focus: 'SG',
         readiness: 77, status: 'Available', load: 'High', hrv: 67, sleep: 7.3,
         wcOverall: 14, wcPoints: 712, podiums: 3, wins: 1, top10s: 11, raceCount: 22,
         discRank: { SG: 5, GS: 18, DH: 9 },
         tests: { cmj: 52.8, sj: 48.2, dj: 3.04, squat1RM: 186, vo2max: 60.6, ybalance: 102 },
         weight: 84, height: 181 },
-      { id: 'sro', name: 'Stefan Rogentin', born: 1994, sex: 'M', disc: ['DH','SG'], focus: 'DH',
+      { id: 'sro', name: 'Stefan Rogentin', born: 1994, dob: '1994-08-12', sex: 'M', disc: ['DH','SG'], focus: 'DH',
         readiness: 80, status: 'Available', load: 'Optimal', hrv: 68, sleep: 7.4,
         wcOverall: 18, wcPoints: 588, podiums: 1, wins: 0, top10s: 9, raceCount: 18,
         discRank: { DH: 4, SG: 11 },
         tests: { cmj: 51.6, sj: 47.4, dj: 2.98, squat1RM: 192, vo2max: 59.8, ybalance: 100 },
         weight: 88, height: 184 },
-      { id: 'gca', name: 'Gino Caviezel', born: 1992, sex: 'M', disc: ['SG','GS'], focus: 'SG',
+      { id: 'gca', name: 'Gino Caviezel', born: 1992, dob: '1992-08-08', sex: 'M', disc: ['SG','GS'], focus: 'SG',
         readiness: 68, status: 'Rehab Phase 4', load: 'Progressive', hrv: 60, sleep: 7.0,
         injury: 'Lussazione spalla dx — RTS in 3 settimane',
         wcOverall: 26, wcPoints: 348, podiums: 0, wins: 0, top10s: 5, raceCount: 14,
         discRank: { SG: 14, GS: 22 },
         tests: { cmj: 50.2, sj: 46.0, dj: 2.88, squat1RM: 176, vo2max: 58.4, ybalance: 96 },
         weight: 86, height: 182 },
-      { id: 'fvo', name: 'Franjo von Allmen', born: 2001, sex: 'M', disc: ['DH','SG'], focus: 'DH',
+      { id: 'fvo', name: 'Franjo von Allmen', born: 2001, dob: '2001-12-12', sex: 'M', disc: ['DH','SG'], focus: 'DH',
         readiness: 88, status: 'Available', load: 'Optimal', hrv: 76, sleep: 8.0,
         wcOverall: 12, wcPoints: 824, podiums: 4, wins: 1, top10s: 13, raceCount: 18,
         discRank: { DH: 2, SG: 8 },
@@ -456,6 +468,88 @@ window.DATA = {
       { date: '2026-04-04T11:30:00',type: 'prerace', status: 'failed', size: '—',      recipients: 5, filename: 'PreGara_Are_SL.pdf', openRate: 0, error: 'SMTP timeout · ritentato 04/04 12:18' },
       { date: '2026-04-04T12:18:00',type: 'prerace', status: 'sent',   size: '1.7 MB', recipients: 5, filename: 'PreGara_Are_SL_retry.pdf', openRate: 100 },
       { date: '2026-04-01T06:00:00', type: 'monthly', status: 'sent',   size: '7.8 MB', recipients: 8, filename: 'Mensile_Marzo_2026_Swiss-Ski.pdf', openRate: 88 },
+    ],
+
+    // Conteggio sessioni per atleta (stagione 2025/26)
+    athleteSessions: {
+      lgb: { palestra: 78, sci: 96, gara: 22, rehab: 0,   recovery: 32, test: 12, briefing: 18 },
+      mge: { palestra: 84, sci: 72, gara: 19, rehab: 2,   recovery: 28, test: 11, briefing: 16 },
+      who: { palestra: 76, sci: 88, gara: 21, rehab: 0,   recovery: 30, test: 12, briefing: 17 },
+      cra: { palestra: 72, sci: 92, gara: 20, rehab: 0,   recovery: 26, test: 11, briefing: 15 },
+      csu: { palestra: 64, sci: 4,  gara: 0,  rehab: 88,  recovery: 42, test: 16, briefing: 8  },
+      jfl: { palestra: 70, sci: 84, gara: 18, rehab: 0,   recovery: 28, test: 10, briefing: 14 },
+      jha: { palestra: 68, sci: 80, gara: 17, rehab: 12,  recovery: 26, test: 10, briefing: 14 },
+      ddu: { palestra: 74, sci: 90, gara: 20, rehab: 0,   recovery: 28, test: 11, briefing: 15 },
+      mme: { palestra: 70, sci: 86, gara: 19, rehab: 0,   recovery: 26, test: 10, briefing: 14 },
+      sst: { palestra: 68, sci: 76, gara: 16, rehab: 6,   recovery: 24, test: 9,  briefing: 12 },
+      mod: { palestra: 86, sci: 102,gara: 26, rehab: 0,   recovery: 34, test: 13, briefing: 20 },
+      lme: { palestra: 80, sci: 94, gara: 24, rehab: 0,   recovery: 30, test: 12, briefing: 18 },
+      jmu: { palestra: 78, sci: 86, gara: 22, rehab: 0,   recovery: 28, test: 11, briefing: 16 },
+      sro: { palestra: 72, sci: 78, gara: 18, rehab: 0,   recovery: 26, test: 10, briefing: 14 },
+      gca: { palestra: 58, sci: 24, gara: 14, rehab: 36,  recovery: 30, test: 12, briefing: 12 },
+      fvo: { palestra: 76, sci: 88, gara: 18, rehab: 0,   recovery: 28, test: 11, briefing: 15 },
+    },
+
+    // Wellness time series (ultimi 14 giorni per atleta)
+    // sleep (h), stress (1-10), fatigue (1-10), load (au), mood (1-10)
+    wellnessHistory: (() => {
+      const out = {};
+      const ids = ['lgb','mge','who','cra','csu','jfl','jha','ddu','mme','sst','mod','lme','jmu','sro','gca','fvo'];
+      const today = new Date('2026-05-07');
+      ids.forEach(id => {
+        const base = { sleep: 7.6, stress: 4, fatigue: 4, load: 450, mood: 7 };
+        if (id === 'csu') { base.sleep = 6.9; base.stress = 6; base.fatigue = 5; base.load = 280; base.mood = 6; }
+        if (id === 'gca') { base.sleep = 7.2; base.stress = 5; base.fatigue = 4; base.load = 320; base.mood = 7; }
+        if (id === 'mod') { base.sleep = 8.3; base.stress = 3; base.fatigue = 3; base.load = 540; base.mood = 9; }
+        out[id] = [];
+        for (let i = 13; i >= 0; i--) {
+          const d = new Date(today); d.setDate(today.getDate() - i);
+          const noise = (s) => (Math.random() - 0.5) * s;
+          out[id].push({
+            date: d.toISOString().split('T')[0],
+            sleep: +(base.sleep + noise(0.8)).toFixed(1),
+            stress: Math.max(1, Math.min(10, Math.round(base.stress + noise(2)))),
+            fatigue: Math.max(1, Math.min(10, Math.round(base.fatigue + noise(2)))),
+            load: Math.max(0, Math.round(base.load + noise(220))),
+            mood: Math.max(1, Math.min(10, Math.round(base.mood + noise(1.6)))),
+          });
+        }
+      });
+      return out;
+    })(),
+
+    // Eventi calendario stagione (mock per maggio 2026)
+    calendarEvents: [
+      // Settimana corrente (centrata su 07/05)
+      { id: 'e001', date: '2026-05-04', time: '09:30', type: 'palestra', title: 'Forza max', loc: 'Magglingen', athleteIds: ['lgb','jfl','jha','ddu','sst'], duration: 90 },
+      { id: 'e002', date: '2026-05-04', time: '16:30', type: 'recovery', title: 'Recovery', loc: 'Hotel', athleteIds: ['lgb','jfl','jha','ddu','sst','mge','who','cra'], duration: 45 },
+      { id: 'e003', date: '2026-05-05', time: '09:00', type: 'sci', title: 'GS Saas-Fee', loc: 'Saas-Fee', athleteIds: ['mod','lme','cra','who'], duration: 180 },
+      { id: 'e004', date: '2026-05-05', time: '14:00', type: 'rehab', title: 'Fase 3 LCA', loc: 'Magglingen', athleteIds: ['csu'], duration: 90 },
+      { id: 'e005', date: '2026-05-06', time: '10:00', type: 'recovery', title: 'Crioterapia', loc: 'Magglingen', athleteIds: ['lgb','mge','who','jfl'], duration: 60 },
+      { id: 'e006', date: '2026-05-06', time: '15:00', type: 'rehab', title: 'Spalla pre-RTS', loc: 'Magglingen', athleteIds: ['gca'], duration: 60 },
+      { id: 'e007', date: '2026-05-07', time: '09:30', type: 'palestra', title: 'Forza + Potenza', loc: 'Magglingen', athleteIds: ['lgb','jfl','jha','ddu','sst','mod','lme','jmu','sro','fvo'], duration: 90 },
+      { id: 'e008', date: '2026-05-07', time: '15:00', type: 'briefing', title: 'Briefing pre-Zermatt', loc: 'Magglingen', athleteIds: ['lgb','jfl','jha','ddu','sst','sro','fvo'], duration: 60 },
+      { id: 'e009', date: '2026-05-07', time: '17:00', type: 'rehab', title: 'Fase 3 — pliometria', loc: 'Magglingen', athleteIds: ['csu'], duration: 75 },
+      { id: 'e010', date: '2026-05-08', time: '09:00', type: 'sci', title: 'SG drill velocità', loc: 'Stelvio', athleteIds: ['lgb','jfl','jha','ddu','sst'], duration: 180 },
+      { id: 'e011', date: '2026-05-08', time: '07:00', type: 'travel', title: 'Trasferta Zermatt', loc: 'Magglingen → Zermatt', athleteIds: ['lgb','jfl','jha','ddu','sst','sro','fvo'], duration: 240 },
+      { id: 'e012', date: '2026-05-09', time: '11:30', type: 'gara', title: 'DH Zermatt-Cervinia', loc: 'Zermatt-Cervinia', athleteIds: ['lgb','jfl','jha','ddu','sst','sro','fvo'], duration: 240 },
+      { id: 'e013', date: '2026-05-10', time: '—', type: 'recovery', title: 'Riposo', loc: '—', athleteIds: [], duration: 0 },
+
+      // Settimana 11-17 maggio
+      { id: 'e014', date: '2026-05-11', time: '09:00', type: 'palestra', title: 'Scarico', loc: 'Magglingen', athleteIds: ['mge','who','cra','mod','lme'], duration: 75 },
+      { id: 'e015', date: '2026-05-12', time: '10:00', type: 'sci', title: 'GS Hintertux', loc: 'Hintertux', athleteIds: ['mod','lme','cra','mme'], duration: 180 },
+      { id: 'e016', date: '2026-05-13', time: '14:00', type: 'test', title: 'CMJ + SJ batch', loc: 'Magglingen', athleteIds: ['lgb','mge','who','cra','jfl','jha','ddu','mme','sst'], duration: 120 },
+      { id: 'e017', date: '2026-05-14', time: '09:00', type: 'sci', title: 'SL Hintertux', loc: 'Hintertux', athleteIds: ['who','cra','mme','lme'], duration: 180 },
+      { id: 'e018', date: '2026-05-15', time: '07:00', type: 'travel', title: 'Trasferta Sölden', loc: 'Magglingen → Sölden', athleteIds: ['mod','lme','cra','who','mme'], duration: 320 },
+      { id: 'e019', date: '2026-05-16', time: '10:00', type: 'gara', title: 'GS Sölden', loc: 'Sölden', athleteIds: ['mod','lme','cra','who','mme','jmu','ddu'], duration: 240 },
+      { id: 'e020', date: '2026-05-17', time: '—', type: 'recovery', title: 'Recovery post-gara', loc: '—', athleteIds: [], duration: 0 },
+
+      // Eventi precedenti (settimana passata)
+      { id: 'e021', date: '2026-05-02', time: '11:00', type: 'sci', title: 'SG Stelvio', loc: 'Stelvio', athleteIds: ['lgb','jfl','jha','ddu','sst'], duration: 180 },
+      { id: 'e022', date: '2026-05-03', time: '10:00', type: 'sci', title: 'GS Saas-Fee', loc: 'Saas-Fee', athleteIds: ['mod','lme','cra','who'], duration: 180 },
+      { id: 'e023', date: '2026-05-01', time: '—', type: 'recovery', title: '1° Maggio off', loc: '—', athleteIds: [], duration: 0 },
+      { id: 'e024', date: '2026-04-30', time: '09:00', type: 'palestra', title: 'Forza eccentrica', loc: 'Magglingen', athleteIds: ['lgb','mge','who','cra','mod','lme'], duration: 90 },
+      { id: 'e025', date: '2026-04-29', time: '14:00', type: 'rehab', title: 'Fase 3 LCA', loc: 'Magglingen', athleteIds: ['csu'], duration: 90 },
     ],
 
     // Storico stagionale infortuni (per panoramica)
