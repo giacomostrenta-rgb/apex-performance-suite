@@ -2533,6 +2533,7 @@ window.__renderDashboardSimple = function() {
 
 window.__paneInit = {
   dashboard: () => { window.__renderDashboardSimple && window.__renderDashboardSimple(); },
+  atleti: () => { try { athletesFull(); } catch(e) { console.warn(e); } },
   calendario: () => { renderCalendarV2(); },
   programma: () => { renderWeekView(); renderSessionDetail(2); },
   gare: () => {
@@ -2560,14 +2561,15 @@ window.__paneInit = {
 };
 
 // initial
-rosterShort();
-athletesFull();
-racesUpcoming();
-recentResults();
-testUpcoming();
-testTable();
-phases();
-calDays();
+// Safe init — solo elementi che esistono
+try { rosterShort && rosterShort(); } catch(e) {}
+try { athletesFull && athletesFull(); } catch(e) { console.warn('athletesFull:', e); }
+try { racesUpcoming && racesUpcoming(); } catch(e) {}
+try { recentResults && recentResults(); } catch(e) {}
+try { testUpcoming && testUpcoming(); } catch(e) {}
+try { testTable && testTable(); } catch(e) {}
+try { phases && phases(); } catch(e) {}
+try { calDays && calDays(); } catch(e) {}
 
 attachSearch(document.getElementById('athletes-search'), 'athletes');
 attachSearch(document.getElementById('dashboard-search'), 'athletes');
