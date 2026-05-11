@@ -2498,7 +2498,7 @@ function renderCalSidebar() {
           <strong>${e.title}</strong>
           <div class="agenda-meta">
             <span class="agenda-type" style="--ev-color:${t.color};">${t.icon || ''}${t.short}</span>
-            <span>· ${e.duration ? e.duration + '\\'' : '—'}</span>
+            <span>· ${e.duration ? e.duration + 'min' : '—'}</span>
             <span>· ${e.athleteIds.length} atl${e.athleteIds.length > 1 ? 'eti' : 'eta'}</span>
           </div>
           ${athNames ? `<div style="margin-top:6px;font-size:11px;color:var(--text-3);">${athNames}${more}</div>` : ''}
