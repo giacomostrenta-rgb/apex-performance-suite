@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/app.css" />
+<link rel="stylesheet" href="assets/app.css?v=16" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -834,8 +834,8 @@
   </div>
 </aside>
 
-<script src="assets/data.js"></script>
-<script src="assets/app.js"></script>
+<script src="assets/data.js?v=16"></script>
+<script src="assets/app.js?v=16"></script>
 <script>
 const T = window.DATA.swissTeam;
 
@@ -2907,7 +2907,7 @@ function renderAthletePageTabs(a) {
   }, 100);
 
   // ===== SESSIONI TAB =====
-  renderAthleteSessions(a);
+  try { renderAthleteSessions(a); } catch(e) { console.error('renderAthleteSessions:', e); }
 
   // ===== TEST TAB =====
   const meta = UTIL.testMeta;
@@ -2938,13 +2938,13 @@ function renderAthletePageTabs(a) {
   `;
 
   // ===== REHAB TAB =====
-  renderAthleteRehab(a);
+  try { renderAthleteRehab(a); } catch(e) { console.error('renderAthleteRehab:', e); }
 
   // ===== CLINICA TAB =====
-  renderAthleteClinica(a);
+  try { renderAthleteClinica(a); } catch(e) { console.error('renderAthleteClinica:', e); }
 
   // ===== GARE TAB =====
-  renderAthleteRaces(a);
+  try { renderAthleteRaces(a); } catch(e) { console.error('renderAthleteRaces:', e); }
 }
 
 function renderAthleteSessions(a) {
