@@ -221,19 +221,21 @@
     <div id="ap-injury" class="card" style="background:var(--bad-soft);border-color:#F5C5C5;margin-bottom:18px;display:none;"></div>
 
     <!-- TABS -->
-    <div class="drawer-tabs" style="max-width:600px;">
-      <div class="drawer-tab active" data-page-tab="anagrafica">Anagrafica</div>
+    <div class="drawer-tabs" style="max-width:760px;">
+      <div class="drawer-tab active" data-page-tab="profilo">Profilo &amp; Readiness</div>
       <div class="drawer-tab" data-page-tab="sessioni">Sessioni</div>
       <div class="drawer-tab" data-page-tab="test">Test</div>
-      <div class="drawer-tab" data-page-tab="stats">Statistiche</div>
+      <div class="drawer-tab" data-page-tab="rehab">Rehab</div>
+      <div class="drawer-tab" data-page-tab="clinica">Clinica</div>
       <div class="drawer-tab" data-page-tab="gare">Gare</div>
     </div>
 
     <!-- TAB CONTENT -->
-    <div class="drawer-tab-content active" data-page-pane="anagrafica" id="ap-anagrafica"></div>
+    <div class="drawer-tab-content active" data-page-pane="profilo" id="ap-profilo"></div>
     <div class="drawer-tab-content" data-page-pane="sessioni" id="ap-sessioni"></div>
     <div class="drawer-tab-content" data-page-pane="test" id="ap-test"></div>
-    <div class="drawer-tab-content" data-page-pane="stats" id="ap-stats"></div>
+    <div class="drawer-tab-content" data-page-pane="rehab" id="ap-rehab"></div>
+    <div class="drawer-tab-content" data-page-pane="clinica" id="ap-clinica"></div>
     <div class="drawer-tab-content" data-page-pane="gare" id="ap-gare"></div>
   </div>
 </section>
@@ -2716,7 +2718,523 @@ window.openAthletePage = function(id) {
   setActiveNav('athlete-detail');
 };
 
+// ============ READINESS DERIVATION ============
+function readinessBreakdown(a) {
+  // Componenti normalizzate 0-100 (più alto = meglio)
+  const sleepScore = Math.min(100, (a.sleep / 8.5) * 100);
+  const hrvScore = Math.min(100, ((a.hrv - 50) / 35) * 100);
+  // Wellness avg recent
+  const wellness = T.wellnessHistory[a.id] || [];
+  const recent = wellness.slice(-7);
+  const avgStress = recent.length ? recent.reduce((s, w) => s + w.stress, 0) / recent.length : 5;
+  const avgFatigue = recent.length ? recent.reduce((s, w) => s + w.fatigue, 0) / recent.length : 5;
+  const stressScore = Math.max(0, 100 - (avgStress * 10));
+  const fatigueScore = Math.max(0, 100 - (avgFatigue * 10));
+  // Load (ACWR proxy)
+  const loadScore = a.load === 'Optimal' ? 85 : a.load === 'High' ? 65 : a.load === 'Reduced' ? 50 : a.load === 'Progressive' ? 70 : 75;
+  // Weighted
+  const weights = { sleep: 0.25, hrv: 0.25, stress: 0.15, fatigue: 0.15, load: 0.20 };
+  const components = [
+    { key: 'sleep', label: 'Sonno', value: a.sleep, unit: 'h', score: sleepScore, weight: weights.sleep, color: '#1D4ED8' },
+    { key: 'hrv', label: 'HRV', value: a.hrv, unit: 'ms', score: hrvScore, weight: weights.hrv, color: '#7C3AED' },
+    { key: 'stress', label: 'Stress (7gg)', value: avgStress.toFixed(1), unit: '/10', score: stressScore, weight: weights.stress, color: '#B91C1C' },
+    { key: 'fatigue', label: 'Fatica (7gg)', value: avgFatigue.toFixed(1), unit: '/10', score: fatigueScore, weight: weights.fatigue, color: '#B45309' },
+    { key: 'load', label: 'Carico ACWR', value: a.load, unit: '', score: loadScore, weight: weights.load, color: '#0F766E' },
+  ];
+  return components;
+}
+
+// ============ SESSION DETAILS — generator ============
+function generateAthleteSessions(athleteId, type, count) {
+  const templates = (window.DATA.swissTeam.exerciseTemplates || {})[type] || [];
+  if (!templates.length) return [];
+  const today = new Date('2026-05-07');
+  const out = [];
+  // Distribute sessions over past 180 days
+  for (let i = 0; i < count; i++) {
+    const daysAgo = Math.floor((i / count) * 180) + Math.floor(Math.random() * 5);
+    const d = new Date(today); d.setDate(today.getDate() - daysAgo);
+    const tpl = templates[i % templates.length];
+    const t = window.DATA.swissTeam.sessionTypes[type];
+    out.push({
+      id: `${athleteId}-${type}-${i}`,
+      date: d.toISOString().split('T')[0],
+      type,
+      title: tpl.title,
+      loc: tpl.loc || (type === 'palestra' ? 'Magglingen' : type === 'sci' ? 'Saas-Fee' : 'Magglingen'),
+      duration: type === 'sci' ? 180 : type === 'gara' ? 240 : 90,
+      load: type === 'sci' ? 620 : type === 'gara' ? 380 : type === 'recovery' ? 180 : type === 'rehab' ? 350 : 540,
+      rpe: type === 'recovery' ? 2 : type === 'rehab' ? 6 : 7,
+      exercises: tpl.exs,
+    });
+  }
+  return out.sort((a, b) => new Date(b.date) - new Date(a.date));
+}
+
+function renderSessionDetails(s) {
+  const dt = new Date(s.date);
+  return `<div class="sess-row-exercises-inner">
+    <h5>Esercizi · ${s.exercises.length} · durata ${s.duration}'</h5>
+    ${s.exercises.map((ex, i) => `
+      <div class="exercise-item">
+        <div class="exercise-num">${i + 1}</div>
+        <div class="exercise-name">
+          <strong>${ex.name}</strong>
+          ${ex.notes ? `<span>${ex.notes}</span>` : ''}
+        </div>
+        <div class="exercise-stat"><strong>${ex.sets}</strong>serie</div>
+        <div class="exercise-stat"><strong>${ex.reps}</strong>rep</div>
+        <div class="exercise-stat"><strong>${ex.load}</strong>carico</div>
+      </div>
+    `).join('')}
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:14px;margin-top:14px;border-top:1px solid var(--border);font-size:12px;color:var(--text-3);">
+      <span>RPE: <strong style="color:var(--text);font-weight:700;">${s.rpe}</strong> · Carico: <strong style="color:var(--text);font-weight:700;">${s.load} au</strong></span>
+      <button class="btn ghost" style="font-size:11px;" data-action="export-session">📄 Export PDF</button>
+    </div>
+  </div>`;
+}
+
 function renderAthletePageTabs(a) {
+  // ===== PROFILO TAB (anagrafica + readiness derivation) =====
+  const sex = a.sex === 'F' ? 'female' : 'male';
+  const benches = T.benchmarks[sex];
+  const dob = a.dob ? new Date(a.dob).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' }) : '—';
+  const status = athleteStatusInfo(a);
+  const components = readinessBreakdown(a);
+  const computedReadiness = Math.round(components.reduce((s, c) => s + c.score * c.weight, 0));
+
+  document.getElementById('ap-profilo').innerHTML = `
+    <div class="grid grid-2-1" style="gap:18px;margin-bottom:18px;">
+      <div>
+        <h3 class="section-title">Anagrafica</h3>
+        <div class="anagrafica-grid">
+          <div class="anagrafica-row"><span class="anagrafica-label">Nato/a</span><span class="anagrafica-value">${dob}</span></div>
+          <div class="anagrafica-row"><span class="anagrafica-label">Età</span><span class="anagrafica-value">${athleteAge(a)} anni</span></div>
+          <div class="anagrafica-row"><span class="anagrafica-label">Altezza</span><span class="anagrafica-value">${a.height} cm</span></div>
+          <div class="anagrafica-row"><span class="anagrafica-label">Peso</span><span class="anagrafica-value">${a.weight} kg</span></div>
+          <div class="anagrafica-row"><span class="anagrafica-label">Specialità</span><span class="anagrafica-value">${a.disc.join(' · ')}</span></div>
+          <div class="anagrafica-row"><span class="anagrafica-label">Focus</span><span class="anagrafica-value">${a.focus}</span></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:18px;">
+          <div class="pill ${status.cls}" style="font-size:12px;padding:6px 12px;">${status.label}</div>
+          ${a.wcOverall ? `<div class="pill good" style="font-size:12px;padding:6px 12px;">#${a.wcOverall} WC</div>` : ''}
+        </div>
+      </div>
+      <div>
+        <h3 class="section-title">Performance DNA</h3>
+        <div class="dna-strip with-labels" id="ap-dna" style="height:200px;"></div>
+        <p class="muted" style="font-size:11.5px;margin-top:14px;line-height:1.5;">Score 0–100 vs riferimento Coppa del Mondo. Forza · Potenza · Reattività · Endurance · Equilibrio · Salto.</p>
+      </div>
+    </div>
+
+    <!-- READINESS DERIVATION -->
+    <div class="readiness-card">
+      <div class="readiness-hero">
+        <div class="readiness-big-num" style="color:${a.readiness >= 80 ? 'var(--good)' : a.readiness >= 70 ? 'var(--warn)' : 'var(--bad)'};">${a.readiness}<sub>%</sub></div>
+        <div class="readiness-label-side">
+          <h4>Readiness composta</h4>
+          <p>Punteggio aggregato derivato da <strong>5 componenti</strong> con pesi ponderati. Calcolato giornalmente da wellness questionnaire (sonno, stress, fatica), wearable (HRV), e ACWR carico allenamento.</p>
+        </div>
+      </div>
+
+      <div class="ready-components">
+        ${components.map(c => `
+          <div class="ready-component">
+            <div class="ready-component-head">
+              <span class="ready-component-name">${c.label}</span>
+              <span class="ready-component-weight">${Math.round(c.weight * 100)}%</span>
+            </div>
+            <div class="ready-component-value" style="color:${c.color};">${c.value}<sub>${c.unit}</sub></div>
+            <div class="ready-component-bar"><div class="ready-component-bar-fill" style="width:${c.score}%;background:${c.color};"></div></div>
+            <div style="font-size:10.5px;color:var(--text-3);margin-top:6px;font-weight:600;">Score ${Math.round(c.score)}/100</div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div style="background:var(--surface-2);border-radius:10px;padding:12px 16px;font-size:12px;color:var(--text-2);line-height:1.6;font-feature-settings:'tnum';">
+        <strong>Formula</strong>: ${components.map(c => `${Math.round(c.weight*100)}% × ${c.label}`).join(' + ')} = <strong style="color:var(--text);">${computedReadiness}% calcolato</strong>
+      </div>
+
+      <div class="grid grid-2" style="gap:14px;margin-top:18px;">
+        <div class="wellness-card">
+          <h5>Trend Readiness · 14gg</h5>
+          <div class="wellness-spark" style="height:80px;"><canvas id="ap-ready-trend"></canvas></div>
+        </div>
+        <div class="wellness-card">
+          <h5>Sonno + Carico · correlazione</h5>
+          <div class="wellness-spark" style="height:80px;"><canvas id="ap-sleep-load"></canvas></div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const tests = ['squat1RM', 'sj', 'dj', 'vo2max', 'ybalance', 'cmj'];
+  const labels = ['Forza', 'Pot', 'Reat', 'End', 'Eq', 'Salto'];
+  document.getElementById('ap-dna').innerHTML = tests.map((t, i) => {
+    const b = benches[t]; const v = a.tests[t];
+    const score = ((v - b.wcAvg) / (b.wcMax - b.wcAvg)) * 100;
+    const cls = score >= 80 ? 'elite' : score >= 60 ? 'good' : score >= 40 ? '' : score >= 20 ? 'warn' : 'bad';
+    const h = Math.max(15, Math.min(100, score));
+    return `<div class="dna-bar ${cls}" style="height:${h}%;" data-label="${labels[i]} ${Math.round(score)}"></div>`;
+  }).join('');
+
+  // Charts for readiness derivation
+  setTimeout(() => {
+    const wellness = T.wellnessHistory[a.id] || [];
+    if (!wellness.length) return;
+    const labels = wellness.map(w => w.date.slice(-2));
+
+    // Readiness trend (synthetic from wellness)
+    const readiness = wellness.map(w => Math.min(100, w.sleep * 8 + (100 - w.stress * 8) * 0.3 + (100 - w.fatigue * 8) * 0.3 + (w.mood * 8) * 0.1));
+    const el1 = document.getElementById('ap-ready-trend');
+    if (el1) {
+      if (el1._chart) el1._chart.destroy();
+      el1._chart = lineChart(el1, labels, [{ data: readiness.map(r => Math.round(r)), color: '#0F766E', fill: true }], { beginAtZero: false });
+    }
+    // Sleep vs Load
+    const el2 = document.getElementById('ap-sleep-load');
+    if (el2) {
+      if (el2._chart) el2._chart.destroy();
+      el2._chart = lineChart(el2, labels, [
+        { label: 'Sonno (h)', data: wellness.map(w => w.sleep), color: '#1D4ED8' },
+        { label: 'Carico (au/100)', data: wellness.map(w => w.load / 100), color: '#B91C1C' },
+      ], { beginAtZero: false, legend: true });
+    }
+  }, 100);
+
+  // ===== SESSIONI TAB =====
+  renderAthleteSessions(a);
+
+  // ===== TEST TAB =====
+  const meta = UTIL.testMeta;
+  document.getElementById('ap-test').innerHTML = `
+    <h3 class="section-title">Test fisici · ultimi valori vs squadra &amp; WC</h3>
+    <div class="grid grid-2" style="gap:12px;">
+      ${tests.map(k => {
+        const b = benches[k]; const v = a.tests[k]; const m = meta[k];
+        const pct = (val) => Math.max(0, Math.min(100, ((val - b.teamMin) / (b.wcMax - b.teamMin)) * 100));
+        const dTeam = (v - b.teamAvg).toFixed(m.decimals);
+        const dWcTop = (v - b.wcTop10).toFixed(m.decimals);
+        return `<div class="benchmark">
+          <div class="benchmark-head"><div class="benchmark-name">${m.label}</div><div class="benchmark-value">${v.toFixed(m.decimals)}<small>${m.unit}</small></div></div>
+          <div class="benchmark-bar">
+            <div class="benchmark-track"></div>
+            <div class="benchmark-fill" style="width:${pct(v)}%;"></div>
+            <div class="benchmark-marker team" style="left:${pct(b.teamAvg)}%;"></div>
+            <div class="benchmark-marker wc" style="left:${pct(b.wcTop10)}%;"></div>
+            <div class="benchmark-dot" style="left:${pct(v)}%;"></div>
+          </div>
+          <div class="benchmark-legend">
+            <span class="${parseFloat(dTeam) >= 0 ? 'text-good' : 'text-bad'}">vs Team <strong>${parseFloat(dTeam) >= 0 ? '+' : ''}${dTeam}${m.unit}</strong></span>
+            <span class="${parseFloat(dWcTop) >= 0 ? 'text-good' : 'text-bad'}">vs WC Top10 <strong>${parseFloat(dWcTop) >= 0 ? '+' : ''}${dWcTop}${m.unit}</strong></span>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+  `;
+
+  // ===== REHAB TAB =====
+  renderAthleteRehab(a);
+
+  // ===== CLINICA TAB =====
+  renderAthleteClinica(a);
+
+  // ===== GARE TAB =====
+  renderAthleteRaces(a);
+}
+
+function renderAthleteSessions(a) {
+  const sessions = T.athleteSessions[a.id] || {};
+  const totalS = Object.values(sessions).reduce((s, n) => s + n, 0);
+
+  document.getElementById('ap-sessioni').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;">
+      <div>
+        <h3 class="section-title" style="margin:0 0 4px;">Sessioni stagione 2025/26</h3>
+        <p class="muted" style="font-size:12.5px;margin:0;">Clicca una categoria per espanderla · clicca una sessione per vedere gli esercizi</p>
+      </div>
+      <div style="font-size:12px;color:var(--text-3);">Totale <strong style="color:var(--text);font-weight:700;font-size:22px;letter-spacing:-0.025em;font-feature-settings:'tnum';">${totalS}</strong></div>
+    </div>
+
+    ${Object.entries(T.sessionTypes).map(([k, t]) => {
+      const count = sessions[k] || 0;
+      const pct = totalS > 0 ? Math.round((count / totalS) * 100) : 0;
+      return `<div class="sess-cat" data-cat-key="${k}">
+        <div class="sess-cat-head" data-action="toggle-sess-cat" data-key="${k}">
+          <div class="sess-cat-icon" style="background:${t.soft};color:${t.color};">${t.icon}</div>
+          <div class="sess-cat-title">
+            <strong>${t.label}</strong>
+            <span>Avg ${count > 0 ? Math.round(180/count) : '—'} giorni tra una sessione e l'altra</span>
+          </div>
+          <div class="sess-cat-count">${count}</div>
+          <div class="sess-cat-pct"><strong>${pct}%</strong>del totale</div>
+          <div class="sess-cat-chevron">▾</div>
+        </div>
+        <div class="sess-cat-bar"><div class="sess-cat-bar-fill" style="width:${pct}%;background:${t.color};"></div></div>
+        <div class="sess-cat-body">
+          <div class="sess-cat-content" id="sess-cat-body-${k}"></div>
+        </div>
+      </div>`;
+    }).join('')}
+  `;
+}
+
+function renderSessCatContent(athleteId, type) {
+  const a = T.athletes.find(x => x.id === athleteId);
+  const sessions = T.athleteSessions[athleteId] || {};
+  const count = sessions[type] || 0;
+  const totalS = Object.values(sessions).reduce((s, n) => s + n, 0);
+  const pct = totalS > 0 ? Math.round((count / totalS) * 100) : 0;
+  const t = T.sessionTypes[type];
+  // Generate session details
+  const generated = generateAthleteSessions(athleteId, type, Math.min(8, count));
+  const totalLoad = generated.reduce((s, x) => s + x.load, 0);
+  const avgRpe = generated.length ? (generated.reduce((s, x) => s + (typeof x.rpe === 'number' ? x.rpe : 7), 0) / generated.length).toFixed(1) : '—';
+  const totalHours = Math.round(generated.reduce((s, x) => s + x.duration, 0) / 60);
+
+  const target = document.getElementById(`sess-cat-body-${type}`);
+  if (!target) return;
+  target.innerHTML = `
+    <div class="sess-cat-stats">
+      <div class="sess-cat-stat"><strong>${count}</strong><span>Sessioni</span></div>
+      <div class="sess-cat-stat"><strong>${pct}<small style="font-size:11px;color:var(--text-3);">%</small></strong><span>del totale</span></div>
+      <div class="sess-cat-stat"><strong>${totalLoad}<small style="font-size:11px;color:var(--text-3);">au</small></strong><span>Carico cumulato</span></div>
+      <div class="sess-cat-stat"><strong>${avgRpe}</strong><span>RPE medio</span></div>
+    </div>
+
+    <h5 style="margin:0 0 10px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-3);">Ultime ${generated.length} sessioni · clicca per gli esercizi</h5>
+    ${generated.length === 0 ? '<div class="muted" style="padding:14px;text-align:center;font-size:13px;">Nessuna sessione registrata</div>' :
+      generated.map(s => {
+        const d = new Date(s.date);
+        return `<div class="sess-row" data-session-id="${s.id}" data-action="toggle-sess-row">
+          <div class="sess-row-head">
+            <div class="sess-row-date">
+              <strong>${d.getDate().toString().padStart(2,'0')}</strong>
+              <span>${d.toLocaleDateString('it-IT', { month: 'short' })}</span>
+            </div>
+            <div class="sess-row-info">
+              <strong>${s.title}</strong>
+              <span>${s.loc} · ${s.exercises.length} esercizi</span>
+            </div>
+            <div class="sess-row-meta">
+              <span>${s.duration}'</span>
+              <span>${s.load} au</span>
+              <span>RPE ${s.rpe}</span>
+            </div>
+            <div style="color:var(--text-3);font-size:14px;">▸</div>
+          </div>
+          <div class="sess-row-exercises">${renderSessionDetails(s)}</div>
+        </div>`;
+      }).join('')
+    }
+  `;
+}
+
+Object.assign(ACTIONS, {
+  'toggle-sess-cat': (btn) => {
+    const card = btn.closest('.sess-cat');
+    const key = btn.dataset.key;
+    if (!card) return;
+    const isOpen = card.classList.contains('open');
+    if (!isOpen && window.__activeAthlete) {
+      renderSessCatContent(window.__activeAthlete, key);
+    }
+    card.classList.toggle('open');
+  },
+  'toggle-sess-row': (btn) => {
+    const row = btn.closest('.sess-row');
+    row?.classList.toggle('open');
+  },
+  'export-session': () => simulateDownload('Sessione_dettaglio.pdf'),
+});
+
+function renderAthleteRehab(a) {
+  const target = document.getElementById('ap-rehab');
+  if (!a.injury) {
+    target.innerHTML = `
+      <div class="clinic-card" style="text-align:center;padding:40px;">
+        <div style="font-size:48px;margin-bottom:14px;opacity:0.5;">✅</div>
+        <h4 style="margin:0 0 6px;font-size:16px;">Nessun infortunio attivo</h4>
+        <p class="muted" style="font-size:13px;margin:0;">L'atleta è disponibile per l'allenamento e le gare. Storico episodi visibile in Clinica.</p>
+      </div>
+
+      <h3 class="section-title" style="margin-top:24px;">Storico infortuni</h3>
+      ${(() => {
+        const hist = T.injuryHistory.filter(i => i.athleteId === a.id);
+        return hist.length ? hist.map(i => `
+          <div class="clinic-card" style="margin-bottom:10px;">
+            <div style="display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;">
+              <div style="font-size:24px;">🩹</div>
+              <div>
+                <strong style="font-size:13px;">${i.diag}</strong>
+                <div class="muted" style="font-size:11.5px;">${i.date} · ${i.area} · ${i.daysOut}gg fuori</div>
+              </div>
+              <span class="pill good">Risolto</span>
+            </div>
+          </div>
+        `).join('') : '<div class="muted" style="padding:14px;font-size:13px;">Nessun episodio precedente</div>';
+      })()}
+    `;
+    return;
+  }
+
+  // Active rehab — full detail (from T.rehab if exists)
+  const c = T.rehab[a.id];
+  if (!c) { target.innerHTML = `<div class="clinic-card" style="text-align:center;padding:40px;color:var(--text-3);">Cartella rehab in attesa di apertura</div>`; return; }
+
+  const rtsDate = new Date(c.rtsForecast);
+  const today = new Date('2026-05-07');
+  const daysToRts = Math.ceil((rtsDate - today) / (1000*60*60*24));
+
+  target.innerHTML = `
+    <div class="rehab-hero">
+      <div class="rehab-hero-avatar">${UTIL.initials(c.name)}</div>
+      <div class="rehab-hero-info">
+        <h3>${c.diagnosis}</h3>
+        <p class="diag">${c.injuryContext || ''}</p>
+        <div class="rehab-hero-meta">
+          <div>Data infortunio<strong>${new Date(c.injuryDate).toLocaleDateString('it-IT')}</strong></div>
+          <div>Giorno +<strong>${c.daysSince}</strong></div>
+          ${c.surgery ? `<div>Intervento<strong>${new Date(c.surgery.date).toLocaleDateString('it-IT')}</strong></div>` : ''}
+        </div>
+      </div>
+      <div class="rehab-hero-rts">
+        <div class="rehab-hero-rts-label">RTS previsto</div>
+        <div class="rehab-hero-rts-date">${rtsDate.toLocaleDateString('it-IT', { day: '2-digit', month: 'short' })}</div>
+        <div class="rehab-hero-rts-days">fra ${daysToRts} giorni</div>
+      </div>
+    </div>
+
+    <h3 class="section-title">Fasi rehabilitazione</h3>
+    <div class="phases-track" style="margin-bottom:18px;">
+      ${c.phases.map(p => `<div class="phase-cell ${p.complete ? 'complete' : ''} ${p.current ? 'current' : ''}">
+        <div class="phase-cell-name">${p.name}</div>
+        <div class="phase-cell-dates">${new Date(p.start).toLocaleDateString('it-IT',{day:'2-digit',month:'short'})} → ${p.end === '—' ? '—' : new Date(p.end).toLocaleDateString('it-IT',{day:'2-digit',month:'short'})}</div>
+        <div class="phase-cell-goal">${p.goals}</div>
+      </div>`).join('')}
+    </div>
+
+    <h3 class="section-title">Criteri Return-to-Sport · ${c.rtsCriteria.filter(r => r.status === 'done').length} / ${c.rtsCriteria.length}</h3>
+    <div class="clinic-card" style="padding:0;">
+      ${c.rtsCriteria.map(r => `
+        <div class="rts-row" style="padding:14px 18px;">
+          <div style="width:22px;height:22px;border-radius:50%;background:${r.status === 'done' ? 'var(--good-soft)' : r.status === 'warn' ? 'var(--warn-soft)' : 'var(--surface-3)'};color:${r.status === 'done' ? 'var(--good)' : r.status === 'warn' ? 'var(--warn)' : 'var(--text-4)'};display:grid;place-items:center;font-size:10px;font-weight:700;">${r.status === 'done' ? '✓' : r.status === 'warn' ? '!' : '○'}</div>
+          <div class="rts-name">${r.name}<span>Target ${r.target} · ${r.last}</span></div>
+          <div class="rts-value ${r.status}">${r.value}</div>
+          <div class="rts-progress"><div class="rts-progress-fill ${r.status}" style="width:${r.current ? Math.min(100, (r.current / 100) * 100) : 0}%;"></div></div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderAthleteClinica(a) {
+  const c = T.clinica && T.clinica[a.id];
+  const target = document.getElementById('ap-clinica');
+
+  if (!c) {
+    target.innerHTML = `
+      <div class="clinic-card">
+        <div class="clinic-card-head"><div class="ico">📋</div><h4>Cartella clinica</h4></div>
+        <p class="muted" style="font-size:13px;margin:0;">Cartella in compilazione · contatta il medico federale per richiesta dati storici.</p>
+      </div>`;
+    return;
+  }
+
+  target.innerHTML = `
+    <!-- Anamnesi -->
+    <div class="clinic-card">
+      <div class="clinic-card-head"><div class="ico">📋</div><h4>Anamnesi &amp; informazioni base</h4></div>
+      <div class="clinic-row"><span class="clinic-label">Anamnesi</span><span class="clinic-value">${c.anamnesi}</span></div>
+      <div class="clinic-row"><span class="clinic-label">Gruppo sang.</span><span class="clinic-value"><strong>${c.bloodType}</strong></span></div>
+      <div class="clinic-row"><span class="clinic-label">Allergie</span><span class="clinic-value">${c.allergies}</span></div>
+      <div class="clinic-row"><span class="clinic-label">Farmaci / Integratori</span><span class="clinic-value" style="font-size:12.5px;">${c.meds}</span></div>
+    </div>
+
+    <!-- Parametri vitali -->
+    <div class="clinic-card">
+      <div class="clinic-card-head"><div class="ico">❤️</div><h4>Parametri vitali · valori di riferimento</h4></div>
+      <div class="grid grid-3" style="gap:12px;">
+        <div class="stat"><div class="stat-label">FC riposo</div><div class="stat-value">${c.vitals.restingHR}<span class="stat-value-sub">bpm</span></div></div>
+        <div class="stat"><div class="stat-label">Pressione</div><div class="stat-value" style="font-size:22px;">${c.vitals.bp}</div></div>
+        <div class="stat"><div class="stat-label">VO2max</div><div class="stat-value">${c.vitals.vo2max}<span class="stat-value-sub">ml/kg/min</span></div></div>
+      </div>
+    </div>
+
+    <!-- Antropometria storica -->
+    <div class="clinic-card">
+      <div class="clinic-card-head"><div class="ico">📏</div><h4>Antropometria · storico</h4></div>
+      ${c.anthropometry.map(an => `
+        <div class="clinic-row">
+          <span class="clinic-label">${new Date(an.date).toLocaleDateString('it-IT', { month: 'short', year: 'numeric' })}</span>
+          <span class="clinic-value">Peso <strong>${an.weight}kg</strong> · Altezza <strong>${an.height}cm</strong> · BF <strong>${an.bf}%</strong> · Massa magra <strong>${an.lean}kg</strong></span>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Interventi -->
+    ${c.surgeries.length > 0 ? `<div class="clinic-card">
+      <div class="clinic-card-head"><div class="ico">🏥</div><h4>Interventi chirurgici</h4></div>
+      ${c.surgeries.map(s => `
+        <div class="clinic-row">
+          <span class="clinic-label">${new Date(s.date).toLocaleDateString('it-IT')}</span>
+          <span class="clinic-value"><strong>${s.type}</strong><br/><span class="muted" style="font-size:12px;">${s.center} · ${s.surgeon}${s.notes ? ' · ' + s.notes : ''}</span></span>
+        </div>
+      `).join('')}
+    </div>` : ''}
+
+    <!-- Esami passati -->
+    <div class="clinic-card">
+      <div class="clinic-card-head"><div class="ico">🔬</div><h4>Esami strumentali · cronologia</h4></div>
+      ${c.pastExams.map(e => `
+        <div class="clinic-row">
+          <span class="clinic-label">${new Date(e.date).toLocaleDateString('it-IT')}</span>
+          <span class="clinic-value"><strong>${e.type}</strong><br/><span class="muted" style="font-size:12px;">${e.findings}</span></span>
+        </div>
+      `).join('')}
+    </div>
+
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:18px;">
+      <button class="btn" data-action="upload-document">+ Aggiungi referto</button>
+      <button class="btn primary" data-action="export-pdf-athlete">📄 Esporta cartella clinica</button>
+    </div>
+  `;
+}
+
+function renderAthleteRaces(a) {
+  const results = T.results.filter(r => r.athleteId === a.id).slice(0, 12);
+  const today = new Date('2026-05-07');
+  const upcoming = T.races.filter(r => new Date(r.date) >= today).slice(0, 4);
+  document.getElementById('ap-gare').innerHTML = `
+    <h3 class="section-title">Prossime gare in programma</h3>
+    <div class="grid grid-2" style="gap:10px;margin-bottom:22px;">
+      ${upcoming.map(r => {
+        const d = new Date(r.date);
+        const days = Math.ceil((d - today) / (1000*60*60*24));
+        return `<div class="athlete-race-row" data-race="${r.id}">
+          <div style="background:var(--accent-soft);color:var(--accent);width:34px;height:34px;border-radius:8px;display:grid;place-items:center;font-weight:700;font-feature-settings:'tnum';">${days}</div>
+          <div><strong>${r.loc}</strong><div class="muted" style="font-size:11px;">${r.disc} · ${d.toLocaleDateString('it-IT',{day:'2-digit',month:'long'})}</div></div>
+          <span class="pill muted">${r.country}</span>
+          <span class="muted tabular" style="font-size:11.5px;">+${days}gg</span>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <h3 class="section-title">Risultati stagione · ${results.length} gare</h3>
+    ${results.length === 0 ? '<div class="muted" style="padding:14px;text-align:center;font-size:13px;">Nessuna gara questa stagione</div>' : results.map(r => {
+      const cls = r.position === 1 ? 'gold' : r.position === 2 ? 'silver' : r.position === 3 ? 'bronze' : (r.position <= 10 ? 'top10' : '');
+      return `<div class="athlete-race-row">
+        <div class="position-badge ${cls}" style="width:30px;height:30px;font-size:12px;">${r.position}</div>
+        <div><strong>${r.race}</strong><div class="muted" style="font-size:11px;">${r.disc} · ${new Date(r.date).toLocaleDateString('it-IT')}</div></div>
+        <span class="muted tabular" style="font-size:11.5px;">${r.time}</span>
+        <span class="pill ${r.position <= 3 ? 'good' : 'muted'}" style="font-feature-settings:'tnum';">${r.wcPts}pt</span>
+      </div>`;
+    }).join('')}
+  `;
+}
+
+// Stub vecchio renderAthletePageTabs — la nuova versione sopra prende il controllo
+function _renderAthletePageTabsOld(a) {
   // Anagrafica
   const sex = a.sex === 'F' ? 'female' : 'male';
   const benches = T.benchmarks[sex];

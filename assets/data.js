@@ -470,6 +470,187 @@ window.DATA = {
       { date: '2026-04-01T06:00:00', type: 'monthly', status: 'sent',   size: '7.8 MB', recipients: 8, filename: 'Mensile_Marzo_2026_Swiss-Ski.pdf', openRate: 88 },
     ],
 
+    // Template esercizi per tipo di sessione (per generare dettagli)
+    exerciseTemplates: {
+      palestra: [
+        { title: 'Forza max · Squat + Reattività', exs: [
+          { name: 'Mobilità + attivazione dinamica', notes: 'FMS routine · drill anche/caviglia', sets: 1, reps: '15\'', load: '—', rpe: 3 },
+          { name: 'Box Squat sub-max', notes: 'Pausa 1" sul box · tecnica pulita', sets: 5, reps: 3, load: '85% 1RM', rpe: 8 },
+          { name: 'Drop Jump reattivo', notes: 'Box 40cm · contatto <200ms', sets: 4, reps: 5, load: 'BW', rpe: 'RSI 2.7' },
+          { name: 'Nordic Hamstring eccentrico', notes: 'Protezione hamstring', sets: 3, reps: 6, load: 'BW', rpe: 8 },
+          { name: 'Pallof Press anti-rotazione', notes: 'Core stabilizzazione', sets: 3, reps: '30"', load: 'banda', rpe: 6 },
+        ]},
+        { title: 'Potenza esplosiva', exs: [
+          { name: 'Riscaldamento dinamico', notes: 'Bike + drill mobilità', sets: 1, reps: '10\'', load: '—', rpe: 3 },
+          { name: 'Power Clean', notes: 'Esplosivo · prima fase', sets: 5, reps: 3, load: '70% 1RM', rpe: 7 },
+          { name: 'Trap Bar Jump Squat', notes: 'Massima velocità', sets: 4, reps: 5, load: '40kg', rpe: 7 },
+          { name: 'Lateral Bound', notes: 'Pliometria laterale sci-spec', sets: 4, reps: 6, load: 'BW', rpe: 7 },
+          { name: 'Core anti-rotazione circuito', notes: 'Pallof + dead-bug', sets: 3, reps: '40"', load: 'BW', rpe: 6 },
+        ]},
+        { title: 'Forza eccentrica', exs: [
+          { name: 'Attivazione + foam rolling', notes: '', sets: 1, reps: '15\'', load: '—', rpe: 2 },
+          { name: 'Bulgarian Split Squat eccentrico', notes: 'Tempo 4-1-1', sets: 4, reps: 8, load: '20kg', rpe: 7 },
+          { name: 'RDL bilanciere', notes: 'Eccentrico controllato', sets: 4, reps: 6, load: '60% 1RM', rpe: 7 },
+          { name: 'Nordic Hamstring', notes: 'Protezione posteriore', sets: 3, reps: 6, load: 'BW', rpe: 8 },
+          { name: 'Plank dinamico + side plank', notes: 'Core circuito', sets: 3, reps: '40"', load: 'BW', rpe: 6 },
+        ]},
+        { title: 'Mobilità + core', exs: [
+          { name: 'Foam rolling completo', notes: 'Tutto il corpo', sets: 1, reps: '15\'', load: '—', rpe: 2 },
+          { name: 'Yoga flow dinamico', notes: 'Apertura anche e mobilità toracica', sets: 1, reps: '20\'', load: '—', rpe: 3 },
+          { name: 'Dead-bug progressivo', notes: 'Core deep stabilizzazione', sets: 3, reps: 8, load: 'BW', rpe: 5 },
+          { name: 'Pallof Press', notes: 'Anti-rotazione', sets: 3, reps: 12, load: 'banda', rpe: 5 },
+        ]},
+      ],
+      sci: [
+        { title: 'GS · tracciato corto', loc: 'Saas-Fee', exs: [
+          { name: 'Riscaldamento on-snow', notes: 'Free skiing pista facile', sets: 1, reps: '15\'', load: '—', rpe: 3 },
+          { name: 'Drill posizione anticipata', notes: 'Esterno · 2 piste', sets: 2, reps: '8 discese', load: '—', rpe: 5 },
+          { name: 'GS tracciato 25 porte', notes: 'Pendenza 60% · neve hard pack', sets: 4, reps: '4 manche', load: '—', rpe: 8 },
+          { name: 'Cool down + mobilità', notes: 'Free skiing leggero', sets: 1, reps: '10\'', load: '—', rpe: 2 },
+        ]},
+        { title: 'SL · drill ritmo', loc: 'Hintertux', exs: [
+          { name: 'Riscaldamento on-snow', notes: 'Free skiing', sets: 1, reps: '12\'', load: '—', rpe: 3 },
+          { name: 'Drill rotolata caviglia', notes: 'Tecnica appoggio · 2 piste', sets: 2, reps: '6 discese', load: '—', rpe: 5 },
+          { name: 'SL tracciato 50 porte', notes: 'Cambio di ritmo · 3 settori', sets: 5, reps: '3 manche', load: '—', rpe: 8 },
+          { name: 'Recupero attivo', notes: 'Cammino + stretching', sets: 1, reps: '10\'', load: '—', rpe: 2 },
+        ]},
+        { title: 'SG · velocità', loc: 'Stelvio', exs: [
+          { name: 'Riscaldamento on-snow', notes: 'Free skiing + drill posizione', sets: 1, reps: '20\'', load: '—', rpe: 3 },
+          { name: 'SG drill velocità', notes: 'Cancellate aperte · pista lunga', sets: 3, reps: '2 manche', load: '—', rpe: 9 },
+          { name: 'Video analisi posizione', notes: 'Briefing 15\' tra manche', sets: 1, reps: '15\'', load: '—', rpe: '—' },
+          { name: 'Free skiing cool down', notes: 'Leggera intensità', sets: 1, reps: '10\'', load: '—', rpe: 2 },
+        ]},
+      ],
+      rehab: [
+        { title: 'Fase 3 LCA · plio asimmetrica', exs: [
+          { name: 'Bike attivazione', notes: 'Resistenza bassa', sets: 1, reps: '10\'', load: '—', rpe: 4 },
+          { name: 'Single hop forward', notes: 'Atterraggio controllato · monitoraggio LSI', sets: 4, reps: 6, load: 'BW', rpe: 7 },
+          { name: 'Triple hop forward', notes: 'LSI target ≥90%', sets: 3, reps: 5, load: 'BW', rpe: 8 },
+          { name: 'Y-Balance test set', notes: 'Reach asimmetrico', sets: 3, reps: 'AMRAP 30"', load: 'BW', rpe: 6 },
+          { name: 'Crioterapia + compressione', notes: 'Recupero attivo', sets: 1, reps: '20\'', load: '—', rpe: '—' },
+        ]},
+        { title: 'Fase 4 spalla · drill caduta', exs: [
+          { name: 'Mobilità GH + scapolare', notes: 'Theraband attivazione', sets: 2, reps: 15, load: 'banda', rpe: 4 },
+          { name: 'Med ball chest throw', notes: 'Esplosivo · no compensi', sets: 4, reps: 6, load: '4kg', rpe: 7 },
+          { name: 'Push-up + perturbazione', notes: 'Su BOSU · partner spinge', sets: 3, reps: 10, load: 'BW', rpe: 7 },
+          { name: 'Drill caduta controllata', notes: 'Su materasso · 3 lati', sets: 3, reps: 5, load: 'BW', rpe: 6 },
+        ]},
+      ],
+      recovery: [
+        { title: 'Recovery + crioterapia', exs: [
+          { name: 'Foam rolling completo', notes: 'Catene principali', sets: 1, reps: '15\'', load: '—', rpe: 2 },
+          { name: 'Crioterapia (whole-body)', notes: '-110°C · 3 minuti', sets: 1, reps: '3\'', load: '—', rpe: '—' },
+          { name: 'Stretching statico', notes: 'Catene posteriori', sets: 1, reps: '20\'', load: '—', rpe: 2 },
+          { name: 'Mobility yoga', notes: 'Apertura anche e spalle', sets: 1, reps: '15\'', load: '—', rpe: 2 },
+        ]},
+      ],
+      test: [
+        { title: 'CMJ + SJ + DJ batch', exs: [
+          { name: 'Riscaldamento dinamico', notes: 'Standardizzato pre-test', sets: 1, reps: '10\'', load: '—', rpe: 4 },
+          { name: 'CMJ (Counter Movement Jump)', notes: 'OptoJump · 3 prove · best', sets: 1, reps: 3, load: 'BW', rpe: 'max' },
+          { name: 'SJ (Squat Jump)', notes: 'No counter movement · 3 prove', sets: 1, reps: 3, load: 'BW', rpe: 'max' },
+          { name: 'DJ (Drop Jump)', notes: 'Box 40cm · RSI · 3 prove', sets: 1, reps: 3, load: 'BW', rpe: 'max' },
+          { name: 'Defaticamento', notes: 'Bike + stretching', sets: 1, reps: '10\'', load: '—', rpe: 2 },
+        ]},
+      ],
+      gara: [
+        { title: 'Gara CdM · giorno gara', exs: [
+          { name: 'Sveglia + colazione 3h pre', notes: '06:30 · ottimizzazione glicogeno', sets: 1, reps: '—', load: '—', rpe: '—' },
+          { name: 'Attivazione fisica', notes: '60\' pre-start · bike + drill', sets: 1, reps: '60\'', load: '—', rpe: 5 },
+          { name: 'Ricognizione tracciato', notes: 'Memorizzazione settori chiave', sets: 1, reps: '—', load: '—', rpe: '—' },
+          { name: '1ª manche', notes: 'Strategia pulita prime 10 porte', sets: 1, reps: 1, load: 'max', rpe: 10 },
+          { name: '2ª manche', notes: 'Cambio strategia in base split', sets: 1, reps: 1, load: 'max', rpe: 10 },
+          { name: 'Cool down + analisi video', notes: 'Recovery + briefing post', sets: 1, reps: '30\'', load: '—', rpe: 2 },
+        ]},
+      ],
+      briefing: [
+        { title: 'Briefing pre-gara', exs: [
+          { name: 'Strategia tracciato', notes: 'Settori chiave · linea ideale', sets: 1, reps: '20\'', load: '—', rpe: '—' },
+          { name: 'Condizioni meteo', notes: 'Vento · neve · visibilità', sets: 1, reps: '5\'', load: '—', rpe: '—' },
+          { name: 'Materiali scelti', notes: 'Sci · lamine · sciolinatura', sets: 1, reps: '15\'', load: '—', rpe: '—' },
+          { name: 'Tempistiche', notes: 'Sveglia · attivazione · start', sets: 1, reps: '10\'', load: '—', rpe: '—' },
+        ]},
+      ],
+    },
+
+    // Cartella clinica per atleta (anamnesi, anthro, esami)
+    clinica: {
+      lgb: {
+        bloodType: '0+', allergies: 'Nessuna nota',
+        meds: 'Vit. D3 4000 UI · Omega 3 · Magnesio (post-allenamento)',
+        anamnesi: 'Atleta storica della squadra svizzera. Carriera senza grandi infortuni gravi. Lieve tendinopatia rotulea 2019 risolta.',
+        surgeries: [
+          { date: '2019-06-10', type: 'Artroscopia ginocchio dx · debridement menisco', center: 'Schulthess Klinik · Zürich', surgeon: 'Prof. Müller', notes: 'Recupero completo in 8 settimane' },
+        ],
+        pastExams: [
+          { date: '2026-04-15', type: 'Eco strutturale ginocchia', findings: 'Nessuna patologia · trocleare nei limiti' },
+          { date: '2026-03-01', type: 'Visita cardiologica annuale', findings: 'ECG nella norma · ecocardio normale · idoneità confermata' },
+          { date: '2025-09-12', type: 'RM colonna lombare', findings: 'Nessuna ernia · lieve scoliosi compensatoria' },
+        ],
+        anthropometry: [
+          { date: '2026-05-01', weight: 64.2, height: 168, bf: 18.4, lean: 52.4 },
+          { date: '2026-03-01', weight: 64.8, height: 168, bf: 19.0, lean: 52.5 },
+          { date: '2026-01-01', weight: 65.5, height: 168, bf: 20.2, lean: 52.3 },
+          { date: '2025-10-01', weight: 66.2, height: 168, bf: 21.0, lean: 52.3 },
+        ],
+        vitals: { restingHR: 48, bp: '108/68', vo2max: 56.8 },
+      },
+      mod: {
+        bloodType: 'A+', allergies: 'Nessuna nota',
+        meds: 'Multivitaminico · Creatina 5g/die · Omega 3',
+        anamnesi: 'Carriera straordinaria · stato fisico eccellente · zero infortuni significativi.',
+        surgeries: [],
+        pastExams: [
+          { date: '2026-04-20', type: 'Visita cardiologica annuale', findings: 'Tutto nella norma · idoneità confermata' },
+          { date: '2026-02-10', type: 'Eco completa', findings: 'Tutto nella norma' },
+        ],
+        anthropometry: [
+          { date: '2026-05-01', weight: 84.0, height: 183, bf: 11.8, lean: 74.1 },
+          { date: '2026-03-01', weight: 84.5, height: 183, bf: 12.1, lean: 74.3 },
+          { date: '2026-01-01', weight: 85.2, height: 183, bf: 12.5, lean: 74.5 },
+        ],
+        vitals: { restingHR: 42, bp: '112/70', vo2max: 64.8 },
+      },
+      csu: {
+        bloodType: 'B+', allergies: 'Lattosio (intolleranza lieve)',
+        meds: 'Antinfiammatori al bisogno · Vit. D3 · Calcio + Vit K2',
+        anamnesi: 'Rottura LCA dx 13/12/2025. Operata 14/12. Anamnesi precedente: distorsione caviglia sx 2022. Buona tolleranza al carico.',
+        surgeries: [
+          { date: '2025-12-14', type: 'Ricostruzione LCA dx + sutura menisco', center: 'Schulthess Klinik · Zürich', surgeon: 'Prof. Stefan Müller', notes: 'Tecnica BPTB · all-inside meniscale' },
+        ],
+        pastExams: [
+          { date: '2026-04-28', type: 'Eco strutturale tendine rotuleo', findings: 'Spessore nei limiti · no tendinopatia' },
+          { date: '2026-03-20', type: 'RM ginocchio dx controllo', findings: 'Innesto integrato · no lassità · menisco riparato' },
+          { date: '2026-01-15', type: 'RM ginocchio dx controllo', findings: 'Innesto in sede · ottima vascolarizzazione' },
+          { date: '2025-12-13', type: 'RM ginocchio dx (acuta)', findings: 'Rottura completa LCA + lesione menisco mediale' },
+        ],
+        anthropometry: [
+          { date: '2026-05-01', weight: 67.4, height: 172, bf: 22.1, lean: 52.5 },
+          { date: '2026-02-01', weight: 66.8, height: 172, bf: 23.4, lean: 51.1 },
+          { date: '2025-12-01', weight: 68.2, height: 172, bf: 20.2, lean: 54.4 },
+        ],
+        vitals: { restingHR: 52, bp: '110/72', vo2max: 54.2 },
+      },
+      gca: {
+        bloodType: 'A-', allergies: 'Nessuna nota',
+        meds: 'Antinfiammatori 1° mese post-op · Vit. D3',
+        anamnesi: 'Lussazione spalla dx 28/03/2026 in allenamento SG. Operata 30/03. Anamnesi: pollice dx distorsione 2023.',
+        surgeries: [
+          { date: '2026-03-30', type: 'Riparazione capsulo-labrale artroscopica (Bankart)', center: 'Hôpital de La Tour · Genève', surgeon: 'Dr. Pierre-Yves Zambelli', notes: 'Riparazione integra · capsula ben tesa' },
+        ],
+        pastExams: [
+          { date: '2026-04-22', type: 'RM spalla dx controllo', findings: 'Riparazione integra · capsula tesa' },
+          { date: '2026-03-29', type: 'RM spalla dx (acuta)', findings: 'Lesione di Bankart + Hill-Sachs minore' },
+          { date: '2026-03-28', type: 'RX spalla dx', findings: 'Lussazione antero-inferiore · ridotta' },
+        ],
+        anthropometry: [
+          { date: '2026-05-01', weight: 86.2, height: 182, bf: 13.5, lean: 74.6 },
+          { date: '2026-03-01', weight: 86.8, height: 182, bf: 13.0, lean: 75.5 },
+        ],
+        vitals: { restingHR: 50, bp: '116/74', vo2max: 58.4 },
+      },
+    },
+
     // Conteggio sessioni per atleta (stagione 2025/26)
     athleteSessions: {
       lgb: { palestra: 78, sci: 96, gara: 22, rehab: 0,   recovery: 32, test: 12, briefing: 18 },
