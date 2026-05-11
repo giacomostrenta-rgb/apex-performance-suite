@@ -423,21 +423,30 @@
   <div class="content">
     <div class="page-header">
       <p class="page-eyebrow">Vista mensile · sync Google &amp; Outlook</p>
-      <h2>Pianificazione</h2>
-      <p>Gare FIS, raduni, sessioni in palestra, sessioni neve, recovery e trasferte.</p>
+      <h2>Pianificazione <em>squadra</em></h2>
+      <p>Allenamenti, gare, rehab, recovery, trasferte. Clicca un giorno per aggiungere un evento, clicca un evento per vedere/modificare i dettagli.</p>
     </div>
-    <div class="card glow">
-      <div class="cal-legend">
-        <span><span class="lg-dot" style="background:var(--accent);"></span>Gara FIS</span>
-        <span><span class="lg-dot" style="background:var(--info);"></span>Palestra</span>
-        <span><span class="lg-dot" style="background:var(--good);"></span>Neve</span>
-        <span><span class="lg-dot" style="background:var(--warn);"></span>Trasferta</span>
+
+    <!-- Legenda eventi -->
+    <div class="card glow" id="cal-legend-card" style="margin-bottom:18px;padding:14px 22px;">
+      <div id="cal-legend-list" style="display:flex;flex-wrap:wrap;gap:14px;font-size:11.5px;color:var(--text-3);"></div>
+    </div>
+
+    <!-- Mese -->
+    <div class="card glow card-pad-0">
+      <div style="padding:18px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);">
+        <div>
+          <button class="btn ghost" data-action="cal-prev-month">←</button>
+          <strong id="cal-month-label" style="font-size:18px;font-weight:600;letter-spacing:-0.012em;padding:0 14px;">—</strong>
+          <button class="btn ghost" data-action="cal-next-month">→</button>
+        </div>
+        <button class="btn primary" data-action="new-event">+ Aggiungi evento</button>
       </div>
-      <div class="cal-grid">
-        <div class="cal-head">Lun</div><div class="cal-head">Mar</div><div class="cal-head">Mer</div>
-        <div class="cal-head">Gio</div><div class="cal-head">Ven</div><div class="cal-head">Sab</div><div class="cal-head">Dom</div>
+      <div class="cal-grid-v2" style="padding:0 16px 16px;">
+        <div class="cal-head-v2">Lun</div><div class="cal-head-v2">Mar</div><div class="cal-head-v2">Mer</div>
+        <div class="cal-head-v2">Gio</div><div class="cal-head-v2">Ven</div><div class="cal-head-v2">Sab</div><div class="cal-head-v2">Dom</div>
       </div>
-      <div class="cal-grid stagger" id="cal-days"></div>
+      <div class="cal-grid-v2 stagger" id="cal-grid-v2" style="padding:0 16px 18px;"></div>
     </div>
   </div>
 </section>
@@ -703,7 +712,7 @@
 
   <div class="drawer-body">
 
-    <!-- TRADING CARD HERO -->
+    <!-- TRADING CARD HERO (sempre visibile) -->
     <div class="tcard with-photo" id="dr-tcard">
       <div class="tcard-watermark" id="dr-watermark">—</div>
       <div style="position:absolute;top:24px;right:24px;display:flex;align-items:center;gap:6px;z-index:3;"><span class="swiss-flag lg" style="box-shadow:0 4px 12px rgba(0,0,0,0.2);"></span></div>
@@ -718,54 +727,36 @@
       </div>
     </div>
 
-    <!-- INJURY (if any) -->
+    <!-- INJURY banner (if any) -->
     <div id="dr-injury" class="card" style="background:var(--bad-soft);border-color:#F5C5C5;margin-bottom:18px;display:none;"></div>
 
-    <!-- LIVE METRICS + STATUS -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr) auto;gap:10px;margin-bottom:18px;">
-      <div class="stat"><div class="stat-label">Readiness</div><div class="stat-value" id="dr-readiness">—</div></div>
-      <div class="stat"><div class="stat-label">HRV</div><div class="stat-value" id="dr-hrv">—</div></div>
-      <div class="stat"><div class="stat-label">Sonno</div><div class="stat-value" id="dr-sleep">—</div></div>
-      <div class="stat"><div class="stat-label">Carico</div><div class="stat-value" style="font-size:18px;" id="dr-load">—</div></div>
-      <div class="stat" style="display:flex;flex-direction:column;justify-content:center;align-items:center;"><div class="stat-label">Stato</div><span class="pill good" id="dr-status">—</span></div>
+    <!-- TABS -->
+    <div class="drawer-tabs">
+      <div class="drawer-tab active" data-drawer-tab="anagrafica">Anagrafica</div>
+      <div class="drawer-tab" data-drawer-tab="sessioni">Sessioni</div>
+      <div class="drawer-tab" data-drawer-tab="test">Test</div>
+      <div class="drawer-tab" data-drawer-tab="stats">Statistiche</div>
+      <div class="drawer-tab" data-drawer-tab="gare">Gare</div>
     </div>
 
-    <!-- PERFORMANCE DNA -->
-    <h3 class="section-title">Performance DNA · scala 0–100 vs WC</h3>
-    <div class="dna-strip with-labels stagger" id="dr-dna" style="margin-bottom:24px;"></div>
+    <!-- TAB: ANAGRAFICA -->
+    <div class="drawer-tab-content active" data-drawer-pane="anagrafica" id="dr-anagrafica"></div>
 
-    <!-- BENCHMARKS -->
-    <h3 class="section-title">Benchmark · vs squadra &amp; WC Top10</h3>
-    <div id="dr-benchmarks" style="margin-bottom:24px;"></div>
+    <!-- TAB: SESSIONI -->
+    <div class="drawer-tab-content" data-drawer-pane="sessioni" id="dr-sessioni"></div>
 
-    <!-- CHARTS -->
-    <div class="grid grid-2" style="margin-bottom:18px;">
-      <div class="card">
-        <div class="card-header"><h3 class="card-title">CMJ · 8 settimane</h3></div>
-        <div class="chart-container" style="height:200px;"><canvas id="dr-cmj-chart"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="card-header"><h3 class="card-title">Profilo radar vs WC Top10</h3></div>
-        <div class="chart-container" style="height:200px;"><canvas id="dr-radar"></canvas></div>
-      </div>
-    </div>
+    <!-- TAB: TEST -->
+    <div class="drawer-tab-content" data-drawer-pane="test" id="dr-test"></div>
 
-    <!-- WC DISCIPLINE RANKS -->
-    <div class="card glow" style="margin-bottom:18px;">
-      <div class="card-header"><h3 class="card-title">Posizione per disciplina</h3><p class="card-sub">Classifica WC singola specialità</p></div>
-      <div id="dr-disc-ranks" class="stagger"></div>
-    </div>
+    <!-- TAB: STATISTICHE -->
+    <div class="drawer-tab-content" data-drawer-pane="stats" id="dr-stats"></div>
 
-    <!-- RECENT RESULTS -->
-    <div class="card glow">
-      <div class="card-header"><h3 class="card-title">Ultimi risultati</h3><p class="card-sub">Stagione 2025/26</p></div>
-      <div id="dr-recent-results" class="stagger"></div>
-    </div>
+    <!-- TAB: GARE -->
+    <div class="drawer-tab-content" data-drawer-pane="gare" id="dr-gare"></div>
 
     <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:24px;">
-      <button class="btn" data-action="open-programma">Programmazione</button>
-      <button class="btn" data-toast="Storico test">Storico test</button>
-      <button class="btn primary" data-action="export-pdf-athlete">📄 Report PDF</button>
+      <button class="btn" data-action="export-pdf-athlete">📄 Report PDF</button>
+      <button class="btn primary" data-action="edit-athlete">Modifica profilo</button>
     </div>
   </div>
 </aside>
@@ -2249,6 +2240,164 @@ window.__renderCharts = function(view) {
   }
 };
 
+// ============ CALENDARIO V2 (v13) ============
+let _calMonth = new Date('2026-05-01'); // mese corrente visualizzato
+
+function renderCalendarLegend() {
+  const el = document.getElementById('cal-legend-list');
+  if (!el) return;
+  el.innerHTML = Object.entries(T.sessionTypes).map(([k, t]) =>
+    `<span style="display:inline-flex;align-items:center;gap:6px;"><span style="display:inline-block;width:12px;height:12px;background:${t.color};border-radius:3px;"></span>${t.label}</span>`
+  ).join('');
+}
+
+function renderCalendarV2() {
+  renderCalendarLegend();
+  const year = _calMonth.getFullYear();
+  const month = _calMonth.getMonth(); // 0-11
+  const today = new Date('2026-05-07'); today.setHours(0,0,0,0);
+  const monthName = _calMonth.toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
+  document.getElementById('cal-month-label').textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+
+  // First day of month, find Monday before it (or that Monday)
+  const first = new Date(year, month, 1);
+  const dayOfWeek = (first.getDay() + 6) % 7; // 0=Mon
+  const start = new Date(year, month, 1 - dayOfWeek);
+
+  // Events indexed by date
+  const evByDate = {};
+  T.calendarEvents.forEach(e => { (evByDate[e.date] = evByDate[e.date] || []).push(e); });
+
+  // Render 6 weeks = 42 cells
+  const grid = document.getElementById('cal-grid-v2');
+  const cells = [];
+  for (let i = 0; i < 42; i++) {
+    const d = new Date(start); d.setDate(start.getDate() + i);
+    const iso = d.toISOString().split('T')[0];
+    const isOther = d.getMonth() !== month;
+    const isToday = d.getTime() === today.getTime();
+    const events = evByDate[iso] || [];
+    cells.push(`<div class="cal-cell ${isOther ? 'other-month' : ''} ${isToday ? 'today' : ''}" data-action="open-day" data-date="${iso}">
+      <div class="cal-cell-num">
+        ${d.getDate()}
+        ${events.length > 0 ? `<span style="font-size:10px;color:var(--text-3);font-weight:600;">${events.length}</span>` : ''}
+      </div>
+      <div class="cal-cell-events">
+        ${events.slice(0, 3).map(e => {
+          const t = T.sessionTypes[e.type] || { color: '#76767E' };
+          const athleteNames = e.athleteIds.slice(0, 2).map(id => {
+            const a = T.athletes.find(x => x.id === id);
+            return a ? a.name.split(' ')[0] : '';
+          }).filter(Boolean).join(', ');
+          const extra = e.athleteIds.length > 2 ? ` +${e.athleteIds.length - 2}` : '';
+          return `<div class="cal-event-pill" style="background:${t.color};color:white;" title="${e.time} · ${e.title} · ${e.athleteIds.length} atleti">${athleteNames || e.title}${extra}</div>`;
+        }).join('')}
+        ${events.length > 3 ? `<div class="cal-event-more">+${events.length - 3} altri</div>` : ''}
+        ${events.length === 0 && !isOther ? '<div class="cal-cell-empty">—</div>' : ''}
+      </div>
+    </div>`);
+  }
+  grid.innerHTML = cells.join('');
+}
+
+// Calendar event form
+function calendarEventForm() {
+  return `
+    <div class="fm-section">Tipo evento &amp; data</div>
+    <div class="field-row">
+      <div class="field"><label class="field-label">Tipo</label>
+        <div class="chip-group" data-radio="ev-type">
+          ${Object.entries(T.sessionTypes).map(([k, t]) => `<div class="chip-pick" data-val="${k}" style="border-color:${t.color};color:${t.color};"><span style="display:inline-block;width:8px;height:8px;background:${t.color};border-radius:50%;margin-right:6px;vertical-align:middle;"></span>${t.short}</div>`).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="field-row three">
+      <div class="field"><label class="field-label">Data</label><input type="date" class="field-input" value="2026-05-07" id="ev-date"/></div>
+      <div class="field"><label class="field-label">Orario</label><input type="time" class="field-input" value="09:30" id="ev-time"/></div>
+      <div class="field"><label class="field-label">Durata (min)</label><input type="number" class="field-input" value="90" id="ev-dur"/></div>
+    </div>
+    <div class="field"><label class="field-label">Titolo</label><input type="text" class="field-input" placeholder="Es: Forza max + reattività" id="ev-title"/></div>
+    <div class="field"><label class="field-label">Località</label><input type="text" class="field-input" value="Magglingen" id="ev-loc"/></div>
+
+    <div class="fm-section">Atleti convocati</div>
+    <div class="chip-group" id="ev-athletes">
+      ${T.athletes.map(a => `<div class="chip-pick" data-id="${a.id}">${a.name}</div>`).join('')}
+    </div>
+  `;
+}
+
+Object.assign(ACTIONS, {
+  'cal-prev-month': () => { _calMonth.setMonth(_calMonth.getMonth() - 1); renderCalendarV2(); },
+  'cal-next-month': () => { _calMonth.setMonth(_calMonth.getMonth() + 1); renderCalendarV2(); },
+  'open-day': (btn) => {
+    const date = btn.dataset.date;
+    const events = T.calendarEvents.filter(e => e.date === date);
+    const d = new Date(date);
+    openFormModal({
+      title: d.toLocaleDateString('it-IT', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' }),
+      subtitle: `${events.length} eventi programmati`,
+      body: events.length === 0 ? `<div style="text-align:center;padding:40px;color:var(--text-3);"><div style="font-size:32px;opacity:0.4;margin-bottom:10px;">📅</div><strong style="display:block;margin-bottom:4px;color:var(--text);">Nessun evento</strong><span style="font-size:13px;">Aggiungi una sessione, allenamento, gara o rehab</span></div>` :
+        events.map(e => {
+          const t = T.sessionTypes[e.type] || {};
+          const names = e.athleteIds.map(id => {
+            const a = T.athletes.find(x => x.id === id);
+            return a ? `<span class="pill muted" style="font-size:11px;">${a.name}</span>` : '';
+          }).join(' ');
+          return `<div style="background:${t.soft || 'var(--surface-2)'};border-left:4px solid ${t.color || '#76767E'};padding:14px 16px;border-radius:8px;margin-bottom:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
+              <strong style="font-size:14px;">${t.icon || '·'} ${e.title}</strong>
+              <span style="font-size:11.5px;color:var(--text-3);font-weight:600;">${e.time} · ${e.duration}'</span>
+            </div>
+            <div style="font-size:12px;color:var(--text-3);margin-bottom:8px;">${e.loc} · ${t.label || e.type}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">${names || '<span style="font-size:11px;color:var(--text-4);">Nessun atleta</span>'}</div>
+          </div>`;
+        }).join(''),
+      actions: [
+        { text: 'Chiudi', action: 'close-fm' },
+        { text: '+ Aggiungi evento', primary: true, action: 'new-event' },
+      ]
+    });
+  },
+  'new-event': () => openFormModal({
+    title: 'Nuovo evento · calendario',
+    subtitle: 'Tipo · orario · atleti coinvolti',
+    body: calendarEventForm(),
+    actions: [
+      { text: 'Annulla', action: 'close-fm' },
+      { text: 'Aggiungi al calendario', primary: true, action: 'save-event' },
+    ],
+    onMount: () => {
+      // Wire radio + multi-select athletes
+      document.querySelectorAll('#ev-athletes .chip-pick').forEach(c => {
+        c.addEventListener('click', () => c.classList.toggle('selected'));
+      });
+      document.querySelectorAll('[data-radio="ev-type"] .chip-pick').forEach(c => {
+        c.addEventListener('click', () => {
+          document.querySelectorAll('[data-radio="ev-type"] .chip-pick').forEach(x => x.classList.remove('selected'));
+          c.classList.add('selected');
+        });
+      });
+    }
+  }),
+  'save-event': () => {
+    const type = document.querySelector('[data-radio="ev-type"] .selected')?.dataset.val || 'palestra';
+    const date = document.getElementById('ev-date').value;
+    const time = document.getElementById('ev-time').value;
+    const title = document.getElementById('ev-title').value || T.sessionTypes[type].label;
+    const loc = document.getElementById('ev-loc').value || '—';
+    const dur = parseInt(document.getElementById('ev-dur').value) || 60;
+    const athleteIds = Array.from(document.querySelectorAll('#ev-athletes .chip-pick.selected')).map(c => c.dataset.id);
+    T.calendarEvents.push({
+      id: 'e-' + Date.now(),
+      date, time, type, title, loc, duration: dur, athleteIds,
+    });
+    closeFormModal();
+    if (document.getElementById('cal-grid-v2')) renderCalendarV2();
+    if (document.getElementById('dash-week-window')) renderDashboardWeekWindow();
+    toast(`Evento aggiunto · ${athleteIds.length} atleti`, 'success', '✓');
+  },
+});
+
 // ============ NEW DASHBOARD (v11 — sintetica) ============
 function renderStatusKpi() {
   const all = T.athletes;
@@ -2384,6 +2533,7 @@ window.__renderDashboardSimple = function() {
 
 window.__paneInit = {
   dashboard: () => { window.__renderDashboardSimple && window.__renderDashboardSimple(); },
+  calendario: () => { renderCalendarV2(); },
   programma: () => { renderWeekView(); renderSessionDetail(2); },
   gare: () => {
     renderGareUpcoming(); renderGareResults(); renderWcStandings(); renderPodium3D();
@@ -2424,6 +2574,311 @@ attachSearch(document.getElementById('dashboard-search'), 'athletes');
 
 window.__renderDashboardSimple();
 initCopilot();
+
+// ============ DRAWER TABS — v12 ============
+// Override openDrawer to use the new tab-based layout
+const _origOpenDrawer = window.openDrawer;
+window.openDrawer = function(id) {
+  const a = T.athletes.find(x => x.id === id);
+  if (!a) return;
+
+  // Populate trading card hero (same as before)
+  document.getElementById('dr-watermark').textContent = UTIL.initials(a.name);
+  document.getElementById('dr-name').innerHTML = a.name.split(' ').map((part, i, arr) => i === arr.length - 1 ? `<em>${part}</em>` : part).join(' ');
+  const age = athleteAge(a);
+  document.getElementById('dr-meta').textContent = `${a.born} · ${age} anni · ${a.sex === 'F' ? 'Donne' : 'Uomini'} · ${a.disc.join(' / ')} · ${a.height}cm / ${a.weight}kg`;
+  document.getElementById('dr-rank').innerHTML = a.wcOverall ? `<em>#</em>${a.wcOverall}` : '—';
+  document.getElementById('dr-points').textContent = a.wcPoints.toLocaleString('it-IT');
+  document.getElementById('dr-podiums').textContent = a.podiums;
+  document.getElementById('dr-wins').textContent = a.wins;
+  document.getElementById('dr-title-name').textContent = a.name;
+
+  // Injury banner
+  const inj = document.getElementById('dr-injury');
+  if (a.injury) {
+    inj.style.display = '';
+    inj.innerHTML = `<strong>⚠ Infortunio in corso:</strong> ${a.injury}`;
+  } else {
+    inj.style.display = 'none';
+  }
+
+  // Reset to first tab
+  document.querySelectorAll('.drawer-tab').forEach(t => t.classList.toggle('active', t.dataset.drawerTab === 'anagrafica'));
+  document.querySelectorAll('.drawer-tab-content').forEach(p => p.classList.toggle('active', p.dataset.drawerPane === 'anagrafica'));
+
+  // Populate all tab content
+  renderDrawerAnagrafica(a);
+  renderDrawerSessioni(a);
+  renderDrawerTest(a);
+  renderDrawerStats(a);
+  renderDrawerGare(a);
+
+  // Show drawer
+  document.getElementById('athlete-drawer').classList.add('open');
+  document.getElementById('drawer-backdrop').classList.add('open');
+  window.__activeAthlete = id;
+};
+
+// Tab switching
+document.addEventListener('click', (e) => {
+  const t = e.target.closest('.drawer-tab[data-drawer-tab]');
+  if (!t) return;
+  document.querySelectorAll('.drawer-tab').forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+  const target = t.dataset.drawerTab;
+  document.querySelectorAll('.drawer-tab-content').forEach(p => p.classList.toggle('active', p.dataset.drawerPane === target));
+  // Render charts in stats tab if just opened
+  if (target === 'stats' && window.__activeAthlete) {
+    setTimeout(() => renderStatsCharts(window.__activeAthlete), 50);
+  }
+});
+
+// ============ TAB RENDERERS ============
+function renderDrawerAnagrafica(a) {
+  const sex = a.sex === 'F' ? 'female' : 'male';
+  const benches = T.benchmarks[sex];
+  const dob = a.dob ? new Date(a.dob).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' }) : '—';
+  const status = athleteStatusInfo(a);
+
+  document.getElementById('dr-anagrafica').innerHTML = `
+    <h3 class="section-title">Anagrafica</h3>
+    <div class="anagrafica-grid" style="margin-bottom:18px;">
+      <div class="anagrafica-row"><span class="anagrafica-label">Data nascita</span><span class="anagrafica-value">${dob}</span></div>
+      <div class="anagrafica-row"><span class="anagrafica-label">Età</span><span class="anagrafica-value">${athleteAge(a)} anni</span></div>
+      <div class="anagrafica-row"><span class="anagrafica-label">Altezza</span><span class="anagrafica-value">${a.height} cm</span></div>
+      <div class="anagrafica-row"><span class="anagrafica-label">Peso</span><span class="anagrafica-value">${a.weight} kg</span></div>
+      <div class="anagrafica-row"><span class="anagrafica-label">Specialità</span><span class="anagrafica-value">${a.disc.join(' · ')}</span></div>
+      <div class="anagrafica-row"><span class="anagrafica-label">Focus</span><span class="anagrafica-value">${a.focus}</span></div>
+    </div>
+
+    <h3 class="section-title">Stato attuale</h3>
+    <div class="grid grid-4" style="margin-bottom:18px;">
+      <div class="stat"><div class="stat-label">Readiness</div><div class="stat-value">${a.readiness}%</div></div>
+      <div class="stat"><div class="stat-label">HRV</div><div class="stat-value">${a.hrv}<span class="stat-value-sub">ms</span></div></div>
+      <div class="stat"><div class="stat-label">Sonno</div><div class="stat-value">${a.sleep}<span class="stat-value-sub">h</span></div></div>
+      <div class="stat"><div class="stat-label">Stato</div><div class="stat-value" style="font-size:14px;"><span class="pill ${status.cls}">${status.label}</span></div></div>
+    </div>
+
+    <h3 class="section-title">Performance DNA · scala 0–100 vs WC</h3>
+    <div class="dna-strip with-labels" id="dr-dna-tab" style="margin-bottom:18px;"></div>
+  `;
+
+  // Render DNA
+  const tests = ['squat1RM', 'sj', 'dj', 'vo2max', 'ybalance', 'cmj'];
+  const labels = ['Forza', 'Pot', 'Reat', 'End', 'Eq', 'Salto'];
+  const dnaHtml = tests.map((t, i) => {
+    const b = benches[t]; const v = a.tests[t];
+    const score = ((v - b.wcAvg) / (b.wcMax - b.wcAvg)) * 100;
+    const cls = score >= 80 ? 'elite' : score >= 60 ? 'good' : score >= 40 ? '' : score >= 20 ? 'warn' : 'bad';
+    const h = Math.max(15, Math.min(100, score));
+    return `<div class="dna-bar ${cls}" style="height:${h}%;" data-label="${labels[i]} ${Math.round(score)}"></div>`;
+  }).join('');
+  document.getElementById('dr-dna-tab').innerHTML = dnaHtml;
+}
+
+function renderDrawerSessioni(a) {
+  const sessions = T.athleteSessions[a.id] || {};
+  const total = Object.values(sessions).reduce((s, n) => s + n, 0);
+
+  // Group display
+  const groups = [
+    { key: 'palestra', priority: 1 },
+    { key: 'sci', priority: 1 },
+    { key: 'gara', priority: 2 },
+    { key: 'rehab', priority: 2 },
+    { key: 'recovery', priority: 2 },
+    { key: 'test', priority: 3 },
+    { key: 'briefing', priority: 3 },
+  ];
+
+  document.getElementById('dr-sessioni').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;">
+      <h3 class="section-title" style="margin:0;">Sessioni stagione</h3>
+      <span class="muted" style="font-size:12px;">Totale <strong style="color:var(--text);font-weight:700;">${total}</strong> sessioni</span>
+    </div>
+
+    <h4 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-3);margin:14px 0 10px;">PALESTRA · forza, potenza, condizionamento</h4>
+    ${groupCard(sessions, 'palestra', total)}
+
+    <h4 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-3);margin:18px 0 10px;">SCI · sport-specifico</h4>
+    ${groupCard(sessions, 'sci', total)}
+    ${groupCard(sessions, 'gara', total)}
+
+    <h4 style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-3);margin:18px 0 10px;">ALTRE SESSIONI</h4>
+    ${groupCard(sessions, 'rehab', total)}
+    ${groupCard(sessions, 'recovery', total)}
+    ${groupCard(sessions, 'test', total)}
+    ${groupCard(sessions, 'briefing', total)}
+
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:18px;">
+      <button class="btn" data-action="new-session">+ Programma sessione</button>
+    </div>
+  `;
+}
+
+function groupCard(sessions, key, total) {
+  const t = T.sessionTypes[key]; if (!t) return '';
+  const count = sessions[key] || 0;
+  const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+  return `<div class="session-group">
+    <div class="session-group-head">
+      <div class="session-group-icon" style="background:${t.soft};color:${t.color};">${t.icon}</div>
+      <div class="session-group-info">
+        <h4>${t.label}</h4>
+        <span>${count} sessioni · ${pct}% del totale</span>
+      </div>
+      <div style="text-align:right;">
+        <div class="session-group-count">${count}</div>
+        <div class="session-group-pct">${pct}%</div>
+      </div>
+    </div>
+    <div class="session-group-bar"><div class="session-group-bar-fill" style="width:${pct}%;background:${t.color};"></div></div>
+  </div>`;
+}
+
+function renderDrawerTest(a) {
+  const sex = a.sex === 'F' ? 'female' : 'male';
+  const benches = T.benchmarks[sex];
+  const tests = a.tests;
+  const meta = UTIL.testMeta;
+
+  document.getElementById('dr-test').innerHTML = `
+    <h3 class="section-title">Test fisici · ultimi valori vs squadra &amp; WC</h3>
+    ${['cmj','sj','dj','squat1RM','vo2max','ybalance'].map(k => {
+      const b = benches[k]; const v = tests[k]; const m = meta[k];
+      const pct = (val) => Math.max(0, Math.min(100, ((val - b.teamMin) / (b.wcMax - b.teamMin)) * 100));
+      const dTeam = (v - b.teamAvg).toFixed(m.decimals);
+      const dWcTop = (v - b.wcTop10).toFixed(m.decimals);
+      return `<div class="benchmark">
+        <div class="benchmark-head">
+          <div class="benchmark-name">${m.label}</div>
+          <div class="benchmark-value">${v.toFixed(m.decimals)}<small>${m.unit}</small></div>
+        </div>
+        <div class="benchmark-bar">
+          <div class="benchmark-track"></div>
+          <div class="benchmark-fill" style="width:${pct(v)}%;"></div>
+          <div class="benchmark-marker team" style="left:${pct(b.teamAvg)}%;"></div>
+          <div class="benchmark-marker wc" style="left:${pct(b.wcTop10)}%;"></div>
+          <div class="benchmark-dot" style="left:${pct(v)}%;"></div>
+        </div>
+        <div class="benchmark-legend">
+          <span class="${parseFloat(dTeam) >= 0 ? 'text-good' : 'text-bad'}">vs Team avg <strong>${parseFloat(dTeam) >= 0 ? '+' : ''}${dTeam}${m.unit}</strong></span>
+          <span class="${parseFloat(dWcTop) >= 0 ? 'text-good' : 'text-bad'}">vs WC Top10 <strong>${parseFloat(dWcTop) >= 0 ? '+' : ''}${dWcTop}${m.unit}</strong></span>
+        </div>
+      </div>`;
+    }).join('')}
+
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:18px;">
+      <button class="btn" data-action="new-test">+ Programma test</button>
+    </div>
+  `;
+}
+
+function renderDrawerStats(a) {
+  const sessions = T.athleteSessions[a.id] || {};
+  const total = Object.values(sessions).reduce((s, n) => s + n, 0);
+  const wellness = T.wellnessHistory[a.id] || [];
+  const last = wellness[wellness.length - 1] || {};
+  const avg = (key) => wellness.length ? (wellness.reduce((s, w) => s + w[key], 0) / wellness.length).toFixed(1) : '—';
+
+  document.getElementById('dr-stats').innerHTML = `
+    <h3 class="section-title">Distribuzione carico · % per tipo di sessione</h3>
+    <div class="stats-card" style="margin-bottom:20px;">
+      ${Object.entries(T.sessionTypes).map(([k, t]) => {
+        const c = sessions[k] || 0;
+        const p = total > 0 ? Math.round((c / total) * 100) : 0;
+        return `<div class="stat-row">
+          <div class="stat-row-label" style="display:flex;align-items:center;gap:8px;"><span style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${t.color};"></span>${t.short}</div>
+          <div class="stat-row-bar"><div class="stat-row-fill" style="width:${p}%;background:${t.color};"></div></div>
+          <div class="stat-row-pct">${p}%</div>
+        </div>`;
+      }).join('')}
+      <div style="padding-top:14px;margin-top:8px;border-top:1px solid var(--border);font-size:12px;color:var(--text-3);display:flex;justify-content:space-between;">
+        <span>Totale sessioni stagione</span><strong class="tabular" style="color:var(--text);font-weight:700;">${total}</strong>
+      </div>
+    </div>
+
+    <h3 class="section-title">Wellness · ultimi 14 giorni</h3>
+    <div class="wellness-grid" style="margin-bottom:20px;">
+      <div class="wellness-card">
+        <h5>Sonno</h5>
+        <div class="wellness-card-value">${last.sleep || '—'}<sub>h · avg ${avg('sleep')}</sub></div>
+        <div class="wellness-spark"><canvas id="spark-sleep"></canvas></div>
+      </div>
+      <div class="wellness-card">
+        <h5>Stress</h5>
+        <div class="wellness-card-value">${last.stress || '—'}<sub>/10 · avg ${avg('stress')}</sub></div>
+        <div class="wellness-spark"><canvas id="spark-stress"></canvas></div>
+      </div>
+      <div class="wellness-card">
+        <h5>Fatica</h5>
+        <div class="wellness-card-value">${last.fatigue || '—'}<sub>/10 · avg ${avg('fatigue')}</sub></div>
+        <div class="wellness-spark"><canvas id="spark-fatigue"></canvas></div>
+      </div>
+      <div class="wellness-card">
+        <h5>Carico allenamento</h5>
+        <div class="wellness-card-value">${last.load || '—'}<sub>au · avg ${Math.round(avg('load'))}</sub></div>
+        <div class="wellness-spark"><canvas id="spark-load"></canvas></div>
+      </div>
+    </div>
+  `;
+}
+
+function renderStatsCharts(athleteId) {
+  const wellness = T.wellnessHistory[athleteId] || [];
+  if (!wellness.length) return;
+  const labels = wellness.map(w => w.date.slice(-2));
+
+  const mk = (id, key, color) => {
+    const el = document.getElementById(id); if (!el) return;
+    if (el._chart) el._chart.destroy();
+    el._chart = lineChart(el, labels, [{ data: wellness.map(w => w[key]), color, fill: true }], { beginAtZero: false });
+  };
+  mk('spark-sleep', 'sleep', '#1D4ED8');
+  mk('spark-stress', 'stress', '#B91C1C');
+  mk('spark-fatigue', 'fatigue', '#B45309');
+  mk('spark-load', 'load', '#0F766E');
+}
+
+function renderDrawerGare(a) {
+  const results = T.results.filter(r => r.athleteId === a.id).slice(0, 12);
+  // Also upcoming races (all team-level)
+  const today = new Date('2026-05-07');
+  const upcoming = T.races.filter(r => new Date(r.date) >= today).slice(0, 4);
+
+  document.getElementById('dr-gare').innerHTML = `
+    <h3 class="section-title">Prossime gare in programma</h3>
+    <div style="margin-bottom:20px;">
+      ${upcoming.map(r => {
+        const d = new Date(r.date);
+        const days = Math.ceil((d - today) / (1000*60*60*24));
+        return `<div class="athlete-race-row" data-race="${r.id}">
+          <div style="background:var(--accent-soft);color:var(--accent);width:34px;height:34px;border-radius:8px;display:grid;place-items:center;font-weight:700;font-feature-settings:'tnum';">${days}</div>
+          <div>
+            <strong>${r.loc}</strong>
+            <div class="muted" style="font-size:11px;">${r.disc} · ${d.toLocaleDateString('it-IT',{day:'2-digit',month:'long'})}</div>
+          </div>
+          <span class="pill muted">${r.country}</span>
+          <span class="muted tabular" style="font-size:11.5px;">+${days}gg</span>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <h3 class="section-title">Risultati stagione · ${results.length} gare</h3>
+    ${results.length === 0 ? '<div class="muted" style="padding:14px;text-align:center;font-size:13px;">Nessuna gara questa stagione</div>' : results.map(r => {
+      const cls = r.position === 1 ? 'gold' : r.position === 2 ? 'silver' : r.position === 3 ? 'bronze' : (r.position <= 10 ? 'top10' : '');
+      return `<div class="athlete-race-row">
+        <div class="position-badge ${cls}" style="width:30px;height:30px;font-size:12px;">${r.position}</div>
+        <div>
+          <strong>${r.race}</strong>
+          <div class="muted" style="font-size:11px;">${r.disc} · ${new Date(r.date).toLocaleDateString('it-IT')}</div>
+        </div>
+        <span class="muted tabular" style="font-size:11.5px;">${r.time}</span>
+        <span class="pill ${r.position <= 3 ? 'good' : 'muted'}" style="font-feature-settings:'tnum';">${r.wcPts}pt</span>
+      </div>`;
+    }).join('')}
+  `;
+}
 </script>
 </body>
 </html>
